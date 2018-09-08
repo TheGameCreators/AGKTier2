@@ -598,6 +598,159 @@ void cObject3D::CreateFromHeightMap( const char *szHeightMap, float width, float
 	SetCollisionMode( 0 );
 }
 
+void cObject3D::CreateFromHeightMapImage(cImage * pImage, float width, float height, float length, int smoothing, int split)
+{
+	DeleteMeshes();
+
+	if (m_pHeightMap) delete[] m_pHeightMap;
+	int imgWidth = 0;
+	int imgHeight = 0;
+
+	if (!pImage)
+	{
+		agk::Warning("Invalid Image passed");
+		return;
+	}
+
+	unsigned char* data;
+	int size = pImage->GetRawData(&data);
+	if (!data)
+	{
+		agk::Warning("Failed to get image data");
+		return;
+	}
+
+	imgWidth = pImage->GetWidth();
+	imgHeight = pImage->GetHeight();
+
+	// convert image into unsigned 16-bit integers
+	m_pHeightMap = new unsigned short[imgWidth*imgHeight];
+	for (int z = 0; z < imgHeight; z++)
+	{
+		for (int x = 0; x < imgWidth; x++)
+		{
+			UINT index = z * imgWidth + x;
+			m_pHeightMap[index] = data[index * 4] * 256;	// Red channel data  MSB
+			m_pHeightMap[index] += data[index * 4 + 1];		// Green channel data LSB
+		}
+	}
+
+	// no longer need raw image data
+	delete[] data;
+
+	// Smoothing passes
+	if (smoothing > 0)
+	{
+		float *pValues2 = new float[imgWidth*imgHeight];
+		float *pValues3 = new float[imgWidth*imgHeight];
+
+		for (int z = 0; z < imgHeight; z++)
+		{
+			for (int x = 0; x < imgWidth; x++)
+			{
+				UINT index = z * imgWidth + x;
+				pValues2[index] = m_pHeightMap[index];
+			}
+		}
+
+		for (int s = 0; s < smoothing; s++)
+		{
+			// 3x3 gaussian blur, separated into horizontal and vertical passes
+			for (int z = 0; z < imgHeight; z++)
+			{
+				for (int x = 0; x < imgWidth; x++)
+				{
+					UINT index = z * imgWidth + x;
+					UINT index2 = x > 0 ? z * imgWidth + x - 1 : index;
+					UINT index3 = x < imgWidth - 1 ? z * imgWidth + x + 1 : index;
+
+					float total = pValues2[index] * 0.5f;
+					total += pValues2[index2] * 0.25f;
+					total += pValues2[index3] * 0.25f;
+
+					pValues3[index] = total;
+				}
+			}
+
+			for (int z = 0; z < imgHeight; z++)
+			{
+				for (int x = 0; x < imgWidth; x++)
+				{
+					UINT index = z * imgWidth + x;
+					UINT index2 = z > 0 ? (z - 1)*imgWidth + x : index;
+					UINT index3 = z < imgHeight - 1 ? (z + 1)*imgWidth + x : index;
+
+					float total = pValues3[index] * 0.5f;
+					total += pValues3[index2] * 0.25f;
+					total += pValues3[index3] * 0.25f;
+
+					pValues2[index] = total;
+				}
+			}
+		}
+
+		delete[] pValues3;
+
+		for (int z = 0; z < imgHeight; z++)
+		{
+			for (int x = 0; x < imgWidth; x++)
+			{
+				UINT index = z * imgWidth + x;
+				m_pHeightMap[index] = (unsigned short)pValues2[index];
+			}
+		}
+
+		delete[] pValues2;
+	} // end of smoothing operation
+
+	  // Set up the member variables
+	m_iHeightMapPixelsX = imgWidth;
+	m_iHeightMapPixelsZ = imgHeight;
+	m_fHeightMapSizeX = width;
+	m_fHeightMapSizeY = height;
+	m_fHeightMapSizeZ = length;
+
+	// entire smoothed terrain now in m_pHeightMap, check if we need to split it
+	if (split < 1) split = 1;
+	if (split > imgWidth - 1) split = imgWidth - 1;
+	if (split > imgHeight - 1) split = imgHeight - 1;
+
+	m_iNumMeshes = split * split;
+	m_pMeshes = new cMesh*[m_iNumMeshes];
+
+	float segsX = (imgWidth - 1) / (float)split;  // segment size in x axis
+	float segsZ = (imgHeight - 1) / (float)split;
+
+	float currX = 0; float currZ = segsZ;
+	int startX = 0; int endX = 0;
+	int startZ = 0; int endZ = agk::Round(currZ);
+
+	for (UINT m = 0; m < m_iNumMeshes; m++)
+	{
+		startX = endX;
+		currX += segsX;
+		if (currX > imgWidth - 0.99f) // to avoid float rounding issues
+		{
+			startZ = endZ;
+			currZ += segsZ;
+			endZ = agk::Round(currZ);
+
+			startX = 0;
+			currX = segsX;
+		}
+		endX = agk::Round(currX);
+
+		m_pMeshes[m] = new cMesh(this);
+		m_pMeshes[m]->CreateFromHeightMap(m_pHeightMap, imgWidth - 1, imgHeight - 1, startX, endX, startZ, endZ, width, height, length);
+	}
+
+	// don't delete m_pHeightMap as we can use it for height look ups later
+
+	// collision data takes up too much space, use height map look ups instead
+	//CreateCollisionData();
+	SetCollisionMode(0);
+}
+
 void cObject3D::CreateFromMeshes( int numMeshes, cMesh **pMesh )
 {
 	DeleteMeshes();
@@ -2136,12 +2289,12 @@ float cObject3D::GetHeightMapHeight( float x, float z )
 	float height_01 = m_pHeightMap[ indexZ2*m_iHeightMapPixelsX + indexX1 ] * (m_fHeightMapSizeY/65535.0f);
 	float height_11 = m_pHeightMap[ indexZ2*m_iHeightMapPixelsX + indexX2 ] * (m_fHeightMapSizeY/65535.0f);
 
-	// blend the points in the X direction
-	float height1 = height_00 * (indexX2-p.x) + height_10 * (p.x-indexX1);
-	float height2 = height_01 * (indexX2-p.x) + height_11 * (p.x-indexX1);
+	// BENGISMO 8/9/2018 - Bug Fix where Floor (16.0) and ceil (16.0) both give 16.0 and so height reports as 0 when it isnt 0 
+	float dfx = indexX2 - p.x;
+	float dfz = indexZ2 - p.z;
 
-	// blend the two resulting points in the Z direction
-	float height = height1 * (indexZ2-p.z) + height2 * (p.z-indexZ1);
+	// Calculate the height (relative to the underside of the object)
+	float height = height_00 * dfx*dfz + height_10 * (1.0 - dfx)*dfz + height_01 * dfx*(1.0 - dfz) + height_11 * (1.0 - dfx)*(1.0 - dfz);
 
 	return height + posFinal().y;
 }

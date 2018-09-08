@@ -1247,6 +1247,8 @@ namespace AGK
 			// physics commands
 			static void SetPhysicsScale( float scale );
 			static void SetPhysicsGravity( float x, float y );
+			static float GetPhysicsGravityX();
+			static float GetPhysicsGravityY();
 			static void SetPhysicsDebugOn();
 			static void SetPhysicsDebugOff();
 			static void SetPhysicsThreading( int threads );
@@ -2762,6 +2764,9 @@ namespace AGK
 
 			static void CreateObjectFromHeightMap( UINT objID, const char* szImageFile, float width, float height, float length, int smoothing, int split ); 
 			static UINT CreateObjectFromHeightMap( const char* szImageFile, float width, float height, float length, int smoothing, int split );
+
+			static void CreateObjectFromHeightMapImage(UINT objID, UINT imageID, float width, float height, float length, int smoothing, int split);
+			static UINT CreateObjectFromHeightMapImage(UINT imageID, float width, float height, float length, int smoothing, int split);
 
 			static UINT CreateObjectFromObjectMesh( UINT fromObjID, UINT meshIndex );
 			static void CreateObjectFromObjectMesh( UINT objID, UINT fromObjID, UINT meshIndex );
