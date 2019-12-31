@@ -22,22 +22,12 @@ namespace AGK
 			bool m_bPrevDown;
 			bool m_bDown;
 
-			float m_fVirtualPosX;
-			float m_fVirtualPosY;
-			float m_fVirtualSizeX;
-			float m_fVirtualSizeY;
-
-			static cSprite *g_pButtonSprite;
-			static cSprite *g_pButtonDownSprite;
+			static cImage *g_pButtonImage;
+			static cImage *g_pButtonDownImage;
 
 			cSprite *m_pButtonSprite;
 			cSprite *m_pButtonDownSprite;
 
-			unsigned char m_iRed;
-			unsigned char m_iGreen;
-			unsigned char m_iBlue;
-			unsigned char m_iAlpha;
-			
 			bool m_bActive;
 			bool m_bVisible;
 
@@ -82,20 +72,14 @@ namespace AGK
 			float m_fX;
 			float m_fY;
 
-			float m_fVirtualPosX;
-			float m_fVirtualPosY;
-			float m_fVirtualSize;
-
-			static cSprite *g_pOuterSprite;
-			static cSprite *g_pInnerSprite;
+			static cImage *g_pOuterImage;
+			static cImage *g_pInnerImage;
 
 			cSprite *m_pOuterSprite;
 			cSprite *m_pInnerSprite;
 
 			static float g_fDeadZone;
 
-			unsigned char m_iAlpha1;
-			unsigned char m_iAlpha2;
 			bool m_bActive;
 			bool m_bVisible;
 

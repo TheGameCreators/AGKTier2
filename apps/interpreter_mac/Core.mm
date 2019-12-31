@@ -377,7 +377,8 @@ int main (int argc, char **argv)
 		[ alert release ];
 		done = 1;
 	}
-	while (!done && !glfwWindowShouldClose(window))
+    
+    while (!done && !glfwWindowShouldClose(window))
 	{
 		// call app each frame
 		try

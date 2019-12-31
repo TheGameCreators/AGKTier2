@@ -22,9 +22,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.SystemClock;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.util.Log;
-import com.android.vending.expansion.downloader.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

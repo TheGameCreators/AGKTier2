@@ -4,10 +4,11 @@
 #include "UntitledViewController.h"
 #include "AGK.h"
 #include "template.h"
+#import <UserNotifications/UNUserNotificationCenter.h>
 
 @class EAGLView;
 
-@interface iphone_appAppDelegate : NSObject <UIApplicationDelegate, AVAudioPlayerDelegate> {
+@interface iphone_appAppDelegate : NSObject <UIApplicationDelegate, AVAudioPlayerDelegate, UNUserNotificationCenterDelegate> {
     UIWindow *window;
 	UntitledViewController *viewController;
 }

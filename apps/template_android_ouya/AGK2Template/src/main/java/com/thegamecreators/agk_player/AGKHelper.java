@@ -1969,6 +1969,11 @@ public class AGKHelper {
 	}
 
 	// local notifications
+	public static void SetNotification( Activity act, int id, int unixtime, String message, String deeplink )
+	{
+
+	}
+
 	public static void SetNotification( Activity act, int id, int unixtime, String message )
 	{
 
@@ -3078,5 +3083,27 @@ public class AGKHelper {
 	public static String GetExternalDir()
 	{
 		return Environment.getExternalStorageDirectory().getAbsolutePath();
+	}
+
+	public static int GetPackageInstalled( Activity act, String packageName )
+	{
+		try {
+			if ( act.getPackageManager().getApplicationInfo(packageName, 0).enabled ) return 1;
+			else return 0;
+		} catch (PackageManager.NameNotFoundException e) {
+			return 0;
+		}
+	}
+
+	// SnapChat
+
+	public static void SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+	{
+
+	}
+
+	public static void ShareSnapChat( Activity act, String image, String sticker, String caption, String url )
+	{
+
 	}
 }

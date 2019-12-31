@@ -8,9 +8,10 @@
 
 #define MAX_TEXTS 0x7fffffff
 
-#define AGK_TEXT_REFRESHING		0x01
-#define AGK_TEXT_BOLD			0x02
+#define AGK_TEXT_REFRESHING			0x01
+#define AGK_TEXT_BOLD				0x02
 #define AGK_TEXT_OVERRIDE_SCISSOR	0x04
+#define AGK_TEXT_SNAP_TO_PIXELS		0x08
 
 // Namespace
 namespace AGK
@@ -36,6 +37,8 @@ namespace AGK
 			unsigned char *m_pCharStyles;
 			float m_fX;
 			float m_fY;
+			float m_fSpriteX;
+			float m_fSpriteY;
 			float m_fAngle;
 			int m_iDepth;
 			float m_fOrigSize;
@@ -148,6 +151,7 @@ namespace AGK
 			void SetMaxWidth( float width );
 			void SetBold( UINT bold );
 			void SetOverrideScissor( int mode );
+			void SetSnap( int mode );
 
 			void SetCharPosition( UINT iIndex, float x, float y );
 			void SetCharX( UINT iIndex, float x );

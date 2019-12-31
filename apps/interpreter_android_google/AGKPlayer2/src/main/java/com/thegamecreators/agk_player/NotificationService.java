@@ -9,13 +9,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.thegamecreators.agk_player2.R;
 import android.util.Log;
-import org.json.JSONObject;
+
 import java.util.Map;
 
 public class NotificationService extends FirebaseMessagingService {
@@ -23,9 +23,18 @@ public class NotificationService extends FirebaseMessagingService {
     static NotificationChannel channel = null;
 
     @Override
+    public void onNewToken( String token )
+    {
+        AGKHelper.GCM_PNRegID = token;
+        Log.e( "Push Token", ": " + AGKHelper.GCM_PNRegID );
+    }
+
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         super.onMessageReceived(remoteMessage);
+
+        if ( AGKHelper.isVisible == 1 ) return;
 
         Context context = getApplicationContext();
 

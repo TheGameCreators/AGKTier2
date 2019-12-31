@@ -4,21 +4,10 @@ copy /y "AGKPlayer2\src\main\jniLibs\arm64-v8a\libandroid_player.so" "..\interpr
 if not %ERRORLEVEL% equ 0 ( GOTO failed )
 copy /y "AGKPlayer2\src\main\jniLibs\armeabi-v7a\libandroid_player.so" "..\interpreter_android_amazon\AGKPlayer2\src\main\jniLibs\armeabi-v7a\libandroid_player.so"
 if not %ERRORLEVEL% equ 0 ( GOTO failed )
-copy /y "AGKPlayer2\src\main\jniLibs\x86\libandroid_player.so" "..\interpreter_android_amazon\AGKPlayer2\src\main\jniLibs\x86\libandroid_player.so"
-if not %ERRORLEVEL% equ 0 ( GOTO failed )
 
 copy /y "AGKPlayer2\src\main\jniLibs\arm64-v8a\libandroid_player.so" "..\interpreter_android_ouya\AGKPlayer2\src\main\jniLibs\arm64-v8a\libandroid_player.so"
 if not %ERRORLEVEL% equ 0 ( GOTO failed )
 copy /y "AGKPlayer2\src\main\jniLibs\armeabi-v7a\libandroid_player.so" "..\interpreter_android_ouya\AGKPlayer2\src\main\jniLibs\armeabi-v7a\libandroid_player.so"
-if not %ERRORLEVEL% equ 0 ( GOTO failed )
-copy /y "AGKPlayer2\src\main\jniLibs\x86\libandroid_player.so" "..\interpreter_android_ouya\AGKPlayer2\src\main\jniLibs\x86\libandroid_player.so"
-if not %ERRORLEVEL% equ 0 ( GOTO failed )
-
-copy /y "AGKPlayer2\src\main\jniLibs\arm64-v8a\libandroid_player.so" "..\..\IDE\Geany-1.24.1\data\android\lib\arm64-v8a\libandroid_player.so"
-if not %ERRORLEVEL% equ 0 ( GOTO failed )
-copy /y "AGKPlayer2\src\main\jniLibs\armeabi-v7a\libandroid_player.so" "..\..\IDE\Geany-1.24.1\data\android\lib\armeabi-v7a\libandroid_player.so"
-if not %ERRORLEVEL% equ 0 ( GOTO failed )
-copy /y "AGKPlayer2\src\main\jniLibs\x86\libandroid_player.so" "..\..\IDE\Geany-1.24.1\data\android\lib\x86\libandroid_player.so"
 if not %ERRORLEVEL% equ 0 ( GOTO failed )
 
 goto :eof

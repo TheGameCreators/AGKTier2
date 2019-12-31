@@ -23,7 +23,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2019.05.22</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -37,15 +37,18 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2075</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>358083327620324</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<false/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fb</string>
 		<string>fbauth</string>
+		<string>snapchat</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -58,6 +61,10 @@
 	<string>Advertisement would like to create a calendar event</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Streaming the camera feed into the app</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Provide your current GPS coordinates to the app</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Provide your current GPS coordinates to the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -68,6 +75,8 @@
 	<string>Save image in your camera roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Selecting photos to load into the app</string>
+	<key>SCSDKClientId</key>
+	<string>1cec1943-35cc-49ed-b25e-61c4a9d7e10a</string>
 	<key>UIInterfaceOrientation</key>
 	<string>UIInterfaceOrientationPortrait</string>
 	<key>UIRequiresFullScreen</key>

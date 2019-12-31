@@ -702,26 +702,26 @@ extern "C"
 	{
 		switch( key )
 		{
-			case AKEYCODE_DEL: return AGK_KEY_BACK;
+			case AKEYCODE_DEL: return AGK_KEY_BACK; // backspace
 			case AKEYCODE_TAB: return AGK_KEY_TAB;
 			case AKEYCODE_ENTER: return AGK_KEY_ENTER;
-			case AKEYCODE_SHIFT_LEFT: return AGK_KEY_SHIFT;
-			case AKEYCODE_SHIFT_RIGHT: return AGK_KEY_SHIFT;
-			//case : return AGK_KEY_CONTROL;
+			case AKEYCODE_SHIFT_LEFT: return 257;
+			case AKEYCODE_SHIFT_RIGHT: return 258;
+			case AKEYCODE_CTRL_LEFT: return 259;
+			case AKEYCODE_CTRL_RIGHT: return 260;
 			case AKEYCODE_BACK: return AGK_KEY_ESCAPE;
 			case AKEYCODE_SPACE: return AGK_KEY_SPACE;
 			case AKEYCODE_PAGE_UP: return AGK_KEY_PAGEUP;
 			case AKEYCODE_PAGE_DOWN: return AGK_KEY_PAGEDOWN;
-			//case : return AGK_KEY_END;
-			//case : return AGK_KEY_HOME;
+			case AKEYCODE_MOVE_HOME: return AGK_KEY_END;
+			case AKEYCODE_MOVE_END: return AGK_KEY_HOME;
 			case AKEYCODE_DPAD_LEFT: return AGK_KEY_LEFT;
 			case AKEYCODE_DPAD_UP: return AGK_KEY_UP;
 			case AKEYCODE_DPAD_RIGHT: return AGK_KEY_RIGHT;
 			case AKEYCODE_DPAD_DOWN: return AGK_KEY_DOWN;
 			case AKEYCODE_DPAD_CENTER: return AGK_KEY_ENTER;
-			//case : return AGK_KEY_INSERT;
-			//case : return AGK_KEY_DELETE;
-
+			case AKEYCODE_INSERT: return AGK_KEY_INSERT;
+			
 			case AKEYCODE_0: return AGK_KEY_0;
 			case AKEYCODE_1: return AGK_KEY_1;
 			case AKEYCODE_2: return AGK_KEY_2;
@@ -760,6 +760,19 @@ extern "C"
 			case AKEYCODE_Y: return AGK_KEY_Y;
 			case AKEYCODE_Z: return AGK_KEY_Z;
 
+			case AKEYCODE_F1: return AGK_KEY_F1;
+			case AKEYCODE_F2: return AGK_KEY_F2;
+			case AKEYCODE_F3: return AGK_KEY_F3;
+			case AKEYCODE_F4: return AGK_KEY_F4;
+			case AKEYCODE_F5: return AGK_KEY_F5;
+			case AKEYCODE_F6: return AGK_KEY_F6;
+			case AKEYCODE_F7: return AGK_KEY_F7;
+			case AKEYCODE_F8: return AGK_KEY_F8;
+			case AKEYCODE_F9: return 120;
+			case AKEYCODE_F10: return 121;
+			case AKEYCODE_F11: return 122;
+			case AKEYCODE_F12: return 123;
+			
 			case AKEYCODE_GRAVE: return 223; break; // `
 			case AKEYCODE_MINUS: return 189; break; // -
 			case AKEYCODE_EQUALS: return 187; break; // =
@@ -770,7 +783,13 @@ extern "C"
 			case AKEYCODE_COMMA: return 188; break; // ,
 			case AKEYCODE_PERIOD: return 190; break; // .
 			case AKEYCODE_SLASH: return 191; break; // /
-			case AKEYCODE_BACKSLASH: return 220; break; // \
+			case AKEYCODE_BACKSLASH: return 220; break; // \    /
+			case AKEYCODE_POUND: return 222; break; // #
+
+			case AKEYCODE_ALT_LEFT: return 261;
+			case AKEYCODE_ALT_RIGHT: return 262;
+			case AKEYCODE_ESCAPE: return AGK_KEY_ESCAPE;
+			case AKEYCODE_FORWARD_DEL: return AGK_KEY_DELETE;
 
 			/*
 			// O-U-Y-A keys:
@@ -929,8 +948,13 @@ extern "C"
 		// stop ouya A button sending a back command
 		if ( agk::GetRawKeyState(97) == 1 && key == AKEYCODE_BACK ) return;
 
-		agk::KeyDown( TranslateKey(key) );
-		int ch = AsciiKey(key);
+		int newKey = TranslateKey(key);
+		agk::KeyDown( newKey );
+		if ( newKey == 257 || newKey == 258 ) agk::KeyDown( 16 );
+		if ( newKey == 259 || newKey == 260 ) agk::KeyDown( 17 );
+		if ( newKey == 261 || newKey == 262 ) agk::KeyDown( 18 );
+		
+		int ch = AsciiKey( key );
 		if ( ch != 0 )
 		{
 			agk::CharDown( ch );
@@ -939,7 +963,11 @@ extern "C"
 
 	void keyup( int key )
 	{
-		agk::KeyUp( TranslateKey(key) );
+		int newKey = TranslateKey(key);
+		agk::KeyUp( newKey );
+		if ( newKey == 257 || newKey == 258 ) agk::KeyUp( 16 );
+		if ( newKey == 259 || newKey == 260 ) agk::KeyUp( 17 );
+		if ( newKey == 261 || newKey == 262 ) agk::KeyUp( 18 );
 	}
 
 	/*

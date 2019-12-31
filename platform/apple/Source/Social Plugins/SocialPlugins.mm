@@ -11,6 +11,7 @@
 #import "GoogleMobileAds/GADInterstitialDelegate.h"
 #import "GoogleMobileAds/GADRewardBasedVideoAdDelegate.h"
 #import "GoogleMobileAds/GADExtras.h"
+#import "GoogleMobileAds/GADMobileAds.h"
 
 #import <Chartboost/Chartboost.h>
 
@@ -70,6 +71,7 @@ uString m_sFBName;
 
 @end
 
+int g_iAdMobInitialized = 0;
 int g_iAdMobTesting = 0;
 int g_iAdMobConsentStatus = -2; //-2=initial value, -1=loading, 0=unknown, 1=non-personalised, 2=personalised
 int g_iChartboostConsentStatus = -2; //-2=initial value, -1=loading, 0=unknown, 1=non-personalised, 2=personalised
@@ -171,7 +173,7 @@ uString g_sAdMobPrivacyPolicy;
 InterstitialListener *g_pInterstitialListener = nil;
 
 // reward ads
-@interface AdMobRewardListener : NSObject <GADRewardBasedVideoAdDelegate>
+@interface AdMobRewardListener : NSObject <GADRewardBasedVideoAdDelegate, iRateDelegate>
 {
 @public
     int loading;
@@ -1006,6 +1008,12 @@ void agk::PlatformAdMobSetupRelative ( const char* szID, int iHorz, int iVert, f
     if ( !g_pSocialPlugins )
         return;
     
+    if ( !g_iAdMobInitialized )
+    {
+        g_iAdMobInitialized = 1;
+        [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    }
+    
     // get our view controller
     UIViewController* viewController = [ [ [ UIApplication sharedApplication ] delegate ] viewController ];
     
@@ -1110,6 +1118,12 @@ void agk::PlatformAdMobSetupRelative ( const char* szID, int iHorz, int iVert, f
 
 void  agk::PlatformAdMobFullscreen ()
 {
+    if ( !g_iAdMobInitialized )
+    {
+        g_iAdMobInitialized = 1;
+        [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    }
+    
     if ( !g_pInterstitialListener )
     {
         g_pInterstitialListener = [[InterstitialListener alloc] init];
@@ -1121,6 +1135,12 @@ void  agk::PlatformAdMobFullscreen ()
 
 void  agk::PlatformAdMobCacheFullscreen ()
 {
+    if ( !g_iAdMobInitialized )
+    {
+        g_iAdMobInitialized = 1;
+        [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    }
+    
     if ( !g_pInterstitialListener )
     {
         g_pInterstitialListener = [[InterstitialListener alloc] init];
@@ -1281,6 +1301,12 @@ int  agk::PlatformAdMobGetFullscreenLoaded ()
 
 void agk::PlatformAdMobRewardAd()
 {
+    if ( !g_iAdMobInitialized )
+    {
+        g_iAdMobInitialized = 1;
+        [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    }
+    
     if ( !g_pAdMobRewardListener )
     {
         g_pAdMobRewardListener = [[AdMobRewardListener alloc] init];
@@ -1294,6 +1320,12 @@ void agk::PlatformAdMobRewardAd()
 
 void agk::PlatformAdMobCacheRewardAd()
 {
+    if ( !g_iAdMobInitialized )
+    {
+        g_iAdMobInitialized = 1;
+        [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    }
+    
     if ( !g_pAdMobRewardListener )
     {
         g_pAdMobRewardListener = [[AdMobRewardListener alloc] init];
@@ -2159,7 +2191,7 @@ extern int agk_LocalNotificationsSetup;
 
 // local notifications
 
-void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage )
+void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage, const char *szDeepLink )
 {
     static int first = 1;
     if ( first )
@@ -2187,10 +2219,18 @@ void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *sz
 	localNotification.alertBody                  = [ NSString stringWithUTF8String: szMessage ];
 	localNotification.soundName                  = UILocalNotificationDefaultSoundName;
 	localNotification.applicationIconBadgeNumber = 0;
-	
-    // set up data in KeyID
-	NSDictionary* infoDict = [ NSDictionary dictionaryWithObject:[NSNumber numberWithInt:iID] forKey:@"KeyID" ];
-    localNotification.userInfo = infoDict;
+
+	// set up data in KeyID
+	NSMutableDictionary* infoDict = [NSMutableDictionary dictionaryWithCapacity:2];
+	[ infoDict setObject:[NSNumber numberWithInt:iID] forKey:@"KeyID" ];
+    
+	if ( szDeepLink && *szDeepLink )
+	{
+		NSDictionary* deeplinkDict = [ NSDictionary dictionaryWithObject:[NSString stringWithUTF8String:szDeepLink] forKey:@"deeplink" ];
+		[infoDict setObject:deeplinkDict forKey:@"aps"];
+	}
+
+	localNotification.userInfo = infoDict;
 	
     // schedule the notification
 	[ [ UIApplication sharedApplication ] scheduleLocalNotification: localNotification ];

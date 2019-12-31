@@ -722,7 +722,7 @@ int agk::CanUseShadowSamplers()
 
 //****f* Core/Misc/SetAntialiasMode
 // FUNCTION
-//   Sets whether the device should using anti-aliasing when rendering to the back buffer. Currently 
+//   Sets whether the device should use anti-aliasing when rendering to the back buffer. Currently 
 //   this only applies to Windows, Mac, and Linux, and only 4x multi-sampling is available.
 //   This does not apply to any objects drawn to an image with SetRenderToImage, only the back buffer 
 //   is anti-aliased.
@@ -922,12 +922,6 @@ void agk::PlatformSetDepthFunc( int mode )
 
 void agk::PlatformSetCullMode( int mode )
 {
-	if ( m_bUsingFBO )
-	{
-		if ( mode == 1 ) mode = 2;
-		else if ( mode == 2 ) mode = 1;
-	}
-
 	if ( mode == m_iCurrentCullMode ) return;
 
 	switch( mode )
@@ -2098,6 +2092,9 @@ void AGKShader::UpdateUniforms()
 
 void AGKShader::UpdateAGKUniforms()
 {
+	if ( agk::m_bUsingFBO ) glFrontFace( GL_CW );
+	else glFrontFace( GL_CCW );
+
 	if ( m_iAGKTime >= 0 ) glUniform1f( m_iAGKTime, agk::Timer() );
 	if ( m_iAGKSinTime >= 0 ) glUniform1f( m_iAGKSinTime, agk::SinRad(agk::Timer()) );
 	if ( m_iAGKResolution >= 0 ) 
@@ -2241,13 +2238,15 @@ void AGKShader::SetShaderSource( const char* vertex, const char* fragment )
 	m_sPSSource.SetStr( fragment );
 
 	// desktop OpenGL doesn't support precision modifiers
-	m_sVSSource.ReplaceStr( "mediump ", " " );
-	m_sVSSource.ReplaceStr( "highp ", " " );
-	m_sVSSource.ReplaceStr( "lowp ", " " );
+	m_sVSSource.ReplaceStr( "mediump ", "" );
+	m_sVSSource.ReplaceStr( "highp ", "" );
+	m_sVSSource.ReplaceStr( "lowp ", "" );
+	m_sVSSource.ReplaceStr( "precision float;", "" );
 
-	m_sPSSource.ReplaceStr( "mediump ", " " );
-	m_sPSSource.ReplaceStr( "highp ", " " );
-	m_sPSSource.ReplaceStr( "lowp ", " " );
+	m_sPSSource.ReplaceStr( "mediump ", "" );
+	m_sPSSource.ReplaceStr( "highp ", "" );
+	m_sPSSource.ReplaceStr( "lowp ", "" );
+	m_sPSSource.ReplaceStr( "precision float;", "" );
 
 	m_sVSLog.SetStr( "" );
 	m_sPSLog.SetStr( "" );

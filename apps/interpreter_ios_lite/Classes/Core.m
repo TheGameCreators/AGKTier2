@@ -1,9 +1,12 @@
 // Common Includes
-#import "core.h"
+#import "Core.h"
 #import "EAGLView.h"
 #include "interpreter.h"
-
 #include "MediaPlayer/MediaPlayer.h"
+#import <UserNotifications/UNNotificationResponse.h>
+#import <UserNotifications/UNNotification.h>
+#import <UserNotifications/UNNotificationRequest.h>
+#import <UserNotifications/UNNotificationContent.h>
 
 // Platform specific
 void Output ( char const* pdasds )
@@ -27,10 +30,6 @@ using namespace AGK;
 	App.g_dwDeviceWidth = [UIScreen mainScreen].bounds.size.width * scale;
 	App.g_dwDeviceHeight = [UIScreen mainScreen].bounds.size.height * scale;
 	
-	// Platform specific iOS method of changing size of device resolution (before app starts)
-	// and method of changing window title and window/fullscreen
-	// NOT RELEVANT TO IOS PLATFORM
-
 	// Tell the UIDevice to send notifications when the orientation changes
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	[[NSNotificationCenter defaultCenter] addObserver:self 
@@ -57,15 +56,68 @@ using namespace AGK;
 	}
 	[viewController setActive];
     
+    NSDictionary *localNotify = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
+    if ( localNotify )
+    {
+        NSDictionary *aps = [localNotify objectForKey:@"aps"];
+        if ( aps )
+        {
+            NSString *deeplink = [aps objectForKey:@"deeplink"];
+            if ( deeplink ) agk::HandleDeepLink( [deeplink UTF8String] );
+        }
+    }
+
+	NSDictionary *remoteNotify = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if ( remoteNotify )
+    {
+        NSDictionary *aps = [remoteNotify objectForKey:@"aps"];
+        if ( aps )
+        {
+            NSString *deeplink = [aps objectForKey:@"deeplink"];
+            if ( deeplink ) agk::HandleDeepLink( [deeplink UTF8String] );
+        }
+    }
     
+    // Add to manage notification-related behaviors on iOS 10
+    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
 	
 	// success
     return YES;
 }
 
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+    //NSLog(@"User Info : %@",notification.request.content.userInfo);
+    completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+}
+
+//Called to let your app know which action was selected by the user for a given notification.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler
+{
+    //NSLog(@"User Info : %@",response.notification.request.content.userInfo);
+    
+    // get the whole string from the notification
+    NSDictionary *aps = [response.notification.request.content.userInfo objectForKey:@"aps"];
+    if ( aps )
+    {
+        NSString *deeplink = [aps objectForKey:@"deeplink"];
+        if ( deeplink ) agk::HandleDeepLink( [deeplink UTF8String] );
+    }
+    
+    completionHandler();
+}
+
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window 
 {
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    if ( (notificationSettings.types & UIRemoteNotificationTypeAlert) != 0 )
+    {
+        [application registerForRemoteNotifications];
+    }
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -98,6 +150,7 @@ using namespace AGK;
     [viewController setAppActive:0];
     [viewController setInactive];
     agk::AppPausing();
+    glFinish();
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -184,12 +237,17 @@ using namespace AGK;
 
 @end
 
+// use this if you want to remove all uses of the IDFA
+// @implementation ASIdentifierManager : NSObject @end
+
 // use this if you want to remove the AdMob SDK (remove libGoogleAdMobAds.a and AdSupport.framework)
 /*
  @implementation GADBannerView : UIView @end
  @implementation GADRequest : NSObject @end
  @implementation GADInterstitial : NSObject @end
  @implementation GADAdSize : NSObject @end
+ @implementation GADExtras : NSObject @end
+ @implementation GADMobileAds : NSObject @end
  GADAdSize const *kGADAdSizeBanner;
  GADAdSize const *kGADAdSizeLargeBanner;
  GADAdSize const *kGADAdSizeMediumRectangle;
@@ -198,7 +256,38 @@ using namespace AGK;
  GADAdSize const *kGADAdSizeSmartBannerPortrait;
  GADAdSize const *kGADAdSizeSmartBannerLandscape;
  GADAdSize const *kGADAdSizeFluid;
+ @implementation GADRewardBasedVideoAd : NSObject @end
+ @implementation PACConsentForm : NSObject @end
+ @implementation PACConsentInformation : NSObject @end
  */
 
+// use this if you want to remove the Chartboost framework (also remove AdSupport.framework)
+/*
+ @implementation Chartboost : NSObject @end
+ NSString * CBLocationGameScreen;
+ */
 
+// use this if you want to remove the Amazon Ad framework
+/*
+@implementation AmazonAdRegistration : NSObject @end
+@implementation AmazonAdOptions : NSObject @end
+@implementation AmazonAdInterstitial : NSObject @end
+*/
+
+// use this if you want to remove the Firebase frameworks
+/*
+@implementation FIRApp : NSObject @end
+@implementation FIRAnalytics : NSObject @end
+*/
+
+/*
+// use this if you want to remove the SnapChat commands
+@implementation SCSDKPhotoSnapContent : NSObject @end
+@implementation SCSDKSnapPhoto : NSObject @end
+*/
+
+#if defined(__i386__) || defined(__x86_64__)
+@implementation PACConsentForm : NSObject @end
+@implementation PACConsentInformation : NSObject @end
+#endif
 

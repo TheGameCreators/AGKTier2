@@ -3,7 +3,6 @@
       android:versionCode="51"
       android:versionName="2.0.21" package="com.mycompany.mytemplate" android:installLocation="auto">
     <uses-feature android:glEsVersion="0x00020000"></uses-feature>
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="15" />
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -24,11 +23,6 @@
        	<meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"
-        />
-
-        <meta-data
-            android:name="APIKey"
-            android:value="YOUR_GAMECIRCLE_API_KEY"
         />
 
         <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="false"/>
@@ -74,9 +68,6 @@
             android:exported="false">
         </activity>
 
-        <activity android:name="com.amazon.ags.html5.overlay.GameCircleUserInterface"
-            android:theme="@style/GCOverlay" android:hardwareAccelerated="false" />
-
         <activity
             android:name="com.amazon.identity.auth.device.authorization.AuthorizationActivity"
             android:theme="@android:style/Theme.NoDisplay"
@@ -89,9 +80,6 @@
                 <data android:host="com.thegamecreators.agk_player2" android:scheme="amzn" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.amazon.ags.html5.overlay.GameCircleAlertUserInterface"
-            android:theme="@style/GCAlert" android:hardwareAccelerated="false" />
 
         <receiver
             android:name="com.amazon.identity.auth.device.authorization.PackageIntentReceiver"

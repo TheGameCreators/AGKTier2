@@ -17,6 +17,7 @@
 		4A01977119CE6053006204A7 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A01977019CE6053006204A7 /* EventKit.framework */; };
 		4A01977319CE6063006204A7 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A01977219CE6063006204A7 /* EventKitUI.framework */; };
 		4A01977519CE608F006204A7 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A01977419CE608F006204A7 /* CoreTelephony.framework */; };
+		4A02FCFA22B0141F00BECD20 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A02FCF922B0141F00BECD20 /* UserNotifications.framework */; };
 		4A0710FC1C78CB1700FB45C4 /* AmazonAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0710FB1C78CB1700FB45C4 /* AmazonAd.framework */; };
 		4A0770C01AFA768A0076C749 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0770BF1AFA768A0076C749 /* FacebookSDK.framework */; };
 		4A0A41141D9EA1920065F425 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A0A41131D9EA1920065F425 /* GoogleService-Info.plist */; };
@@ -37,6 +38,8 @@
 		4A58BA5A206AA23C0038F2F0 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA53206AA23C0038F2F0 /* nanopb.framework */; };
 		4A58BA5B206AA23C0038F2F0 /* GoogleToolboxForMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA54206AA23C0038F2F0 /* GoogleToolboxForMac.framework */; };
 		4A58BA5D206AA2970038F2F0 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA5C206AA2970038F2F0 /* libsqlite3.tbd */; };
+		4A5C2D66230AE9F900E42FE5 /* SCSDKCreativeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D64230AE9F900E42FE5 /* SCSDKCreativeKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4A5C2D6E230B4A7C00E42FE5 /* SCSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D6C230B4A6F00E42FE5 /* SCSDKCoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A5FF6F61F6C2F0F00BFF8C8 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5FF6F51F6C2F0F00BFF8C8 /* ReplayKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A653C1F20642CFE008B519B /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A653C1E20642CFE008B519B /* ARKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A6879F11EB0F72000281DB2 /* Default-375w-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6879F01EB0F72000281DB2 /* Default-375w-667h@2x.png */; };
@@ -51,6 +54,8 @@
 		4A687A031EB0F81A00281DB2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6879FA1EB0F81A00281DB2 /* Default@2x.png */; };
 		4A769D4620DAB68400843C60 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A769D4520DAB68400843C60 /* SafariServices.framework */; };
 		4A769D4820DAB6A700843C60 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A769D4720DAB6A700843C60 /* JavaScriptCore.framework */; };
+		4A92A6912332654C00955DFD /* SCSDKCoreKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D6C230B4A6F00E42FE5 /* SCSDKCoreKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4A92A6922332654C00955DFD /* SCSDKCreativeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D64230AE9F900E42FE5 /* SCSDKCreativeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4A952B111FA00CC2006F2215 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A952B101FA00CC2006F2215 /* WatchConnectivity.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A9A52821FDF6BEE00E3AE27 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A9A52811FDF6BEE00E3AE27 /* Icons.xcassets */; };
 		4A9D50791996814400473873 /* ProgramData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D50781996814400473873 /* ProgramData.cpp */; };
@@ -58,6 +63,9 @@
 		4ABD90A41AB88A4400ADB1BA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABD90A31AB88A4400ADB1BA /* AdSupport.framework */; };
 		4ABD90A61AB88FCF00ADB1BA /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABD90A51AB88FCF00ADB1BA /* Chartboost.framework */; };
 		4ABD90AC1AB890EB00ADB1BA /* libAGKiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABD90AB1AB890EB00ADB1BA /* libAGKiOS.a */; };
+		4AF8AE9522F2060C00CC735F /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF8AE9422F2060C00CC735F /* GoogleAppMeasurement.framework */; };
+		4AF8AE9822F2068900CC735F /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF8AE9622F2068800CC735F /* nanopb.framework */; };
+		4AF8AE9922F2068900CC735F /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF8AE9722F2068800CC735F /* GoogleUtilities.framework */; };
 		726A37B315B8DA0D002F8919 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 726A37B215B8DA0D002F8919 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		72EF411914632D6400C96B0A /* UntitledViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72EF411814632D6400C96B0A /* UntitledViewController.xib */; };
 		9B0A5AAF13269BF4006B5FB6 /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A5AAD13269BF4006B5FB6 /* interpreter.cpp */; };
@@ -74,6 +82,21 @@
 		D8C10A48161211B900665788 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C10A47161211B900665788 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4A5C2D6B230B4A2700E42FE5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4A92A6912332654C00955DFD /* SCSDKCoreKit.framework in Embed Frameworks */,
+				4A92A6922332654C00955DFD /* SCSDKCreativeKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* Core.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Core.h; sourceTree = "<group>"; };
@@ -89,6 +112,7 @@
 		4A01977019CE6053006204A7 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		4A01977219CE6063006204A7 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		4A01977419CE608F006204A7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4A02FCF922B0141F00BECD20 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4A0710FB1C78CB1700FB45C4 /* AmazonAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonAd.framework; path = "../../platform/apple/Source/Social Plugins/AmazonAd.framework"; sourceTree = "<group>"; };
 		4A0770BF1AFA768A0076C749 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../platform/apple/Source/Social Plugins/FacebookSDK/FacebookSDK.framework"; sourceTree = "<group>"; };
 		4A0A41131D9EA1920065F425 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -109,6 +133,9 @@
 		4A58BA53206AA23C0038F2F0 /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = "../../platform/apple/Source/Social Plugins/Firebase/nanopb.framework"; sourceTree = "<group>"; };
 		4A58BA54206AA23C0038F2F0 /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleToolboxForMac.framework; path = "../../platform/apple/Source/Social Plugins/Firebase/GoogleToolboxForMac.framework"; sourceTree = "<group>"; };
 		4A58BA5C206AA2970038F2F0 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4A5C2D64230AE9F900E42FE5 /* SCSDKCreativeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SCSDKCreativeKit.framework; path = "../../platform/apple/Source/Social Plugins/SCSDKCreativeKit.framework"; sourceTree = "<group>"; };
+		4A5C2D68230AFE3F00E42FE5 /* ProgramData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgramData.h; path = ../../interpreter/ProgramData.h; sourceTree = "<group>"; };
+		4A5C2D6C230B4A6F00E42FE5 /* SCSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SCSDKCoreKit.framework; path = "../../platform/apple/Source/Social Plugins/SCSDKCoreKit.framework"; sourceTree = "<group>"; };
 		4A5FF6F51F6C2F0F00BFF8C8 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		4A653C1E20642CFE008B519B /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		4A6879F01EB0F72000281DB2 /* Default-375w-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-375w-667h@2x.png"; sourceTree = "<group>"; };
@@ -131,6 +158,9 @@
 		4ABD90A51AB88FCF00ADB1BA /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = "../../platform/apple/Source/Social Plugins/Chartboost.framework"; sourceTree = "<group>"; };
 		4ABD90AB1AB890EB00ADB1BA /* libAGKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAGKiOS.a; path = ../../platform/apple/Lib/Release/libAGKiOS.a; sourceTree = "<group>"; };
 		4AD751D41D81B231001DE9C0 /* AppGameKit Player.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AppGameKit Player.entitlements"; sourceTree = "<group>"; };
+		4AF8AE9422F2060C00CC735F /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleAppMeasurement.framework; path = "../../platform/apple/Source/Social Plugins/GoogleAppMeasurement.framework"; sourceTree = "<group>"; };
+		4AF8AE9622F2068800CC735F /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = "../../platform/apple/Source/Social Plugins/nanopb.framework"; sourceTree = "<group>"; };
+		4AF8AE9722F2068800CC735F /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = "../../platform/apple/Source/Social Plugins/GoogleUtilities.framework"; sourceTree = "<group>"; };
 		726A37B215B8DA0D002F8919 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		72EF411814632D6400C96B0A /* UntitledViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UntitledViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* agkinterpreter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "agkinterpreter-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -189,6 +219,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AF8AE9822F2068900CC735F /* nanopb.framework in Frameworks */,
+				4AF8AE9922F2068900CC735F /* GoogleUtilities.framework in Frameworks */,
+				4AF8AE9522F2060C00CC735F /* GoogleAppMeasurement.framework in Frameworks */,
+				4A02FCFA22B0141F00BECD20 /* UserNotifications.framework in Frameworks */,
 				4A769D4820DAB6A700843C60 /* JavaScriptCore.framework in Frameworks */,
 				4A769D4620DAB68400843C60 /* SafariServices.framework in Frameworks */,
 				4AB6380720CAD754007F0A18 /* WebKit.framework in Frameworks */,
@@ -226,12 +260,14 @@
 				4A58BA59206AA23C0038F2F0 /* FirebaseNanoPB.framework in Frameworks */,
 				28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */,
 				D891016A125FFD84008C4A30 /* CoreGraphics.framework in Frameworks */,
+				4A5C2D66230AE9F900E42FE5 /* SCSDKCreativeKit.framework in Frameworks */,
 				D8A3468812B14DE800DBEBEC /* AVFoundation.framework in Frameworks */,
 				4A58BA57206AA23C0038F2F0 /* FirebaseInstanceID.framework in Frameworks */,
 				4A0710FC1C78CB1700FB45C4 /* AmazonAd.framework in Frameworks */,
 				D8A3468C12B14DF700DBEBEC /* OpenAL.framework in Frameworks */,
 				D8A346A612B14E0B00DBEBEC /* AudioToolbox.framework in Frameworks */,
 				4ABD90AC1AB890EB00ADB1BA /* libAGKiOS.a in Frameworks */,
+				4A5C2D6E230B4A7C00E42FE5 /* SCSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +277,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4A5C2D68230AFE3F00E42FE5 /* ProgramData.h */,
 				4A9D50781996814400473873 /* ProgramData.cpp */,
 				9B0A5AAD13269BF4006B5FB6 /* interpreter.cpp */,
 				9B0A5AAE13269BF4006B5FB6 /* interpreter.h */,
@@ -312,6 +349,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A5C2D6C230B4A6F00E42FE5 /* SCSDKCoreKit.framework */,
+				4A5C2D64230AE9F900E42FE5 /* SCSDKCreativeKit.framework */,
+				4AF8AE9722F2068800CC735F /* GoogleUtilities.framework */,
+				4AF8AE9622F2068800CC735F /* nanopb.framework */,
+				4AF8AE9422F2060C00CC735F /* GoogleAppMeasurement.framework */,
+				4A02FCF922B0141F00BECD20 /* UserNotifications.framework */,
 				4A769D4720DAB6A700843C60 /* JavaScriptCore.framework */,
 				4A769D4520DAB68400843C60 /* SafariServices.framework */,
 				4AB6380620CAD754007F0A18 /* WebKit.framework */,
@@ -419,6 +462,8 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				4A5C2D6B230B4A2700E42FE5 /* Embed Frameworks */,
+				4A387FB82327AE6700F6D9BD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -502,6 +547,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4A387FB82327AE6700F6D9BD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Target architectures: $ARCHS\"\n\nAPP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\nFRAMEWORK_TMP_PATH=\"$FRAMEWORK_EXECUTABLE_PATH-tmp\"\n\n# remove simulator's archs if location is not simulator's directory\ncase \"${TARGET_BUILD_DIR}\" in\n*\"iphonesimulator\")\necho \"No need to remove archs\"\n;;\n*)\nif $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"i386\") ; then\nlipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"i386\" \"$FRAMEWORK_EXECUTABLE_PATH\"\necho \"i386 architecture removed\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\nfi\nif $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"x86_64\") ; then\nlipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"x86_64\" \"$FRAMEWORK_EXECUTABLE_PATH\"\necho \"x86_64 architecture removed\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\nfi\n;;\nesac\n\necho \"Completed for executable $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -533,7 +598,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 2091;
+				DEVELOPMENT_TEAM = 4245WA8N82;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -560,10 +626,12 @@
 				);
 				INFOPLIST_FILE = "agkinterpreter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					../../platform/apple/Lib/Debug,
 					../../platform/apple/Lib/Release,
 				);
+				MARKETING_VERSION = 2019.11.27;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thegamecreators.agk2player;
@@ -589,7 +657,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 2091;
+				DEVELOPMENT_TEAM = 4245WA8N82;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -613,7 +682,9 @@
 				);
 				INFOPLIST_FILE = "agkinterpreter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"../../platform/apple/Lib/Release\"";
+				MARKETING_VERSION = 2019.11.27;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thegamecreators.agk2player;

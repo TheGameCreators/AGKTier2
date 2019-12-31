@@ -1677,6 +1677,8 @@ void cObject3D::UpdateCollisionData()
 
 void cObject3D::SetShader( AGKShader *pShader ) 
 { 
+	if ( !pShader && IsQuad() ) pShader = AGKShader::g_pObjectQuad;
+
 	for( UINT i = 0; i < m_iNumMeshes; i++ )
 	{
 		m_pMeshes[ i ]->SetShader( pShader );

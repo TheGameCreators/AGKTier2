@@ -1449,36 +1449,36 @@ public class AGKHelper {
 	public static void SetInputText( Activity act, String text, int cursorpos )
 	{
 		//if ( mTextInput == null ) return;
-		/*
+
 		RunnableKeyboard run = new RunnableKeyboard();
 		run.act = act;
 		run.action = 3;
 		run.text = text;
 		run.cursorpos = cursorpos;
-		act.runOnUiThread( run );*/
-
+		act.runOnUiThread( run );
+/*
 		if ( AGKHelper.mTextInput != null )
 		{
 			AGKHelper.mTextInput.setText(text);
 			if ( cursorpos >= 0 ) AGKHelper.mTextInput.setSelection(cursorpos);
-		}
+		}*/
 	}
 
 	public static void SetInputTextCursor( Activity act, int cursorpos )
 	{
 		//if ( mTextInput == null ) return;
-		/*
+
 		RunnableKeyboard run = new RunnableKeyboard();
 		run.act = act;
 		run.action = 5;
 		run.cursorpos = cursorpos;
 		act.runOnUiThread( run );
-		*/
 
+/*
 		if ( AGKHelper.mTextInput != null )
 		{
 			if ( cursorpos >= 0 ) AGKHelper.mTextInput.setSelection(cursorpos);
-		}
+		}*/
 	}
 
 	public static void ShowKeyboard( Activity act, int multiline, int inputType )
@@ -1969,6 +1969,11 @@ public class AGKHelper {
 	}
 
 	// local notifications
+	public static void SetNotification( Activity act, int id, int unixtime, String message, String deeplink )
+	{
+
+	}
+
 	public static void SetNotification( Activity act, int id, int unixtime, String message )
 	{
 
@@ -3078,5 +3083,27 @@ public class AGKHelper {
 	public static String GetExternalDir()
 	{
 		return Environment.getExternalStorageDirectory().getAbsolutePath();
+	}
+
+	public static int GetPackageInstalled( Activity act, String packageName )
+	{
+		try {
+			if ( act.getPackageManager().getApplicationInfo(packageName, 0).enabled ) return 1;
+			else return 0;
+		} catch (PackageManager.NameNotFoundException e) {
+			return 0;
+		}
+	}
+
+	// SnapChat
+
+	public static void SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+	{
+
+	}
+
+	public static void ShareSnapChat( Activity act, String image, String sticker, String caption, String url )
+	{
+
 	}
 }

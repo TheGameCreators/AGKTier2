@@ -1203,6 +1203,12 @@ void agk::SetVSync( int mode )
 {
 	if ( mode < 0 ) mode = 0;
 
+	if ( mode > 0 ) 
+	{
+		m_iSyncMode = 0;
+		m_fSyncTime = 1.0f/60.0f;
+	}
+
 	//glfwSwapInterval( mode );
 }
 
@@ -2420,6 +2426,9 @@ void cSoundMgr::PlatformUpdate()
 		
 		if ( pSound->sourceID )
 		{
+			int state = 0;
+			alGetSourcei( pSound->sourceID, AL_SOURCE_STATE, &state );
+
 			//alGetSourcei(pSound->sourceID, AL_SOURCE_STATE, &state);
 			alGetSourcei(pSound->sourceID, AL_BUFFERS_PROCESSED, &buffers);
 			if ( buffers > 0 )
@@ -2435,11 +2444,11 @@ void cSoundMgr::PlatformUpdate()
 				if ( pSound->m_iLoop == 1 || pSound->m_iLoopCount+1 < pSound->m_iLoop )
 				{
 					alSourceQueueBuffers(pSound->sourceID, 1, &(pSound->bufferID));
+					if ( state != AL_PLAYING ) alSourcePlay(pSound->sourceID);
+					state = AL_PLAYING;
 				}
 			}
 
-			int state = 0;
-			alGetSourcei( pSound->sourceID, AL_SOURCE_STATE, &state );
 			if ( state != AL_PLAYING )
 			{
 				pSound->m_iLoopCount++;
@@ -5307,7 +5316,7 @@ bool  agk::PlatformHasTwitter             ( void )
 
 // local notifications
 
-void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage )
+void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage, const char *szDeepLink )
 {
 	
 }
@@ -5770,3 +5779,22 @@ void agk::ARDeleteAnchor( int anchorID )
 	
 }
 
+int agk::GetAppInstalled( const char *packageName )
+//****
+{
+	return 0;
+}
+
+// SnapChat
+
+void agk::SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+//****
+{
+
+}
+
+void agk::ShareSnapChatImage( const char* imageFile, const char* stickerFile, const char* caption, const char* url )
+//****
+{
+
+}

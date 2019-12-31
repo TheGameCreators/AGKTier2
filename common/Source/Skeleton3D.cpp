@@ -1372,7 +1372,8 @@ void Skeleton3D::Update( float time )
 					m_iLoopCount++;
 					if ( (m_bFlags & AGK_SKELETON3D_LOOPING) || (m_iLoopTotal > 0 && m_iLoopCount < m_iLoopTotal) )
 					{
-						while ( m_fCurrTime > m_fLoopEndTime ) m_fCurrTime -= (m_fLoopEndTime-m_fLoopStartTime);
+						if ( m_fLoopEndTime-m_fLoopStartTime < 0.000001f ) m_fCurrTime = m_fLoopEndTime;
+						else while ( m_fCurrTime > m_fLoopEndTime ) m_fCurrTime -= (m_fLoopEndTime-m_fLoopStartTime);
 					}
 					else
 					{
@@ -1385,7 +1386,8 @@ void Skeleton3D::Update( float time )
 					m_iLoopCount++;
 					if ( (m_bFlags & AGK_SKELETON3D_LOOPING) || (m_iLoopTotal > 0 && m_iLoopCount < m_iLoopTotal) )
 					{
-						while ( m_fCurrTime < m_fLoopStartTime ) m_fCurrTime += (m_fLoopEndTime-m_fLoopStartTime);
+						if ( m_fLoopEndTime-m_fLoopStartTime < 0.000001f ) m_fCurrTime = m_fLoopStartTime;
+						else while ( m_fCurrTime < m_fLoopStartTime ) m_fCurrTime += (m_fLoopEndTime-m_fLoopStartTime);
 					}
 					else 
 					{

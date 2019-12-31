@@ -5,3 +5,4 @@
 
 -keep public class com.thegamecreators.agk_player.AGKHelper { *; }
 -keep public class com.google.firebase.** { *; }
+-keep public class androidx.core.content.** { *; }

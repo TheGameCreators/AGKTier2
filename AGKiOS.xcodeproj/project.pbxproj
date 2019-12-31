@@ -208,6 +208,8 @@
 		4A54011020C5DFD1002874FA /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A54010F20C5DFD0002874FA /* GoogleMobileAds.framework */; };
 		4A5720E619F0716F001BA462 /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5720E519F0716F001BA462 /* Chartboost.framework */; };
 		4A58BA4D206AA20B0038F2F0 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA4C206AA20B0038F2F0 /* FirebaseAnalytics.framework */; };
+		4A5C2D62230AD21E00E42FE5 /* SCSDKCreativeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D60230AD21E00E42FE5 /* SCSDKCreativeKit.framework */; };
+		4A5C2D63230AD21E00E42FE5 /* SCSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D61230AD21E00E42FE5 /* SCSDKCoreKit.framework */; };
 		4A653C1D2062C68F008B519B /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A653C1C2062C68F008B519B /* ARKit.framework */; };
 		4A6E38031FDF325B0098EFBA /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A6E38011FDF325A0098EFBA /* b2MotorJoint.h */; };
 		4A6E38041FDF325B0098EFBA /* b2MotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E38021FDF325B0098EFBA /* b2MotorJoint.cpp */; };
@@ -1629,6 +1631,8 @@
 		4A54010F20C5DFD0002874FA /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "platform/apple/Source/Social Plugins/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		4A5720E519F0716F001BA462 /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = "platform/apple/Source/Social Plugins/Chartboost.framework"; sourceTree = "<group>"; };
 		4A58BA4C206AA20B0038F2F0 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = "platform/apple/Source/Social Plugins/Firebase/FirebaseAnalytics.framework"; sourceTree = "<group>"; };
+		4A5C2D60230AD21E00E42FE5 /* SCSDKCreativeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SCSDKCreativeKit.framework; path = "platform/apple/Source/Social Plugins/SCSDKCreativeKit.framework"; sourceTree = "<group>"; };
+		4A5C2D61230AD21E00E42FE5 /* SCSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SCSDKCoreKit.framework; path = "platform/apple/Source/Social Plugins/SCSDKCoreKit.framework"; sourceTree = "<group>"; };
 		4A653C1C2062C68F008B519B /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		4A6E38011FDF325A0098EFBA /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		4A6E38021FDF325B0098EFBA /* b2MotorJoint.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
@@ -2880,6 +2884,7 @@
 				D806E9FB124B95CF0067F527 /* Foundation.framework in Frameworks */,
 				4A0710F81C788B4F00FB45C4 /* AmazonAd.framework in Frameworks */,
 				9B99755712D3136800F8A432 /* QuartzCore.framework in Frameworks */,
+				4A5C2D63230AD21E00E42FE5 /* SCSDKCoreKit.framework in Frameworks */,
 				4A58BA4D206AA20B0038F2F0 /* FirebaseAnalytics.framework in Frameworks */,
 				9B99759312D313B400F8A432 /* AudioToolbox.framework in Frameworks */,
 				9B99759712D313CC00F8A432 /* OpenAL.framework in Frameworks */,
@@ -2891,6 +2896,7 @@
 				9B9975A812D315DE00F8A432 /* CoreGraphics.framework in Frameworks */,
 				D854AED61546F18B00651682 /* MessageUI.framework in Frameworks */,
 				D854AED81546F19600651682 /* SystemConfiguration.framework in Frameworks */,
+				4A5C2D62230AD21E00E42FE5 /* SCSDKCreativeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2919,6 +2925,8 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A5C2D61230AD21E00E42FE5 /* SCSDKCoreKit.framework */,
+				4A5C2D60230AD21E00E42FE5 /* SCSDKCreativeKit.framework */,
 				4A54010F20C5DFD0002874FA /* GoogleMobileAds.framework */,
 				4A54010D20C59D7E002874FA /* PersonalizedAdConsent.framework */,
 				4A58BA4C206AA20B0038F2F0 /* FirebaseAnalytics.framework */,
@@ -6473,9 +6481,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.0.sdk/System/Library/Frameworks\"",
-					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins\"",
 					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins/FacebookSDK\"",
 					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins/Firebase\"",
+					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
@@ -6532,9 +6540,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.0.sdk/System/Library/Frameworks\"",
-					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins\"",
 					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins/FacebookSDK\"",
 					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins/Firebase\"",
+					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins\"",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -6669,9 +6677,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.0.sdk/System/Library/Frameworks\"",
-					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins\"",
 					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins/FacebookSDK\"",
 					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins/Firebase\"",
+					"\"$(PROJECT_DIR)/platform/apple/Source/Social Plugins\"",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -4725,10 +4725,11 @@ bool  agk::PlatformHasTwitter             ( void )
 
 // local notifications
 
-void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage )
+void agk::PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage, const char *szDeepLink )
 {
 	
 }
+
 
 void agk::PlatformCancelLocalNotification( int iID )
 {
@@ -4933,33 +4934,56 @@ void agk::DeleteCloudDataVariable( const char* varName )
 
 void agk::SetSharedVariableAppGroup( const char* group )
 {
-	
+
 }
 
 void agk::SaveSharedVariable( const char *varName, const char *varValue )
 {
-	
+	EM_ASM_({
+		var cookieName = UTF8ToString($0);
+		var cookieValue = UTF8ToString($1);
+		var d = new Date();
+		d.setTime(d.getTime() + (5 * 365 * 24 * 60 * 60 * 1000)); // 5 years
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+	}, varName, varValue);
 }
 
 char* agk::LoadSharedVariable( const char *varName, const char *defaultValue )
 {
-	if ( !defaultValue )
-	{
-		char *str = new char[1];
-		*str = 0;
-		return str;
-	}
-	else
-	{
-		char *str = new char[ strlen(defaultValue)+1 ];
-		strcpy( str, defaultValue );
-		return str;
-	}
+	char* jsString = (char*) EM_ASM_INT({
+		var cookieName = UTF8ToString($0);
+		var returnValue = UTF8ToString($1);
+		var name = cookieName + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				returnValue = c.substring(name.length, c.length);
+				break;
+			}
+		}
+		var lengthBytes = lengthBytesUTF8(returnValue)+1;
+		var heapString = _malloc(lengthBytes);
+		stringToUTF8(returnValue, heapString, lengthBytes);
+		return heapString;
+	}, varName, defaultValue);
+
+	char *str = new char[ strlen(jsString)+1 ];
+	strcpy( str, jsString );
+	free(jsString);
+	return str;
 }
 
 void agk::DeleteSharedVariable( const char *varName )
 {
-	
+	EM_ASM_({
+		var cookieName = UTF8ToString($0);
+		document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+	}, varName);
 }
 
 void agk::FirebaseSetup()
@@ -5189,3 +5213,22 @@ void agk::ARDeleteAnchor( int anchorID )
 	
 }
 
+int agk::GetAppInstalled( const char *packageName )
+//****
+{
+	return 0;
+}
+
+// SnapChat
+
+void agk::SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+//****
+{
+
+}
+
+void agk::ShareSnapChatImage( const char* imageFile, const char* stickerFile, const char* caption, const char* url )
+//****
+{
+
+}

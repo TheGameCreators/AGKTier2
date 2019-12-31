@@ -1433,7 +1433,7 @@ void agk::SetImmersiveMode( int mode )
 //   device can display than the device will use its highest possible resolution, you can use 
 //   <i>GetDeviceWidth</i> and <i>GetDeviceHeight</i> to find out what was used.
 //   On mobile devices using a screen resolution with a different aspect ratio than the device will result 
-//   in stetching. You can check the aspect ratio of the device with GetMaxDeviceWidth and GetMaxDeviceHeight.
+//   in stretching. You can check the aspect ratio of the device with GetMaxDeviceWidth and GetMaxDeviceHeight.
 //   It is not recommended that you allow both portrait and landscape orientations when using this command
 //   as AGK cannot prevent stretching without undoing your desired screen resolution so it will not do so. 
 //   If you want all orientations without stretching you will need to monitor GetMaxDeviceWidth and 
@@ -1684,7 +1684,7 @@ void agk::SetExpansionFileVersion(int version)
 //****f* Core/Misc/GetExpansionFileState
 // FUNCTION
 //   Returns the state of any expansion file used by this platform, currently only applicable to Android.
-//   Returns -1 if an error occured during download, 0 if the expansion file is not used on this platform, 
+//   Returns -1 if an error occurred during download, 0 if the expansion file is not used on this platform, 
 //   1 if it should exist but doesn't (you call DownloadExpansionFile() in this case), 2 if it is currently 
 //   being downloaded, and 3 if everything has completed and the file exists.
 // SOURCE
@@ -1712,7 +1712,7 @@ int agk::GetExpansionFileError()
 
 //****f* Core/Misc/DownloadExpansionFile
 // FUNCTION
-//   Starts the download of any expansion file that this platform and app needs, currently only pplicable
+//   Starts the download of any expansion file that this platform and app needs, currently only applicable
 //   to Android. If the download has already started this has no effect. You can use <i>GetExpansionFileProgress</i>
 //   to check on the progress of the download and <i>GetExpanionFileState</i> to check when it has completed.
 //   After calling this command you should wait for <i>GetExpanionFileState</i> to return -1 (error) or 3 (complete)
@@ -1726,7 +1726,7 @@ void agk::DownloadExpansionFile()
 
 //****f* Core/Misc/GetExpansionFileProgress
 // FUNCTION
-//   Checks the progress of a download started by DownloadExpanionFile, returns a float value between 0 and 100
+//   Checks the progress of a download started by DownloadExpansionFile, returns a float value between 0 and 100
 //   Use GetExpansionFileState to check if the download has completed.
 // SOURCE
 float agk::GetExpansionFileProgress()
@@ -2637,14 +2637,8 @@ void agk::SetVSync( int mode )
 		}
 	}
 
-	/* some monitors can go up to 240Hz with vsync enabled
-	if ( mode > 0 )
-	{
-		// assuming a vsync rate of 60fps we should set the sync rate to slightly higher to catch any 
-		// devices that ignore the vsync command
-		m_fSyncTime = 1 / 200.0f;
-	}
-	*/
+	if ( m_bUsingVSync ) m_iSyncMode = 2;
+	else m_iSyncMode = 0;
 }
 
 //****f* Core/Display/GetMaxDeviceWidth
@@ -2680,7 +2674,7 @@ int agk::GetMaxDeviceHeight()
 //****f* Core/Display/GetDeviceDPI
 // FUNCTION
 //   Gets the Dots Per Inch (also called Pixels Per Inch) of the device screen.
-//   This only works on iOS and Android, other platforms will reutrn 0.
+//   This only works on iOS and Android, other platforms will return 0.
 //   On iOS this value is hardcoded by device, so if a new device is released then an AGK update will be required to
 //   get an accurate value. In the meantime an estimated value will be generated.
 // SOURCE
@@ -2707,7 +2701,7 @@ char* agk::GetAppPackageName()
 
 //****f* Core/Misc/GetDevicePlatform
 // FUNCTION
-//   On Android this returns 0 if this app is running on a Google deivce, or 1 if it is running on an Amazon device.
+//   On Android this returns 0 if this app is running on a Google device, or 1 if it is running on an Amazon device.
 //   On all other platforms this returns 0.
 // SOURCE
 int agk::GetDevicePlatform()
@@ -3433,7 +3427,7 @@ int agk::Round( float a )
 
 //****f* Core/Maths/Sqrt
 // FUNCTION
-//   Returns the sqaure root of a float value.
+//   Returns the square root of a float value.
 // INPUTS
 //   a -- The value to square root.
 // SOURCE
@@ -3955,7 +3949,7 @@ bool cImage::CaptureFromCamera()
 //****f* Image/Capture/GetNumDeviceCameras
 // FUNCTION
 //   Returns the number of cameras available for SetDeviceCameraToImage.
-//   Currently oinly works on Android
+//   Currently only works on Android, iOS, and Windows
 // SOURCE
 int agk::GetNumDeviceCameras()
 //****
@@ -5473,7 +5467,7 @@ void cSoundMgr::PlatformUpdate()
 			if ( pSound->m_pSourceVoice ) pSound->m_pSourceVoice->GetState( &state );
 			else pSound->m_pSourceVoiceWin8->GetState( &state, /*XAUDIO2_VOICE_NOSAMPLESPLAYED*/ 0x100 );
 			
-			if ( state.BuffersQueued == 1 && (pSound->m_iLoop == 1 || pSound->m_iLoopCount+1 < pSound->m_iLoop) )
+			if ( state.BuffersQueued <= 1 && (pSound->m_iLoop == 1 || pSound->m_iLoopCount+1 < pSound->m_iLoop) )
 			{
 				pSound->m_iLoopCount++;
 				if ( pSound->m_iLoop == 1 || pSound->m_iLoopCount+1 < pSound->m_iLoop ) 
@@ -6215,7 +6209,7 @@ void agk::DeleteVideo()
 //   Sets the width, height, and position of the video whilst it is playing. Can be called before or 
 //   during playback. The coordinates are in AGK screen coordinates based on your chosen virtual 
 //   resolution. The aspect ratio is not preserved and will be stretched to fit your chosen dimensions.
-//   To find the actual size of the video in pixels use <i>GetvideoWidth</i> and <i>GetVideoHeight</i>.
+//   To find the actual size of the video in pixels use <i>GetVideoWidth</i> and <i>GetVideoHeight</i>.
 //   An exception to the stretching is Windows which will always keep the aspect ratio of the original
 //   video and add black borders where necessary.
 // INPUTS
@@ -7036,7 +7030,7 @@ float agk::GetVideoPosition()
 // FUNCTION
 //   Returns the number of seconds the video lasts from start to finish. If this returns 0 
 //   then call it in a loop with Sync() to wait for the video to finish loading the meta data.
-//   If it returns less than 0 then this platform does not support this command or an error occured.
+//   If it returns less than 0 then this platform does not support this command or an error occurred.
 //
 //   example:
 //   duration = GetVideoDuration()
@@ -7093,7 +7087,7 @@ void agk::SetVideoVolume( float volume )
 // FUNCTION
 //   Returns the width in pixels of the currently loaded video, if this returns 0 
 //   then call it in a loop with Sync() to wait for the video to finish loading the meta data.
-//   If it returns less than 0 then this platform does not support this command or an error occured.
+//   If it returns less than 0 then this platform does not support this command or an error occurred.
 //
 //   example:
 //   width = GetVideoWidth()
@@ -7114,7 +7108,7 @@ float agk::GetVideoWidth()
 // FUNCTION
 //   Returns the height in pixels of the currently loaded video, if this returns 0  
 //   then call it in a loop with Sync() to wait for the video to finish loading the meta data.
-//   If it returns less than 0 then this platform does not support this command or an error occured.
+//   If it returns less than 0 then this platform does not support this command or an error occurred.
 //
 //   example:
 //   height = GetVideoHeight()
@@ -7198,8 +7192,8 @@ void agk::SetVideoPosition( float seconds )
 //   On Android 6 and below the recording may stop at any time, for example if the app is sent to the 
 //   background, or if another activity is activated such as an In App Purchase, or using the 
 //   <i>FacebookLogin</i> command. On Android 7 and above the recording will pause when the app is in the
-//   background and resume when the app resumes.
-//   On iOS the recording will continue after such interuptions, until <i>StopScreenRecording</i> is called.
+//   background and resume when the app resumes. 
+//   On iOS the recording will continue after such interruptions, until <i>StopScreenRecording</i> is called.
 // INPUTS
 //   szFilename -- The path to save the video, should end in .mp4, can be a "raw:" file path
 //   microphone -- 1 to record from the microphone, 0 to record from the device
@@ -7255,9 +7249,9 @@ void agk::ActivateSmartWatch( const char *szReserved )
 
 //****f* Extras/SmartWatch/GetSmartWatchState
 // FUNCTION
-//   Returns the current state of the smart watch connection. 0=initial state, <i>ActivateSmartWatch</i> has 
+//   Returns the current state of the smart watch connection: 0=initial state, <i>ActivateSmartWatch</i> has 
 //   not been called. 1=connecting, will transition to a more detailed state in a moment. 2=connection 
-//   successful, you may send and receive data. -1=watch commands not supported on this device, -2=connection 
+//   successful, you may send and receive data. -1=watch commands not supported on this device. -2=connection 
 //   failed or no watch found. -3=watch found but it is not currently paired with the device, -4=watch found 
 //   but our watch app is not currently installed.
 //   </br></br>
@@ -7337,7 +7331,7 @@ int agk::GetTextToSpeechReady()
 //   queue up a lot of text. You can call <i>IsSpeaking</i> to check when the queue is empty and all text has been 
 //   spoken, or cancelled. Note that there may be a delay on the first call to this command when an unfamiliar
 //   language has been set with <i>SetSpeechLanguage</i>. For example using French on a device setup for English 
-//   will attempt to download the French langauge engine before starting to speak the text.
+//   will attempt to download the French language engine before starting to speak the text.
 //   </br></br>
 //   If the app is sent to the background then speech will stop and all text will be removed from the queue.
 //   </br></br>
@@ -7360,7 +7354,7 @@ void agk::Speak( const char *text )
 //   queue up a lot of text. You can call <i>IsSpeaking</i> to check when the queue is empty and all text has been 
 //   spoken, or cancelled. Note that there may be a delay on the first call to this command when an unfamiliar
 //   language has been set with <i>SetSpeechLanguage</i>. For example using French on a device setup for English 
-//   will attempt to download the French langauge engine before starting to speak the text.
+//   will attempt to download the French language engine before starting to speak the text.
 //   </br></br>
 //   If the app is sent to the background then speech will stop and all text will be removed from the queue.
 //   </br></br>
@@ -7424,7 +7418,7 @@ char* agk::GetSpeechVoiceLanguage( int index )
 //****f* Sound/TextToSpeech/GetSpeechVoiceName
 // FUNCTION
 //   Returns the name of the given voice. On iOS this is a human readable first name, but does not give any details 
-//   about the accent or language of that voice. On Android the name gives the langauge and accent information but 
+//   about the accent or language of that voice. On Android the name gives the language and accent information but 
 //   is not as easy to read.
 //   </br></br>
 //   Currently only works on iOS and Android.
@@ -7664,7 +7658,7 @@ void agk::SetRawWritePath( const char* str )
 
 //****f* File/Access/GetWritePath
 // FUNCTION
-//   Returns the directory that new files will be written to on the current plaform that the app is running on.
+//   Returns the directory that new files will be written to on the current platform that the app is running on.
 // SOURCE
 char* agk::GetWritePath()
 //****
@@ -7677,7 +7671,7 @@ char* agk::GetWritePath()
 
 //****f* File/Access/GetReadPath
 // FUNCTION
-//   Returns the directory that contains the application executable on the current plaform that the app is running on.
+//   Returns the directory that contains the application executable on the current platform that the app is running on.
 //   Note that on Android this path is inaccessible in normal use and will return an empty string.
 // SOURCE
 char* agk::GetReadPath()
@@ -7695,7 +7689,7 @@ char* agk::GetReadPath()
 //   By default all apps write to the system specified app settings folder, for example "C:\Users\Me\AppData" 
 //   on Windows, "/home/user/.config" on Linux, and a protected app data folder on Android. The documents path
 //   is guaranteed to be visible to the user, for example on Android it will be the sdcard folder. Only iOS 
-//   can't provide a publically accessible location to write to.
+//   can't provide a publicly accessible location to write to.
 // SOURCE
 char* agk::GetDocumentsPath()
 //****
@@ -8928,7 +8922,7 @@ int agk::SetCurrentDir( const char* szPath )
 
 //****f* File/Directory/MakeFolder
 // FUNCTION
-//   Creates a folder at the current path. By default this is determined by the command <i>SetFolder</i> or <i>SetCurrentDir</i>.
+//   Creates a folder at the current path. By default this is determined by the command <i>SetFolder</i>.
 //   You can also use a filename beginning with "raw:" to create a folder anywhere on the file system, for example 
 //   MakeFolder("raw:C:\Temp\MyFolder")
 // INPUTS
@@ -8970,7 +8964,7 @@ int agk::MakeFolder( const char* szName )
 
 //****f* File/Directory/DeleteFolder
 // FUNCTION
-//   Deletes a folder at the current path. By default this is determined by the command <i>SetFolder</i> or <i>SetCurrentDir</i>.
+//   Deletes a folder at the current path. By default this is determined by the command <i>SetFolder</i>.
 //   You can also use a filename beginning with "raw:" to delete a folder anywhere on the file system, for example 
 //   DeleteFolder("raw:C:\Temp\MyFolder"). 
 //   The folder must be empty for this command to succeed.
@@ -9591,12 +9585,12 @@ UINT agk::GetAppRunning( UINT appID )
 //   Immediately terminates the specified app. This should only be used in extreme cases as the app is not
 //   given a chance to clean up or finish what it is doing.
 // INPUTS
-//   appID -- The app ID to check, returned from RunApp()
+//   appID -- The app ID to terminate, returned from RunApp()
 // SOURCE
 void agk::TerminateApp( UINT appID )
 //****
 {
-	HANDLE hProc = OpenProcess( 0, TRUE, appID );
+	HANDLE hProc = OpenProcess( PROCESS_TERMINATE, TRUE, appID );
 	if ( !hProc ) return;
 
 	TerminateProcess( hProc, 0 );
@@ -9688,7 +9682,7 @@ void agk::ShareFile( const char* szFilename )
 //   associate installs to adverts previously seen and clicked on Facebook. Note that on iOS this 
 //   functionality requires the IDFA (Advertising Identifier) and you must declare this if you submit 
 //   the app to Apple. Apple will ask if you use the IDFA and what you use it for. For install tracking 
-//   with Facebook Ads you MUST tick "Attribute this app installation to a previously served Aderstisement" 
+//   with Facebook Ads you MUST tick "Attribute this app installation to a previously served Advertisement" 
 //   and "Attribute an action taken within this app to a previously served advertisement". If you are also 
 //   using AdMob, Amazon Ads, or Chartboost in your app then you must also tick "Serve advertisements 
 //   within the app".<br/><br/>
@@ -10231,7 +10225,7 @@ int agk::GetGameCenterLoggedIn()
 
 //****f* Extras/GameCenter/GetGameCenterPlayerID
 // FUNCTION
-//   Returns the unique ID for the currently loggeed in player. If no one is logged in, or the platform
+//   Returns the unique ID for the currently logged in player. If no one is logged in, or the platform
 //   does not support GameCenter commands then this will return an empty string.
 //   If calling this command from Tier 2 then the returned string must be deleted with agk::DeleteString
 //   when you are done with it.
@@ -10245,7 +10239,7 @@ char* agk::GetGameCenterPlayerID()
 
 //****f* Extras/GameCenter/GetGameCenterPlayerDisplayName
 // FUNCTION
-//   Returns the display name for the currently loggeed in player. If no one is logged in, or the platform
+//   Returns the display name for the currently logged in player. If no one is logged in, or the platform
 //   does not support GameCenter commands then this will return an empty string.
 //   If calling this command from Tier 2 then the returned string must be deleted with agk::DeleteString
 //   when you are done with it.
@@ -10514,7 +10508,7 @@ void agk::SetSharedVariableAppGroup( const char* group )
 
 //****f* Extras/Shared Variables/SaveSharedVariable
 // FUNCTION
-//   Saves a variable so it can be accessed from other apps. This only works on iOS and Android platforms, 
+//   Saves a variable so it can be accessed from other apps. This only works on iOS, Android, and HTML5 platforms, 
 //   and apps can only share a variable if they meet certain requirements based on the platform.<br/><br/>
 //
 //   On iOS the apps must be created by the same Apple developer account, and have the same App Group added 
@@ -10523,13 +10517,15 @@ void agk::SetSharedVariableAppGroup( const char* group )
 //
 //   On Android the apps must have the WRITE_EXTERNAL_STORAGE permission and have the same package name up 
 //   to the last dot. For example com.mycompany.mygroup.myapp1 and com.mycompany.mygroup.myapp2 would be able 
-//   to share varaibles. On Android shared variables are written to a user accesible location, so be aware 
+//   to share variables. On Android shared variables are written to a user accessible location, so be aware 
 //   that users may be able to read and/or edit the variables that you save.<br/><br/>
+//
+//   On HTML the apps must be hosted on the same domain, the values are stored as cookies.<br/><br/>
 //
 //   Variables are identified by name, so using SaveSharedVariable("username", "Alice") will set the 
 //   variable called "username" to the value "Alice". This can then be read by other apps by using
-//   LoadSharedVariables( "username", "" )
-//   If two apps save different values to the same variable name then the value will be overwriten and 
+//   LoadSharedVariable( "username", "" )
+//   If two apps save different values to the same variable name then the value will be overwritten and 
 //   only the most recent value will be accessible.
 //   Variable values will persist even if the app is deleted and re-installed.
 //   You should not use this command to store any sensitive information such as passwords in plain text.
@@ -10547,18 +10543,23 @@ void agk::SaveSharedVariable( const char *varName, const char *varValue )
 
 //****f* Extras/Shared Variables/LoadSharedVariable
 // FUNCTION
-//   Loads a variable that was saved by this app, or another app. This only works on iOS and Android platforms, 
+//   Loads a variable that was saved by this app, or another app. This only works on iOS, Android, and HTML5 platforms, 
 //   and apps can only share a variable if they meet certain requirements based on the platform.<br/><br/>
+//
 //   On iOS the apps must have the same Bundle Seed ID (also called App ID Prefix) and have the same 
 //   explicit App ID up to the last dot. For example com.mycompany.mygroup.myapp1 and 
-//   com.mycompany.mygroup.myapp2 would be able to share varaibles.<br/><br/>
+//   com.mycompany.mygroup.myapp2 would be able to share variables.<br/><br/>
+//
 //   On Android the apps must have the WRITE_EXTERNAL_STORAGE permission and have the same package name up 
 //   to the last dot. For example com.mycompany.mygroup.myapp1 and com.mycompany.mygroup.myapp2 would be able 
-//   to share varaibles. On Android shared variables are written to a user accesible location, so be aware 
+//   to share variables. On Android shared variables are written to a user accessible location, so be aware 
 //   that users may be able to read and/or edit the variables that you save.<br/><br/>
+//
+//   On HTML the apps must be hosted on the same domain, the values are stored as cookies.<br/><br/>
+//
 //   Variables are identified by name, so using SaveSharedVariable("username", "Alice") will set the 
 //   variable called "username" to the value "Alice". This can then be read by other apps by using
-//   LoadSharedVariables( "username", "" ).
+//   LoadSharedVariable( "username", "" ).
 //   If a variable with the given name doesn't exist then the specified default value is returned instead
 // INPUTS
 //   varName -- The name of the variable to retrieve
@@ -10642,6 +10643,9 @@ int AGKFont::PlatformGetSystemFontPath( const uString &sFontName, uString &sOut 
 	result = RegQueryInfoKey( hKey, 0, 0, 0, 0, 0, 0, 0, &maxValueNameSize, &maxValueDataSize, 0, 0 );
 	if (result != ERROR_SUCCESS) return 0;
 
+	maxValueNameSize *= 2; // max length doesn't account for escaped characters taking up 2 bytes, so increase size to be safe
+	maxValueDataSize *= 2;
+
 	DWORD valueIndex = 0;
 	char* valueName = new char[maxValueNameSize];
 	unsigned char* valueData = new unsigned char[maxValueDataSize];
@@ -10721,7 +10725,7 @@ void agk::ARSetup()
 // FUNCTION
 //   Returns the current state of the AR setup process. 0=ARSetup not yet called,
 //   -1=AR not available on this device, or setup failed, -2=User rejected ARCore install, 1=ARCore install in 
-//   progress, 2=AR setup scuessful.
+//   progress, 2=AR setup successful.
 // SOURCE
 int agk::ARGetStatus()
 //****
@@ -10831,7 +10835,7 @@ float agk::ARGetLightEstimate()
 //   in the world. Returns the number of hits detected, the hits will be ordered with the closest first.
 //   The coordinates should be in screen space, for example the values returned from <i>GetPointerX</i>
 //   and <i>GetPointerY</i>. When you are finished checking the results of this hit test you should call 
-//   <i>ArHitTestFinish</i> to release any used resources. If not then this will be done automatically 
+//   <i>ARHitTestFinish</i> to release any used resources. If not then this will be done automatically 
 //   when you next call ARHitTest.
 // INPUTS
 //   screenX -- The X component of the screen coordinate
@@ -10964,7 +10968,7 @@ void agk::ARHitTestFinish()
 //****f* Extras/AR/ARGetPlanes
 // FUNCTION
 //   Queries the AR session for all the planes currently being tracked in the world, these are detected
-//   over time if <i>ArSetPlaneDetectionMode</i> is turned on. Returns the number of planes found. This
+//   over time if <i>ARSetPlaneDetectionMode</i> is turned on. Returns the number of planes found. This
 //   can be used to show the detected planes to the user by creating some plane objects with 
 //   <i>CreateObjectPlane</i> and placing them at the given position, with the given rotation, and size.
 //   When you are done checking the results you should call <i>ARGetPlanesFinish</i> to clean up any 
@@ -11186,3 +11190,54 @@ void agk::ARDeleteAnchor( int anchorID )
 	
 }
 
+//****f* Core/Misc/GetAppInstalled
+// FUNCTION
+//   Returns 1 if the specified app is installed and enabled on the device. For Android this should be the 
+//   package name of the app, e.g. com.faceboook.katana for the Facebook App.
+//   Currently this only works on Android
+// INPUTS
+//   packageName -- The package name of the app to check
+// SOURCE
+int agk::GetAppInstalled( const char *packageName )
+//****
+{
+	return 0;
+}
+
+// SnapChat
+
+//****f* Extras/SnapChat/SetSnapChatStickerSettings
+// FUNCTION
+//   Sets the properties for any sticker images that are added to future calls to <i>ShareSnapChatImage</i>.
+//   The X and Y parameters should be in the range 0.0 to 1.0 for example in the X direction 1.0 is the far 
+//   right of the image and 0.0 is the far left of the image.
+// INPUTS
+//   x -- The X position of the sticker, default 0.5
+//   y -- The Y position of the sticker, default 0.5
+//   width -- The width of the sticker, default 250
+//   height -- The height of the sticker, default 250
+//   angle -- The angle of the sticker, default 0
+// SOURCE
+void agk::SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+//****
+{
+
+}
+
+//****f* Extras/SnapChat/ShareSnapChatImage
+// FUNCTION
+//   Sends the specified image to the SnapChat app on the current device, along with an optional sticker file, 
+//   caption, and URL. The user can then modify the image using the SnapChat app and decide whether to share 
+//   it with friends. If the user does not have the SnapChat app installed then the app store will be opened
+//   instead on the SnapChat app page. This command will only work on Android and iOS 10 or above
+// INPUTS
+//   imageFile -- The path to the image you want to share
+//   stickerFile -- The path to a sticker image to add to the image, can be an empty string
+//   caption -- The caption to add to the image, can be an empty string
+//   url -- The URL to add to the image, can be an empty string
+// SOURCE
+void agk::ShareSnapChatImage( const char* imageFile, const char* stickerFile, const char* caption, const char* url )
+//****
+{
+
+}

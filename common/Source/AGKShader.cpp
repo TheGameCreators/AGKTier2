@@ -1676,7 +1676,7 @@ UINT AGKShader::GetMeshShaderHash( cMesh *pMesh )
 
 	if ( pMesh->HasValidBones() )
 	{
-		hash |= (pMesh->GetNumBones() & 0xff) << 9;
+		hash |= (pMesh->GetNumBones() & 0xff) << 8;
 	}
 
 	if ( pMesh->HasVertColors() )	hash |= 0x20000;

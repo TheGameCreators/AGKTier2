@@ -4,6 +4,8 @@ package com.thegamecreators.agk_player;
 import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.*;
 import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
@@ -13,23 +15,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 
 import com.google.android.gms.games.AchievementsClient;
 import com.google.android.gms.games.AnnotatedData;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.games.PlayersClient;
 import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
-import com.google.android.gms.games.achievement.Achievements;
-import com.google.android.gms.games.achievement.Achievements.LoadAchievementsResult;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
@@ -96,7 +95,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -109,10 +107,10 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.Keep;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -131,6 +129,14 @@ import com.google.android.vending.expansion.downloader.impl.BroadcastDownloaderC
 
 import com.google.api.services.drive.model.FileList;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.snapchat.kit.sdk.SnapCreative;
+import com.snapchat.kit.sdk.creative.api.SnapCreativeKitApi;
+import com.snapchat.kit.sdk.creative.exceptions.SnapMediaSizeException;
+import com.snapchat.kit.sdk.creative.exceptions.SnapStickerSizeException;
+import com.snapchat.kit.sdk.creative.media.SnapMediaFactory;
+import com.snapchat.kit.sdk.creative.media.SnapPhotoFile;
+import com.snapchat.kit.sdk.creative.media.SnapSticker;
+import com.snapchat.kit.sdk.creative.models.SnapPhotoContent;
 import com.thegamecreators.agk_player.iap.*;
 
 import com.facebook.*;
@@ -163,7 +169,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.media.MediaPlayer;
 import android.media.MediaScannerConnection;
 import android.content.DialogInterface;
@@ -1911,19 +1916,24 @@ class AGKLocationListener implements GoogleApiClient.ConnectionCallbacks,
 	public void onConnected(Bundle dataBundle) {
 		Log.i("GPS","Connected");
 		Location mCurrentLocation;
-		mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(AGKHelper.m_GPSClient);
-		if ( mCurrentLocation != null )
-		{
-			AGKHelper.m_fGPSLatitude = (float) mCurrentLocation.getLatitude();
-			AGKHelper.m_fGPSLongitude = (float) mCurrentLocation.getLongitude();
+		try {
+			mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(AGKHelper.m_GPSClient);
+			if ( mCurrentLocation != null )
+			{
+				AGKHelper.m_fGPSLatitude = (float) mCurrentLocation.getLatitude();
+				AGKHelper.m_fGPSLongitude = (float) mCurrentLocation.getLongitude();
+			}
+
+			LocationRequest mLocationRequest = LocationRequest.create();
+			mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+			mLocationRequest.setInterval(5000);
+			mLocationRequest.setFastestInterval(1000);
+
+			LocationServices.FusedLocationApi.requestLocationUpdates(AGKHelper.m_GPSClient, mLocationRequest, this);
 		}
-
-		LocationRequest mLocationRequest = LocationRequest.create();
-		mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		mLocationRequest.setInterval(5000);
-		mLocationRequest.setFastestInterval(1000);
-
-		LocationServices.FusedLocationApi.requestLocationUpdates(AGKHelper.m_GPSClient, mLocationRequest, this);
+		catch( SecurityException e ) {
+			Log.e( "GPS", "User has not granted location permission" );
+		}
 	}
 
 	public void onDisconnected() {
@@ -2153,7 +2163,7 @@ public class AGKHelper {
 			Intent intent2 = new Intent(act, AGKActivity.class);
 			PendingIntent pIntent = PendingIntent.getActivity(act, 0, intent2, 0);
 			try {
-				int result = DownloaderService.startDownloadServiceIfRequired(act, "default", pIntent, g_sExpansionSalt, g_sExpansionKey);
+				int result = DownloaderService.startDownloadServiceIfRequired(act, "expansion", pIntent, g_sExpansionSalt, g_sExpansionKey);
 				if (DownloaderService.NO_DOWNLOAD_REQUIRED == result) {
 					g_iExpansionState = 3;
 					if ( mExpansionClient != null ) {
@@ -2418,6 +2428,9 @@ public class AGKHelper {
 
 	public static void GameCenterCompleteLogin( final Activity act )
 	{
+		GamesClient gamesClient = Games.getGamesClient( act, g_GamesAccount );
+		gamesClient.setViewForPopups( act.getWindow().getDecorView() );
+
 		PlayersClient playersClient = Games.getPlayersClient( act, g_GamesAccount );
 		Task<Player> playerTask = playersClient.getCurrentPlayer().addOnCompleteListener(
 				new OnCompleteListener<Player>() {
@@ -3168,6 +3181,7 @@ public class AGKHelper {
 	static int m_iAdMobConsentStatus = -2; // -2=startup value triggers consent load, -1=loading, 0=unknown, 1=non-personalised, 2=personalised
 	static String m_sAdMobPrivacyPolicy = "";
 	static ConsentForm m_pAdMobConsentForm = null;
+	static int m_iAdMobInitialized = 0;
 
 	public static void SetAdMobTestMode( int mode )
 	{
@@ -3286,6 +3300,11 @@ public class AGKHelper {
 
 	public static void CreateAd(Activity act, String publisherID, int horz, int vert, int offsetX, int offsetY, int type)
 	{
+		if ( m_iAdMobInitialized == 0 ) {
+			m_iAdMobInitialized = 1;
+			MobileAds.initialize(act);
+		}
+
 		RunnableAd run = new RunnableAd();
 		run.pubID = publisherID;
 		run.horz = horz;
@@ -3300,6 +3319,11 @@ public class AGKHelper {
 	
 	public static void CacheFullscreenAd(Activity act, String publisherID)
 	{
+		if ( m_iAdMobInitialized == 0 ) {
+			m_iAdMobInitialized = 1;
+			MobileAds.initialize(act);
+		}
+
 		RunnableAd run = new RunnableAd();
 		run.pubID = publisherID;
 		run.action = 10;
@@ -3309,6 +3333,11 @@ public class AGKHelper {
 	
 	public static void CreateFullscreenAd(Activity act, String publisherID)
 	{
+		if ( m_iAdMobInitialized == 0 ) {
+			m_iAdMobInitialized = 1;
+			MobileAds.initialize(act);
+		}
+
 		RunnableAd run = new RunnableAd();
 		run.pubID = publisherID;
 		run.action = 9;
@@ -3318,6 +3347,11 @@ public class AGKHelper {
 
 	public static void CacheRewardAd(Activity act, String publisherID)
 	{
+		if ( m_iAdMobInitialized == 0 ) {
+			m_iAdMobInitialized = 1;
+			MobileAds.initialize(act);
+		}
+
 		RunnableAd run = new RunnableAd();
 		run.rewardpubID = publisherID;
 		run.action = 12;
@@ -3327,6 +3361,11 @@ public class AGKHelper {
 
 	public static void ShowRewardAd(Activity act, String publisherID)
 	{
+		if ( m_iAdMobInitialized == 0 ) {
+			m_iAdMobInitialized = 1;
+			MobileAds.initialize(act);
+		}
+
 		m_iRewardAdRewarded = 0;
 
 		RunnableAd run = new RunnableAd();
@@ -3484,7 +3523,7 @@ public class AGKHelper {
 
 	// local notifications
 	static NotificationChannel mNotificationChannel = null;
-	public static void SetNotification( Activity act, int id, int unixtime, String message )
+	public static void SetNotification( Activity act, int id, int unixtime, String message, String deeplink )
 	{
 		if (mNotificationChannel == null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
 		{
@@ -3498,11 +3537,17 @@ public class AGKHelper {
 		intent.putExtra("title", act.getString(R.string.app_name) );
 		intent.putExtra("message", message);
 		intent.putExtra("id",id);
+		intent.putExtra("deeplink",deeplink);
 		PendingIntent sender = PendingIntent.getBroadcast(act, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) act.getSystemService(Context.ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, unixtime * 1000L, sender);
+	}
+
+	public static void SetNotification( Activity act, int id, int unixtime, String message )
+	{
+		SetNotification( act, id, unixtime, message, "" );
 	}
 
 	public static void CancelNotification( Activity act, int id )
@@ -4182,6 +4227,9 @@ public class AGKHelper {
 	static byte[] g_sExpansionSalt = new byte[] { 1, 42, -12, -1, 54, 98, -100, -12, 43, 2, -8, -4, 9, 5, -106, -107, -33, 45, -1, 84 };
 	static DownloaderClient mExpansionClient = null;
 	static ZipResourceFile g_pExpansionFile = null;
+	static NotificationChannel g_pExpansionChannel = null;
+	static String g_sExpansionNotificationName = "Additional App Files";
+	static String g_sExpansionNotificationDesc = "Additional App Files Download Status";
 
 	static class DownloaderClient extends BroadcastDownloaderClient {
 
@@ -4229,6 +4277,12 @@ public class AGKHelper {
 	public static void setExpansionKey( String key )
 	{
 		g_sExpansionKey = key;
+	}
+
+	public static void setExpansionNotificationDescription( String name, String desc )
+	{
+		g_sExpansionNotificationName = name;
+		g_sExpansionNotificationDesc = desc;
 	}
 	
 	public static void SetExpansionVersion(int version)
@@ -4282,6 +4336,16 @@ public class AGKHelper {
     	
     	try
     	{
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+			{
+				if ( g_pExpansionChannel == null ) {
+					NotificationManager mNotificationManager = (NotificationManager) act.getSystemService(Context.NOTIFICATION_SERVICE);
+					g_pExpansionChannel = new NotificationChannel("expansion", g_sExpansionNotificationName, NotificationManager.IMPORTANCE_DEFAULT);
+					g_pExpansionChannel.setDescription(g_sExpansionNotificationDesc);
+					mNotificationManager.createNotificationChannel(g_pExpansionChannel);
+				}
+			}
+
     		if ( mExpansionClient == null )
 			{
 				mExpansionClient = new DownloaderClient();
@@ -4289,15 +4353,7 @@ public class AGKHelper {
 				mExpansionClient.register( act );
 			}
 
-			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-			{
-				NotificationManager mNotificationManager = (NotificationManager) act.getSystemService(Context.NOTIFICATION_SERVICE);
-				NotificationChannel channel = new NotificationChannel("dts","DTS Downloader", NotificationManager.IMPORTANCE_DEFAULT );
-				channel.setDescription("DTS File Downloader Status");
-				mNotificationManager.createNotificationChannel(channel);
-			}
-
-    		int result = DownloaderService.startDownloadServiceIfRequired(act, "dts", pIntent, g_sExpansionSalt, g_sExpansionKey );
+			int result = DownloaderService.startDownloadServiceIfRequired(act, "expansion", pIntent, g_sExpansionSalt, g_sExpansionKey );
     		if ( DownloaderService.NO_DOWNLOAD_REQUIRED == result )
     		{
     			g_iExpansionState = 3;
@@ -5127,7 +5183,7 @@ public class AGKHelper {
 		File src = new File(sPath);
 
 		String sMIME = MimeTypeMap.getSingleton().getMimeTypeFromExtension(sExt);
-		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".provider", src);
+		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".fileprovider", src);
 
 		Intent target = new Intent( Intent.ACTION_VIEW );
 		target.setDataAndType( uri, sMIME );
@@ -5163,7 +5219,7 @@ public class AGKHelper {
 
 		File src = new File(sPath);
 
-		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".provider", src);
+		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".fileprovider", src);
 
 		Intent target = new Intent( Intent.ACTION_SEND );
 		target.setType( "image/*" );
@@ -5186,7 +5242,7 @@ public class AGKHelper {
 		else sFileName = sPath;
 
 		File src = new File(sPath);
-		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".provider", src);
+		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".fileprovider", src);
 
 		Intent target = new Intent( Intent.ACTION_SEND );
 		target.setType( "image/*" );
@@ -5217,7 +5273,7 @@ public class AGKHelper {
 		File src = new File(sPath);
 
 		String sMIME = MimeTypeMap.getSingleton().getMimeTypeFromExtension(sExt);
-		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".provider", src);
+		Uri uri = FileProvider.getUriForFile(act, act.getApplicationContext().getPackageName() + ".fileprovider", src);
 
 		Intent target = new Intent( Intent.ACTION_SEND );
 		target.setType( sMIME );
@@ -5234,5 +5290,67 @@ public class AGKHelper {
 	public static String GetExternalDir()
 	{
 		return Environment.getExternalStorageDirectory().getAbsolutePath();
+	}
+
+	public static int GetPackageInstalled( Activity act, String packageName )
+	{
+		try {
+			if ( act.getPackageManager().getApplicationInfo(packageName, 0).enabled ) return 1;
+			else return 0;
+		} catch (PackageManager.NameNotFoundException e) {
+			return 0;
+		}
+	}
+
+	// SnapChat
+	public static float m_fSnapChatStickerX = 0.5f; // between 0 and 1
+	public static float m_fSnapChatStickerY = 0.5f;
+	public static int m_iSnapChatStickerWidth = 250;
+	public static int m_iSnapChatStickerHeight = 250;
+	public static float m_fSnapChatStickerAngle = 0;
+
+	public static void SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+	{
+		m_fSnapChatStickerX = x;
+		m_fSnapChatStickerY = y;
+		m_iSnapChatStickerWidth = width;
+		m_iSnapChatStickerHeight = height;
+		m_fSnapChatStickerAngle = angle;
+	}
+
+	public static void ShareSnapChat( Activity act, String image, String sticker, String caption, String url )
+	{
+		SnapCreativeKitApi snapCreativeKitApi = SnapCreative.getApi( act );
+		SnapMediaFactory snapMediaFactory = SnapCreative.getMediaFactory( act );
+
+		SnapPhotoFile photoFile;
+		try {
+			photoFile = snapMediaFactory.getSnapPhotoFromFile( new File(image) );
+		} catch (SnapMediaSizeException e) {
+			Log.e("SnapChat API", "Photo file is too large");
+			return;
+		}
+
+		SnapPhotoContent snapPhotoContent = new SnapPhotoContent(photoFile);
+
+		if ( sticker != null && !sticker.equals("") ) {
+			SnapSticker snapSticker = null;
+			try {
+				snapSticker = snapMediaFactory.getSnapStickerFromFile(new File(sticker));
+				snapSticker.setWidth(m_iSnapChatStickerWidth);
+				snapSticker.setHeight(m_iSnapChatStickerHeight);
+				snapSticker.setPosX(m_fSnapChatStickerX); // between 0 and 1
+				snapSticker.setPosY(m_fSnapChatStickerY);
+				snapSticker.setRotationDegreesClockwise(0); // degrees clockwise
+				snapPhotoContent.setSnapSticker(snapSticker);
+			} catch (SnapStickerSizeException e) {
+				Log.e("SnapChat API", "Sticker file is too large");
+			}
+		}
+
+		if ( caption != null && !caption.equals("") ) snapPhotoContent.setCaptionText( caption );
+		if ( url != null && !url.equals("") ) snapPhotoContent.setAttachmentUrl( url );
+
+		snapCreativeKitApi.send(snapPhotoContent);
 	}
 }

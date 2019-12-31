@@ -17,6 +17,7 @@
 		4A01977119CE6053006204A7 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A01977019CE6053006204A7 /* EventKit.framework */; };
 		4A01977319CE6063006204A7 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A01977219CE6063006204A7 /* EventKitUI.framework */; };
 		4A01977519CE608F006204A7 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A01977419CE608F006204A7 /* CoreTelephony.framework */; };
+		4A02FCFC22B015FD00BECD20 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A02FCFB22B015FD00BECD20 /* UserNotifications.framework */; };
 		4A0A413F1D9EADF90065F425 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0A413A1D9EADF90065F425 /* FirebaseAnalytics.framework */; };
 		4A0A41401D9EADF90065F425 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0A413B1D9EADF90065F425 /* FirebaseInstanceID.framework */; };
 		4A0A41451D9EAE0B0065F425 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0A41441D9EAE0B0065F425 /* libsqlite3.tbd */; };
@@ -31,21 +32,25 @@
 		4A58BA66206AA5510038F2F0 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA61206AA5500038F2F0 /* nanopb.framework */; };
 		4A58BA67206AA5510038F2F0 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA62206AA5510038F2F0 /* FirebaseCore.framework */; };
 		4A58BA69206AA5950038F2F0 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A58BA68206AA5940038F2F0 /* ARKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4A5C2D7C230DA27400E42FE5 /* SCSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D7A230DA27400E42FE5 /* SCSDKCoreKit.framework */; };
+		4A5C2D7D230DA29D00E42FE5 /* SCSDKCoreKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D7A230DA27400E42FE5 /* SCSDKCoreKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4A5C2D80230DA31700E42FE5 /* SCSDKCreativeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D7F230DA31700E42FE5 /* SCSDKCreativeKit.framework */; };
+		4A5C2D81230DA32A00E42FE5 /* SCSDKCreativeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C2D7F230DA31700E42FE5 /* SCSDKCreativeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4A5FF6F81F6C301400BFF8C8 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5FF6F71F6C301400BFF8C8 /* ReplayKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A687A221EB0FAC100281DB2 /* Default-375w-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A181EB0FAC100281DB2 /* Default-375w-667h@2x.png */; };
 		4A687A231EB0FAC100281DB2 /* Default-414w-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A191EB0FAC100281DB2 /* Default-414w-736h@3x.png */; };
 		4A687A241EB0FAC100281DB2 /* Default-Landscape-1366h@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A1A1EB0FAC100281DB2 /* Default-Landscape-1366h@2x~ipad.png */; };
 		4A687A251EB0FAC100281DB2 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A1B1EB0FAC100281DB2 /* Default-Landscape@2x~ipad.png */; };
-		4A687A261EB0FAC100281DB2 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A1C1EB0FAC100281DB2 /* Default-Landscape~ipad.png */; };
 		4A687A271EB0FAC100281DB2 /* Default-Portrait-1366h@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A1D1EB0FAC100281DB2 /* Default-Portrait-1366h@2x~ipad.png */; };
 		4A687A281EB0FAC100281DB2 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A1E1EB0FAC100281DB2 /* Default-Portrait@2x~ipad.png */; };
-		4A687A291EB0FAC100281DB2 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A1F1EB0FAC100281DB2 /* Default-Portrait~ipad.png */; };
 		4A687A2A1EB0FAC100281DB2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A687A201EB0FAC100281DB2 /* Default@2x.png */; };
 		4A7962001FE02D5E00153A39 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A7961FF1FE02D5E00153A39 /* Icons.xcassets */; };
 		4A88FF8919EC4E7A00982F31 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A88FF8819EC4E7A00982F31 /* FacebookSDK.framework */; };
 		4A952B131FA00CE2006F2215 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A952B121FA00CE2006F2215 /* WatchConnectivity.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A9D50791996814400473873 /* ProgramData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D50781996814400473873 /* ProgramData.cpp */; };
 		4AAAB70921C04875003BE3C8 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AAAB70821C04875003BE3C8 /* WebKit.framework */; };
+		4AF5D73222F8770F0090B480 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF5D73022F8770E0090B480 /* Default-Landscape~ipad.png */; };
+		4AF5D73322F8770F0090B480 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF5D73122F8770F0090B480 /* Default-Portrait~ipad.png */; };
 		726A37B315B8DA0D002F8919 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 726A37B215B8DA0D002F8919 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		72EF411914632D6400C96B0A /* UntitledViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72EF411814632D6400C96B0A /* UntitledViewController.xib */; };
 		9B0A5AAF13269BF4006B5FB6 /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A5AAD13269BF4006B5FB6 /* interpreter.cpp */; };
@@ -64,6 +69,21 @@
 		D8C10A48161211B900665788 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C10A47161211B900665788 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4A5C2D76230D9F8F00E42FE5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4A5C2D81230DA32A00E42FE5 /* SCSDKCreativeKit.framework in Embed Frameworks */,
+				4A5C2D7D230DA29D00E42FE5 /* SCSDKCoreKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* Core.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Core.h; sourceTree = "<group>"; };
@@ -79,6 +99,7 @@
 		4A01977019CE6053006204A7 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		4A01977219CE6063006204A7 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		4A01977419CE608F006204A7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4A02FCFB22B015FD00BECD20 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		4A0A413A1D9EADF90065F425 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = "../../platform/apple/Source/Social Plugins/Firebase/FirebaseAnalytics.framework"; sourceTree = "<group>"; };
 		4A0A413B1D9EADF90065F425 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = "../../platform/apple/Source/Social Plugins/Firebase/FirebaseInstanceID.framework"; sourceTree = "<group>"; };
 		4A0A41441D9EAE0B0065F425 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -93,21 +114,23 @@
 		4A58BA61206AA5500038F2F0 /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = "../../platform/apple/Source/Social Plugins/Firebase/nanopb.framework"; sourceTree = "<group>"; };
 		4A58BA62206AA5510038F2F0 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = "../../platform/apple/Source/Social Plugins/Firebase/FirebaseCore.framework"; sourceTree = "<group>"; };
 		4A58BA68206AA5940038F2F0 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
+		4A5C2D7A230DA27400E42FE5 /* SCSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SCSDKCoreKit.framework; path = "../../platform/apple/Source/Social Plugins/SCSDKCoreKit.framework"; sourceTree = "<group>"; };
+		4A5C2D7F230DA31700E42FE5 /* SCSDKCreativeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SCSDKCreativeKit.framework; path = "../../platform/apple/Source/Social Plugins/SCSDKCreativeKit.framework"; sourceTree = "<group>"; };
 		4A5FF6F71F6C301400BFF8C8 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		4A687A181EB0FAC100281DB2 /* Default-375w-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-375w-667h@2x.png"; sourceTree = "<group>"; };
 		4A687A191EB0FAC100281DB2 /* Default-414w-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-414w-736h@3x.png"; sourceTree = "<group>"; };
 		4A687A1A1EB0FAC100281DB2 /* Default-Landscape-1366h@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape-1366h@2x~ipad.png"; sourceTree = "<group>"; };
 		4A687A1B1EB0FAC100281DB2 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
-		4A687A1C1EB0FAC100281DB2 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		4A687A1D1EB0FAC100281DB2 /* Default-Portrait-1366h@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait-1366h@2x~ipad.png"; sourceTree = "<group>"; };
 		4A687A1E1EB0FAC100281DB2 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		4A687A1F1EB0FAC100281DB2 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		4A687A201EB0FAC100281DB2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4A7961FF1FE02D5E00153A39 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		4A88FF8819EC4E7A00982F31 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../platform/apple/Source/Social Plugins/FacebookSDK/FacebookSDK.framework"; sourceTree = "<group>"; };
 		4A952B121FA00CE2006F2215 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
 		4A9D50781996814400473873 /* ProgramData.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = ProgramData.cpp; path = ../../interpreter/ProgramData.cpp; sourceTree = "<group>"; };
 		4AAAB70821C04875003BE3C8 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		4AF5D73022F8770E0090B480 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		4AF5D73122F8770F0090B480 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		726A37B215B8DA0D002F8919 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		72EF411814632D6400C96B0A /* UntitledViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UntitledViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* agkinterpreter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "agkinterpreter-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -169,6 +192,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5C2D80230DA31700E42FE5 /* SCSDKCreativeKit.framework in Frameworks */,
+				4A5C2D7C230DA27400E42FE5 /* SCSDKCoreKit.framework in Frameworks */,
+				4A02FCFC22B015FD00BECD20 /* UserNotifications.framework in Frameworks */,
 				4AAAB70921C04875003BE3C8 /* WebKit.framework in Frameworks */,
 				4A58BA69206AA5950038F2F0 /* ARKit.framework in Frameworks */,
 				4A952B131FA00CE2006F2215 /* WatchConnectivity.framework in Frameworks */,
@@ -259,16 +285,16 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4AF5D73022F8770E0090B480 /* Default-Landscape~ipad.png */,
+				4AF5D73122F8770F0090B480 /* Default-Portrait~ipad.png */,
 				4A7961FF1FE02D5E00153A39 /* Icons.xcassets */,
 				4A44D4621FBC8D690074C59C /* Default-375w-812h@3x.png */,
 				4A687A181EB0FAC100281DB2 /* Default-375w-667h@2x.png */,
 				4A687A191EB0FAC100281DB2 /* Default-414w-736h@3x.png */,
 				4A687A1A1EB0FAC100281DB2 /* Default-Landscape-1366h@2x~ipad.png */,
 				4A687A1B1EB0FAC100281DB2 /* Default-Landscape@2x~ipad.png */,
-				4A687A1C1EB0FAC100281DB2 /* Default-Landscape~ipad.png */,
 				4A687A1D1EB0FAC100281DB2 /* Default-Portrait-1366h@2x~ipad.png */,
 				4A687A1E1EB0FAC100281DB2 /* Default-Portrait@2x~ipad.png */,
-				4A687A1F1EB0FAC100281DB2 /* Default-Portrait~ipad.png */,
 				4A687A201EB0FAC100281DB2 /* Default@2x.png */,
 				4A0A41461D9EAE420065F425 /* GoogleService-Info.plist */,
 				D88342E716F8C88C006ABD6F /* Default-568h@2x.png */,
@@ -282,6 +308,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A5C2D7F230DA31700E42FE5 /* SCSDKCreativeKit.framework */,
+				4A5C2D7A230DA27400E42FE5 /* SCSDKCoreKit.framework */,
+				4A02FCFB22B015FD00BECD20 /* UserNotifications.framework */,
 				4AAAB70821C04875003BE3C8 /* WebKit.framework */,
 				4A58BA68206AA5940038F2F0 /* ARKit.framework */,
 				4A952B121FA00CE2006F2215 /* WatchConnectivity.framework */,
@@ -380,6 +409,8 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				4A5C2D76230D9F8F00E42FE5 /* Embed Frameworks */,
+				4A387FB92327AF9500F6D9BD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -432,11 +463,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A687A261EB0FAC100281DB2 /* Default-Landscape~ipad.png in Resources */,
+				4AF5D73322F8770F0090B480 /* Default-Portrait~ipad.png in Resources */,
 				D8897F6812ADCB6500573108 /* MainWindow.xib in Resources */,
 				4A687A241EB0FAC100281DB2 /* Default-Landscape-1366h@2x~ipad.png in Resources */,
-				4A687A291EB0FAC100281DB2 /* Default-Portrait~ipad.png in Resources */,
 				4A7962001FE02D5E00153A39 /* Icons.xcassets in Resources */,
+				4AF5D73222F8770F0090B480 /* Default-Landscape~ipad.png in Resources */,
 				4A44D4631FBC8D690074C59C /* Default-375w-812h@3x.png in Resources */,
 				72EF411914632D6400C96B0A /* UntitledViewController.xib in Resources */,
 				4A687A221EB0FAC100281DB2 /* Default-375w-667h@2x.png in Resources */,
@@ -451,6 +482,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4A387FB92327AF9500F6D9BD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Target architectures: $ARCHS\"\n\nAPP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\nFRAMEWORK_TMP_PATH=\"$FRAMEWORK_EXECUTABLE_PATH-tmp\"\n\n# remove simulator's archs if location is not simulator's directory\ncase \"${TARGET_BUILD_DIR}\" in\n*\"iphonesimulator\")\necho \"No need to remove archs\"\n;;\n*)\nif $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"i386\") ; then\nlipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"i386\" \"$FRAMEWORK_EXECUTABLE_PATH\"\necho \"i386 architecture removed\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\nfi\nif $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"x86_64\") ; then\nlipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"x86_64\" \"$FRAMEWORK_EXECUTABLE_PATH\"\necho \"x86_64 architecture removed\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\nfi\n;;\nesac\n\necho \"Completed for executable $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -485,9 +536,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"../../platform/apple/Source/Social\\ Plugins/FacebookSDK\"",
-					"\"../../platform/apple/Source/Social\\ Plugins\"",
-					"\"../../platform/apple/Source/Social\\ Plugins/Firebase\"",
+					"\"../../platform/apple/Source/Social Plugins/FacebookSDK\"",
+					"\"../../platform/apple/Source/Social Plugins\"",
+					"\"../../platform/apple/Source/Social Plugins/Firebase\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -508,6 +559,7 @@
 				);
 				INFOPLIST_FILE = "agkinterpreter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"../../platform/apple/Lib/Release\"";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -534,9 +586,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"../../platform/apple/Source/Social\\ Plugins/FacebookSDK\"",
-					"\"../../platform/apple/Source/Social\\ Plugins\"",
-					"\"../../platform/apple/Source/Social\\ Plugins/Firebase\"",
+					"\"../../platform/apple/Source/Social Plugins/FacebookSDK\"",
+					"\"../../platform/apple/Source/Social Plugins\"",
+					"\"../../platform/apple/Source/Social Plugins/Firebase\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = agkinterpreter_Prefix.pch;
@@ -554,6 +606,7 @@
 				);
 				INFOPLIST_FILE = "agkinterpreter-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"../../platform/apple/Lib/Release\"";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";

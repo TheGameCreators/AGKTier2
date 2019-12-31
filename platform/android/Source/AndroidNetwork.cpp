@@ -1453,6 +1453,9 @@ void cHTTPConnection::Stop()
 {
 	AGKThread::Stop();
 
+	// force any existing connection to time out
+	curl_easy_setopt( request, CURLOPT_CONNECTTIMEOUT_MS, 1 );
+
 	m_bConnected = false;
 }
 

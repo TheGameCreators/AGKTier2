@@ -1,5 +1,5 @@
-APP_PLATFORM := android-15
+APP_PLATFORM := android-19
 APP_MODULES := AGKAndroid
 APP_OPTIM := release
-APP_ABI := armeabi-v7a x86 arm64-v8a
+APP_ABI := armeabi-v7a arm64-v8a
 APP_STL := c++_static

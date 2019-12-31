@@ -340,8 +340,10 @@ namespace AGK
 			UINT GetClientDisconnected( UINT client );
 			void DeleteDisconnectedClient( UINT client );
 			int GetClientName( UINT client, uString &sName );
+			int GetClientIP( UINT client, uString &sIP );
 			float GetClientPing( UINT client );
 			UINT GetServerID( ) { return 1; } // for now server is always client ID 1
+			int GetServerIP( uString &sIP );
 			
 			void SetLocalVariableI( const char *name, int i, int mode=0 );
 			void SetLocalVariableF( const char *name, float f, int mode=0 );

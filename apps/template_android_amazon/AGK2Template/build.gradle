@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     sourceSets.main.jni.srcDirs = []
 
     defaultConfig {
         applicationId "com.mycompany.mytemplate"
         minSdkVersion 15
-        targetSdkVersion 15
+        targetSdkVersion 26
     }
 
     buildTypes {
@@ -20,12 +20,11 @@ android {
 }
 
 dependencies {
-    compile project(':FacebookSDK')
-    compile project(':GameCircleSDK')
-    compile 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation project(':FacebookSDK')
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
     implementation 'com.google.android.ads.consent:consent-library:1.0.6'
-    compile 'com.google.firebase:firebase-analytics:15.0.0'
-    compile files('libs/amazon-ads-5.8.2.jar')
-    compile files('libs/in-app-purchasing-2.0.61.jar')
-    compile files('libs/chartboost.jar')
+    implementation 'com.google.firebase:firebase-analytics:15.0.0'
+    implementation files('libs/amazon-ads-5.9.0.jar')
+    implementation files('libs/in-app-purchasing-2.0.76.jar')
+    implementation files('libs/chartboost.jar')
 }

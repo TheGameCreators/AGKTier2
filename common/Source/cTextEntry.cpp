@@ -262,6 +262,7 @@ void cEditBox::SetText( const char *str )
     if ( m_bActive ) agk::PlatformChangeTextInput( str );
 }
 
+// coordinates are in world space
 void cEditBox::SetCursorLocation( float x, float y )
 {
 	if ( GetFixed() )
@@ -433,6 +434,7 @@ bool cEditBox::GetHitTest( float x, float y )
 	float realx = x;
 	float realy = y;
 
+	// GetHitTest accepts coordinates in world space so if the edit box is fixed then convert them to screen space
 	if ( GetFixed() )
 	{
 		realx = agk::WorldToScreenX( x );

@@ -69,6 +69,26 @@ bool ZipFile::AddEntry( const char* realPath, const char* zipPath, int compressi
 	if ( compressionlevel < -1 ) compressionlevel = -1;
 	if ( compressionlevel > 9 ) compressionlevel = 9;
 
+	const char *ext = strrchr( realPath, '.' );
+	if ( ext )
+	{
+		uString sExt( ext );
+		sExt.Lower();
+		if ( sExt.CompareTo( ".mp3" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".m4a" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".jpg" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".png" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".gif" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".wav" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".ogg" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".mpg" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".mpeg" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".mp4" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".m4v" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".dat" ) == 0 ) compressionlevel = 0;
+		if ( sExt.CompareTo( ".zip" ) == 0 ) compressionlevel = 0;
+	}
+
 	if ( !m_zf ) 
 	{
 #ifdef _AGK_ERROR_CHECK

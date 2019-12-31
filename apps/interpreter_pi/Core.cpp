@@ -455,19 +455,20 @@ int main (int argc, char **argv)
 					src_rect.height = e.xconfigure.height << 16; 
 				
 					dispman_update = vc_dispmanx_update_start( 0 );
-		            vc_dispmanx_element_change_attributes( dispman_update, dispman_element, ELEMENT_CHANGE_DEST_RECT | ELEMENT_CHANGE_SRC_RECT, 0, 255, &dst_rect, &src_rect, 0, (DISPMANX_TRANSFORM_T)0 ); 
+		            		int failure = vc_dispmanx_element_change_attributes( dispman_update, dispman_element, ELEMENT_CHANGE_DEST_RECT | ELEMENT_CHANGE_SRC_RECT, 0, 255, &dst_rect, &src_rect, 0, (DISPMANX_TRANSFORM_T)0 ); 
 		            vc_dispmanx_update_submit_sync( dispman_update );
+					assert(failure == 0);
 		            
 		            if ( !surfaceChanged ) break;
 		            
 		            nativewindow.element = dispman_element;
 					nativewindow.width = e.xconfigure.width;
 					nativewindow.height = e.xconfigure.height;
-				
-					eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, context);
+
+					eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 					eglDestroySurface( display, surface );
-					  
-					surface = eglCreateWindowSurface( display, config, &nativewindow, NULL );
+					
+  					surface = eglCreateWindowSurface( display, config, &nativewindow, NULL );
 					assert(surface != EGL_NO_SURFACE);
 
 					result = eglMakeCurrent(display, surface, surface, context);

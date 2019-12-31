@@ -1,46 +1,56 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     sourceSets.main.jni.srcDirs = []
 
     defaultConfig {
         applicationId "com.mycompany.mytemplate"
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion 19
+        targetSdkVersion 28
     }
 
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4096M"
+    }
 }
 
 dependencies {
-    compile project(':FacebookSDK')
-    compile 'com.google.android.gms:play-services-ads:15.0.0'
-    compile 'com.google.android.gms:play-services-games:15.0.0'
-    compile 'com.google.android.gms:play-services-location:15.0.0'
-    compile 'com.google.android.gms:play-services-auth:15.0.0'
-    compile 'com.google.firebase:firebase-analytics:15.0.0'
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile files('libs/chartboost.jar')
-    compile files('libs/amazon-ads-5.8.2.jar')
-    implementation 'com.google.ar:core:1.6.0'
-    implementation 'com.google.android.ads.consent:consent-library:1.0.6'
-    compile "com.google.firebase:firebase-messaging:15.0.0"
-    implementation 'com.google.api-client:google-api-client:1.23.0'
+    implementation project(':FacebookSDK')
+    implementation 'com.google.android.gms:play-services-ads:18.1.1'
+    implementation 'com.google.android.gms:play-services-games:18.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.0.1'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation files('libs/chartboost.jar')
+    implementation files('libs/amazon-ads-5.9.0.jar')
+    implementation 'com.google.ar:core:1.10.0'
+    implementation 'com.google.android.ads.consent:consent-library:1.0.7'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
+    implementation 'com.google.api-client:google-api-client:1.25.0'
     implementation 'com.google.api-client:google-api-client-android:1.23.0'
     implementation 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
     implementation files('libs/YouTubeAndroidPlayerAPI.jar')
-}
-
-configurations {
-    all {
-        exclude module: 'httpclient'
-        exclude module: 'commons-logging'
-    }
+    implementation([
+            'com.snapchat.kit.sdk:creative:1.3.2',
+            'com.snapchat.kit.sdk:core:1.3.2',
+    ])
 }

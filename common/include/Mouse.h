@@ -11,6 +11,10 @@
 #define AGK_MOUSE_PREV_RIGHT	0x00000010
 #define AGK_MOUSE_PREV_MIDDLE	0x00000020
 #define AGK_MOUSE_CAPTURED		0x00000040
+#define AGK_MOUSE_FOURTH		0x00000080
+#define AGK_MOUSE_FIFTH			0x00000100
+#define AGK_MOUSE_PREV_FOURTH	0x00000200
+#define AGK_MOUSE_PREV_FIFTH	0x00000400
 
 namespace AGK
 {
@@ -39,6 +43,16 @@ namespace AGK
 			bool GetRightTrue() 
 			{
 				return (m_bFlags & AGK_MOUSE_RIGHT) != 0; 
+			}
+
+			bool GetFourthTrue() 
+			{
+				return (m_bFlags & AGK_MOUSE_FOURTH) != 0; 
+			}
+
+			bool GetFifthTrue() 
+			{
+				return (m_bFlags & AGK_MOUSE_FIFTH) != 0; 
 			}
 
 		public:
@@ -107,6 +121,32 @@ namespace AGK
 						}
 						break;
 					}
+					case 3: 
+					{
+						// record new state
+						if ( state == 0 )
+						{
+							m_bFlags &= ~AGK_MOUSE_FOURTH; 
+						}
+						else
+						{
+							m_bFlags |= AGK_MOUSE_FOURTH;
+						}
+						break;
+					}
+					case 4: 
+					{
+						// record new state
+						if ( state == 0 )
+						{
+							m_bFlags &= ~AGK_MOUSE_FIFTH; 
+						}
+						else
+						{
+							m_bFlags |= AGK_MOUSE_FIFTH;
+						}
+						break;
+					}
 				}
 			}
 
@@ -123,6 +163,12 @@ namespace AGK
 
 				if ( m_bFlags & AGK_MOUSE_MIDDLE ) m_bFlags |= AGK_MOUSE_PREV_MIDDLE;
 				else m_bFlags &= ~AGK_MOUSE_PREV_MIDDLE;
+
+				if ( m_bFlags & AGK_MOUSE_FOURTH ) m_bFlags |= AGK_MOUSE_PREV_FOURTH;
+				else m_bFlags &= ~AGK_MOUSE_PREV_FOURTH;
+
+				if ( m_bFlags & AGK_MOUSE_FIFTH ) m_bFlags |= AGK_MOUSE_PREV_FIFTH;
+				else m_bFlags &= ~AGK_MOUSE_PREV_FIFTH;
 
 				m_fWheelPrev = m_fWheel;
 			}
@@ -184,6 +230,42 @@ namespace AGK
 			{
 				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
 				return ( (m_bFlags & AGK_MOUSE_PREV_MIDDLE) != 0 && (m_bFlags & AGK_MOUSE_MIDDLE) == 0 ); 
+			}
+
+			bool GetFourthPressed() 
+			{
+				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
+				return ( (m_bFlags & AGK_MOUSE_PREV_FOURTH) == 0 && (m_bFlags & AGK_MOUSE_FOURTH) != 0 ); 
+			}
+			
+			bool GetFourthState() 
+			{
+				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
+				return (m_bFlags & AGK_MOUSE_FOURTH) != 0; 
+			}
+
+			bool GetFourthReleased() 
+			{
+				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
+				return ( (m_bFlags & AGK_MOUSE_PREV_FOURTH) != 0 && (m_bFlags & AGK_MOUSE_FOURTH) == 0 ); 
+			}
+
+			bool GetFifthPressed() 
+			{
+				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
+				return ( (m_bFlags & AGK_MOUSE_PREV_FIFTH) == 0 && (m_bFlags & AGK_MOUSE_FIFTH) != 0 ); 
+			}
+			
+			bool GetFifthState() 
+			{
+				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
+				return (m_bFlags & AGK_MOUSE_FIFTH) != 0; 
+			}
+
+			bool GetFifthReleased() 
+			{
+				if ( (m_bFlags & AGK_MOUSE_CAPTURED) != 0 ) return false;
+				return ( (m_bFlags & AGK_MOUSE_PREV_FIFTH) != 0 && (m_bFlags & AGK_MOUSE_FIFTH) == 0 ); 
 			}
 
 			bool IsCaptured() { return (m_bFlags & AGK_MOUSE_CAPTURED) != 0; }

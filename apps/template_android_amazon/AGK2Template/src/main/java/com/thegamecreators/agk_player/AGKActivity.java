@@ -53,44 +53,38 @@ public class AGKActivity extends NativeActivity
     {
         switch( requestCode )
         {
-            case 10002: {
+            case 10002: { // screen recording
                 if (resultCode != Activity.RESULT_OK) {
                     Log.i("MediaProjection", "User cancelled");
                     return;
                 }
-                if ( Build.VERSION.SDK_INT >= 21 ) {
+                if (Build.VERSION.SDK_INT >= 21) {
                     Log.i("MediaProjection", "Starting screen capture");
 
                     int width = AGKHelper.g_pAct.getWindow().getDecorView().getWidth();
                     int height = AGKHelper.g_pAct.getWindow().getDecorView().getHeight();
-                    if ( width > height )
-                    {
-                        if ( width > 1280 ) width = 1280;
-                        if ( height > 720 ) height = 720;
-                    }
-                    else
-                    {
-                        if ( width > 720 ) width = 720;
-                        if ( height > 1280 ) height = 1280;
+                    if (width > height) {
+                        if (width > 1280) width = 1280;
+                        if (height > 720) height = 720;
+                    } else {
+                        if (width > 720) width = 720;
+                        if (height > 1280) height = 1280;
                     }
                     int audioSource = 0;
-                    if ( AGKHelper.g_iScreenRecordMic == 1 ) {
+                    if (AGKHelper.g_iScreenRecordMic == 1) {
                         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
                             audioSource = MediaRecorder.AudioSource.MIC;
-                        }
-                        else
-                        {
-                            Log.w( "Screen Recording", "The app does not have the RECORD_AUDIO permission, video will have no audio" );
+                        } else {
+                            Log.w("Screen Recording", "The app does not have the RECORD_AUDIO permission, video will have no audio");
                         }
                     }
 
                     AGKHelper.mMediaRecorder = new MediaRecorder();
-                    if ( audioSource > 0 ) AGKHelper.mMediaRecorder.setAudioSource(audioSource);
+                    if (audioSource > 0) AGKHelper.mMediaRecorder.setAudioSource(audioSource);
                     AGKHelper.mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
                     AGKHelper.mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
                     AGKHelper.mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-                    if ( audioSource > 0 )
-                    {
+                    if (audioSource > 0) {
                         AGKHelper.mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                         AGKHelper.mMediaRecorder.setAudioEncodingBitRate(96000);
                         AGKHelper.mMediaRecorder.setAudioSamplingRate(44100);
@@ -101,9 +95,7 @@ public class AGKActivity extends NativeActivity
                     AGKHelper.mMediaRecorder.setOutputFile(AGKHelper.g_sScreenRecordFile);
                     try {
                         AGKHelper.mMediaRecorder.prepare();
-                    }
-                    catch( Exception e )
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         AGKHelper.mMediaRecorder.release();
                         AGKHelper.mMediaRecorder = null;

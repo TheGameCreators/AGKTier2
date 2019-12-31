@@ -1296,7 +1296,7 @@ void cNetworkMessage::CopyMessage( cNetworkMessage *pOther )
 		memcpy( m_Buffer, pOther->GetBuffer(), max );
 	}
 
-	m_iSize = pOther->m_iSize;
+	m_iSize = max;
 	m_iPtr = m_iSize;
 	m_iFromClientID = 0;
 	m_iToClientID = 0;
@@ -3023,6 +3023,61 @@ int cNetwork::GetClientName( UINT client, uString &sName )
 	{
 #ifdef _AGK_ERROR_CHECK
 		agk::Error( "Invalid client ID passed to cNetwork::GetClientName()" );
+#endif
+	}
+
+	return result;
+}
+
+int cNetwork::GetClientIP( uint32_t client, uString &sIP )
+{
+	int result = -1;
+	if ( !m_ppClientSock ) 
+	{
+		agk::Error( "Failed to get client IP, only the server knows the client IPs" );
+		return result;
+	}
+
+	{
+		cAutoLock autolock( m_kClientLock ); // can platform double lock? (confirmed works on Windows and iOS)
+		
+		UINT *index = m_cClientRef.GetItem( client );
+		if ( index != 0 && *index < m_iNumClients ) 
+		{
+			sIP.SetStr( m_ppClientSock[ *index ]->GetRemoteIP() );
+			result = sIP.GetLength();
+		}
+	}
+
+	if ( result < 0 )
+	{
+#ifdef _AGK_ERROR_CHECK
+		agk::Error( "Invalid client ID passed to cNetwork::GetClientIP()" );
+#endif
+	}
+
+	return result;
+}
+
+int cNetwork::GetServerIP( uString &sIP )
+{
+	int result = -1;
+	if ( !m_pServerSock ) 
+	{
+		agk::Error( "Failed to get server IP, use GetDeviceIP or GetDeviceIPv6 instead" );
+		return result;
+	}
+
+	{
+		cAutoLock alock(m_kCleanUpLock);
+		sIP.SetStr( m_pServerSock->GetRemoteIP() );
+		result = sIP.GetLength();
+	}
+	
+	if ( result < 0 )
+	{
+#ifdef _AGK_ERROR_CHECK
+		agk::Error( "Failed to get server IP" );
 #endif
 	}
 

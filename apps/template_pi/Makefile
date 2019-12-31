@@ -41,7 +41,7 @@ $(ODIR)/%.o: ../interpreter/%.cpp $(DEPS)
 
 # link the .o files
 Executable: | $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o build/PiPlayer$(SUFFIX) $(LDFLAGS) -lAGKPi -lavcodec -lavformat -lavutil -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lXrandr -lpthread -lopenal -lcurl -ludev -lrt -lXxf86vm -lXext -lX11
+	$(CC) $(LDFLAGS) $(OBJS) -o build/PiPlayer$(SUFFIX) $(LDFLAGS) -lAGKPi -lavcodec -lavformat -lavutil -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lXrandr -lpthread -lopenal -ludev -lrt -lXxf86vm -lXext -lX11
 
 
 # delete compiled files

@@ -13,7 +13,7 @@ endif
 OUT = platform/pi/Lib/Release$(SUFFIX)
 CC = g++-4.8
 ODIR = $(OUT)/obj
-INC = -Icommon/include -Icommon -Igiflib -Izxing -Ilibpng -Ilibjpeg -Izlib -Iassimp -Ibullet -Ibullet/BulletCollision/CollisionShapes -Ilibogg/include -Ifreetype/include -Irenderer/OpenGLES2 -I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux
+INC = -Icommon/include -Icommon -Igiflib -Izxing -Ilibpng -Ilibjpeg -Izlib -Iassimp -Ibullet -Ibullet/BulletCollision/CollisionShapes -Ilibogg/include -Ifreetype/include -Irenderer/OpenGLES2 -I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux -Icurl -Icurl/include
 
 _OBJS = AGKMotionState.o \
         AGKToBullet.o \
@@ -648,7 +648,211 @@ _OBJS = AGKMotionState.o \
         freetype/src/type1/type1.o \
         freetype/src/cid/type1cid.o \
         freetype/src/type42/type42.o \
-        freetype/src/winfonts/winfnt.o
+        freetype/src/winfonts/winfnt.o \
+        curl/amigaos.o \
+        curl/asyn-ares.o \
+        curl/asyn-thread.o \
+        curl/base64.o \
+        curl/conncache.o \
+        curl/connect.o \
+        curl/content_encoding.o \
+        curl/cookie.o \
+        curl/curl_addrinfo.o \
+        curl/curl_des.o \
+        curl/curl_endian.o \
+        curl/curl_fnmatch.o \
+        curl/curl_gethostname.o \
+        curl/curl_gssapi.o \
+        curl/curl_memrchr.o \
+        curl/curl_multibyte.o \
+        curl/curl_ntlm_core.o \
+        curl/curl_ntlm_wb.o \
+        curl/curl_rtmp.o \
+        curl/curl_sasl.o \
+        curl/curl_sspi.o \
+        curl/curl_threads.o \
+        curl/dict.o \
+        curl/dotdot.o \
+        curl/easy.o \
+        curl/escape.o \
+        curl/file.o \
+        curl/fileinfo.o \
+        curl/formdata.o \
+        curl/ftp.o \
+        curl/ftplistparser.o \
+        curl/getenv.o \
+        curl/getinfo.o \
+        curl/gopher.o \
+        curl/hash.o \
+        curl/hmac.o \
+        curl/hostasyn.o \
+        curl/hostcheck.o \
+        curl/hostip.o \
+        curl/hostip4.o \
+        curl/hostip6.o \
+        curl/hostsyn.o \
+        curl/http.o \
+        curl/http_chunks.o \
+        curl/http_digest.o \
+        curl/http_negotiate.o \
+        curl/http_ntlm.o \
+        curl/http_proxy.o \
+        curl/http2.o \
+        curl/idn_win32.o \
+        curl/if2ip.o \
+        curl/inet_ntop.o \
+        curl/inet_pton.o \
+        curl/ldap.o \
+        curl/llist.o \
+        curl/md4.o \
+        curl/memdebug.o \
+        curl/multi.o \
+        curl/netrc.o \
+        curl/non-ascii.o \
+        curl/nonblock.o \
+        curl/nwlib.o \
+        curl/nwos.o \
+        curl/openldap.o \
+        curl/parsedate.o \
+        curl/pingpong.o \
+        curl/pipeline.o \
+        curl/progress.o \
+        curl/rand.o \
+        curl/rtsp.o \
+        curl/select.o \
+        curl/sendf.o \
+        curl/share.o \
+        curl/slist.o \
+        curl/smb.o \
+        curl/socks.o \
+        curl/socks_gssapi.o \
+        curl/socks_sspi.o \
+        curl/speedcheck.o \
+        curl/splay.o \
+        curl/ssh.o \
+        curl/strdup.o \
+        curl/strcase.o \
+        curl/strerror.o \
+        curl/strtok.o \
+        curl/strtoofft.o \
+        curl/system_win32.o \
+        curl/telnet.o \
+        curl/tftp.o \
+        curl/timeval.o \
+        curl/transfer.o \
+        curl/url.o \
+        curl/warnless.o \
+        curl/wildcard.o \
+        curl/x509asn1.o \
+        curl/vtls/axtls.o \
+        curl/vtls/cyassl.o \
+        curl/vtls/darwinssl.o \
+        curl/vtls/gskit.o \
+        curl/vtls/gtls.o \
+        curl/vtls/mbedtls.o \
+        curl/vtls/nss.o \
+        curl/vtls/openssl.o \
+        curl/vtls/polarssl.o \
+        curl/vtls/polarssl_threadlock.o \
+        curl/vtls/schannel.o \
+        curl/vtls/vtls.o \
+        curl/imap.o \
+        curl/mprintf.o \
+        curl/md5.o \
+        curl/pop3.o \
+        curl/smtp.o \
+        curl/version.o \
+        curl/mbedTLS/xtea.o \
+        curl/mbedTLS/aes.o \
+        curl/mbedTLS/aesni.o \
+        curl/mbedTLS/arc4.o \
+        curl/mbedTLS/aria.o \
+        curl/mbedTLS/asn1parse.o \
+        curl/mbedTLS/asn1write.o \
+        curl/mbedTLS/base64.o \
+        curl/mbedTLS/bignum.o \
+        curl/mbedTLS/blowfish.o \
+        curl/mbedTLS/camellia.o \
+        curl/mbedTLS/ccm.o \
+        curl/mbedTLS/certs.o \
+        curl/mbedTLS/chacha20.o \
+        curl/mbedTLS/chachapoly.o \
+        curl/mbedTLS/cipher.o \
+        curl/mbedTLS/cipher_wrap.o \
+        curl/mbedTLS/cmac.o \
+        curl/mbedTLS/ctr_drbg.o \
+        curl/mbedTLS/debug.o \
+        curl/mbedTLS/des.o \
+        curl/mbedTLS/dhm.o \
+        curl/mbedTLS/ecdh.o \
+        curl/mbedTLS/ecdsa.o \
+        curl/mbedTLS/ecjpake.o \
+        curl/mbedTLS/ecp.o \
+        curl/mbedTLS/ecp_curves.o \
+        curl/mbedTLS/entropy.o \
+        curl/mbedTLS/entropy_poll.o \
+        curl/mbedTLS/error.o \
+        curl/mbedTLS/gcm.o \
+        curl/mbedTLS/havege.o \
+        curl/mbedTLS/hkdf.o \
+        curl/mbedTLS/hmac_drbg.o \
+        curl/mbedTLS/md.o \
+        curl/mbedTLS/md_wrap.o \
+        curl/mbedTLS/md2.o \
+        curl/mbedTLS/md4.o \
+        curl/mbedTLS/md5.o \
+        curl/mbedTLS/memory_buffer_alloc.o \
+        curl/mbedTLS/net_sockets.o \
+        curl/mbedTLS/nist_kw.o \
+        curl/mbedTLS/oid.o \
+        curl/mbedTLS/padlock.o \
+        curl/mbedTLS/pem.o \
+        curl/mbedTLS/pk.o \
+        curl/mbedTLS/pk_wrap.o \
+        curl/mbedTLS/pkcs5.o \
+        curl/mbedTLS/pkcs11.o \
+        curl/mbedTLS/pkcs12.o \
+        curl/mbedTLS/pkparse.o \
+        curl/mbedTLS/pkwrite.o \
+        curl/mbedTLS/platform.o \
+        curl/mbedTLS/platform_util.o \
+        curl/mbedTLS/poly1305.o \
+        curl/mbedTLS/ripemd160.o \
+        curl/mbedTLS/rsa.o \
+        curl/mbedTLS/rsa_internal.o \
+        curl/mbedTLS/sha1.o \
+        curl/mbedTLS/sha256.o \
+        curl/mbedTLS/sha512.o \
+        curl/mbedTLS/ssl_cache.o \
+        curl/mbedTLS/ssl_ciphersuites.o \
+        curl/mbedTLS/ssl_cli.o \
+        curl/mbedTLS/ssl_cookie.o \
+        curl/mbedTLS/ssl_srv.o \
+        curl/mbedTLS/ssl_ticket.o \
+        curl/mbedTLS/ssl_tls.o \
+        curl/mbedTLS/threading.o \
+        curl/mbedTLS/timing.o \
+        curl/mbedTLS/version.o \
+        curl/mbedTLS/version_features.o \
+        curl/mbedTLS/x509.o \
+        curl/mbedTLS/x509_create.o \
+        curl/mbedTLS/x509_crl.o \
+        curl/mbedTLS/x509_crt.o \
+        curl/mbedTLS/x509_csr.o \
+        curl/mbedTLS/x509write_crt.o \
+        curl/mbedTLS/x509write_csr.o \
+        curl/vauth/cleartext.o \
+        curl/vauth/cram.o \
+        curl/vauth/digest.o \
+        curl/vauth/digest_sspi.o \
+        curl/vauth/krb5_gssapi.o \
+        curl/vauth/krb5_sspi.o \
+        curl/vauth/ntlm.o \
+        curl/vauth/ntlm_sspi.o \
+        curl/vauth/oauth2.o \
+        curl/vauth/spnego_gssapi.o \
+        curl/vauth/spnego_sspi.o \
+        curl/vauth/vauth.o
 
         
 OBJS = $(patsubst %,$(ODIR)/%,$(_OBJS))
@@ -714,6 +918,10 @@ setup:
 	mkdir -p $(OUT)/obj/freetype/src/cid
 	mkdir -p $(OUT)/obj/freetype/src/type42
 	mkdir -p $(OUT)/obj/freetype/src/winfonts
+	mkdir -p $(OUT$(ARCH))/obj/curl
+	mkdir -p $(OUT$(ARCH))/obj/curl/mbedTLS
+	mkdir -p $(OUT$(ARCH))/obj/curl/vauth
+	mkdir -p $(OUT$(ARCH))/obj/curl/vtls
 
 $(ODIR)/%.o: common/Source/%.cpp
 	$(CC) -DIDE_PI -Wno-unused-result -c $(INC) -o $@ $< $(CFLAGS)
@@ -759,6 +967,9 @@ $(ODIR)/libogg/%.o: libogg/%.c
 
 $(ODIR)/freetype/%.o: freetype/%.c
 	gcc-4.8 -DIDE_PI -Wno-unused-result -c $(INC) -o $@ $< $(CFLAGS)
+	
+$(ODIR)/curl/%.o: curl/%.c
+	gcc-4.8 -DAGK_LINUX -DBUILDING_LIBCURL -DUSE_MBEDTLS -Wno-unused-result -c $(INC) -o $@ $< $(CFLAGS)
 	
 linkall: | $(OBJS)
 	ar rcs $(OUT)/libAGKPi.a $(OBJS)

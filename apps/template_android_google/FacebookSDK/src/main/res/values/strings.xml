@@ -26,9 +26,6 @@
     <string name="com_facebook_loginview_log_out_action">Log out</string>
     <string name="com_facebook_loginview_cancel_action">Cancel</string>
     <string name="com_facebook_logo_content_description">Facebook Logo</string>
-    <string name="com_facebook_loginfragment_log_in_button">Log in&#8230;</string>
-    <string name="com_facebook_loginfragment_logged_in">Logged in</string>
-    <string name="com_facebook_loginfragment_not_logged_in">Not logged in</string>
     <string name="com_facebook_usersettingsfragment_log_in_button">Log in&#8230;</string>
     <string name="com_facebook_usersettingsfragment_logged_in">Logged in</string>
     <string name="com_facebook_usersettingsfragment_not_logged_in">Not logged in</string>

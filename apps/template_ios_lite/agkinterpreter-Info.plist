@@ -49,9 +49,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Streaming the camera feed into the app</string>
 	<key>NSLocationUsageDescription</key>
-	<string></string>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -62,6 +62,12 @@
 	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Provide your current GPS coordinates to the app</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

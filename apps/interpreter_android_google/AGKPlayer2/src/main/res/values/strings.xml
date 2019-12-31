@@ -4,4 +4,6 @@
     <string name="games_app_id">960969182309</string>
     <string name="backtext">Press back to return to the app</string>
     <string name="waittext">Please Wait...</string>
+    <string name="admob_app_id">ca-app-pub-6042722625366627~8152259761</string>
+    <string name="snap_chat_id">1cec1943-35cc-49ed-b25e-61c4a9d7e10a</string>
 </resources>

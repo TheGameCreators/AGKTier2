@@ -10062,3 +10062,185 @@ case AGKI_GETIMAGESIZEFROMFILE_L_S:
     m_pStack[ m_iStackPtr++ ].i = agk::GetImageSizeFromFile( param0 );
     break;
 }
+case AGKI_SETSHADERERRORMODE_0_L:
+{
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetShaderErrorMode( param0 );
+    break;
+}
+case AGKI_SETSHADERCONSTANTARRAYFLOATBYNAME_0_L_S_L_F:
+{
+    float param3 = m_pStack[ --m_iStackPtr ].f;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetShaderConstantArrayFloatByName( param0, param1, param2, param3 );
+    break;
+}
+case AGKI_SETSHADERCONSTANTARRAYVEC2BYNAME_0_L_S_L_F_F:
+{
+    float param4 = m_pStack[ --m_iStackPtr ].f;
+    float param3 = m_pStack[ --m_iStackPtr ].f;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetShaderConstantArrayVec2ByName( param0, param1, param2, param3, param4 );
+    break;
+}
+case AGKI_SETSHADERCONSTANTARRAYVEC3BYNAME_0_L_S_L_F_F_F:
+{
+    float param5 = m_pStack[ --m_iStackPtr ].f;
+    float param4 = m_pStack[ --m_iStackPtr ].f;
+    float param3 = m_pStack[ --m_iStackPtr ].f;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetShaderConstantArrayVec3ByName( param0, param1, param2, param3, param4, param5 );
+    break;
+}
+case AGKI_SETSHADERCONSTANTARRAYVEC4BYNAME_0_L_S_L_F_F_F_F:
+{
+    float param6 = m_pStack[ --m_iStackPtr ].f;
+    float param5 = m_pStack[ --m_iStackPtr ].f;
+    float param4 = m_pStack[ --m_iStackPtr ].f;
+    float param3 = m_pStack[ --m_iStackPtr ].f;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetShaderConstantArrayVec4ByName( param0, param1, param2, param3, param4, param5, param6 );
+    break;
+}
+case AGKI_ISINVERTEDDEPTH_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::IsInvertedDepth( );
+    break;
+}
+case AGKI_GETCLIPSPACEMODE_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetClipSpaceMode( );
+    break;
+}
+case AGKI_ISTOPLEFTORIGIN_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::IsTopLeftOrigin( );
+    break;
+}
+case AGKI_GETDRAWING3DSETUPTIME_F_0:
+{
+    m_pStack[ m_iStackPtr++ ].f = agk::GetDrawing3DSetupTime( );
+    break;
+}
+case AGKI_MAKECOLOR_L_L_L_L_L:
+{
+    int param3 = m_pStack[ --m_iStackPtr ].i;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    int param1 = m_pStack[ --m_iStackPtr ].i;
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    m_pStack[ m_iStackPtr++ ].i = agk::MakeColor( param0, param1, param2, param3 );
+    break;
+}
+case AGKI_GETCOLORALPHA_L_L:
+{
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    m_pStack[ m_iStackPtr++ ].i = agk::GetColorAlpha( param0 );
+    break;
+}
+case AGKI_SETPRESENTMODE_0_L:
+{
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetPresentMode( param0 );
+    break;
+}
+case AGKI_FORCEPRESENT_0_0:
+{
+    agk::ForcePresent( );
+    break;
+}
+case AGKI_GETAPPINSTALLED_L_S:
+{
+    const char* param0 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    m_pStack[ m_iStackPtr++ ].i = agk::GetAppInstalled( param0 );
+    break;
+}
+case AGKI_SETSNAPCHATSTICKERSETTINGS_0_F_F_L_L_F:
+{
+    float param4 = m_pStack[ --m_iStackPtr ].f;
+    int param3 = m_pStack[ --m_iStackPtr ].i;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    float param1 = m_pStack[ --m_iStackPtr ].f;
+    float param0 = m_pStack[ --m_iStackPtr ].f;
+    agk::SetSnapChatStickerSettings( param0, param1, param2, param3, param4 );
+    break;
+}
+case AGKI_SHARESNAPCHATIMAGE_0_S_S_S_S:
+{
+    const char* param3 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    const char* param2 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    const char* param0 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    agk::ShareSnapChatImage( param0, param1, param2, param3 );
+    break;
+}
+case AGKI_SETLOCALNOTIFICATION_0_L_L_S_S:
+{
+    const char* param3 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    const char* param2 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param1 = m_pStack[ --m_iStackPtr ].i;
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetLocalNotification( param0, param1, param2, param3 );
+    break;
+}
+case AGKI_GETRENDERERNAME_S_0:
+{
+    char *szReturnStr = agk::GetRendererName( );
+    m_pStrStack[ m_iStrStackPtr++ ].SetStrUTF8( szReturnStr );
+    delete [] szReturnStr;
+    break;
+}
+case AGKI_GETNETWORKCLIENTIP_S_L_L:
+{
+    int param1 = m_pStack[ --m_iStackPtr ].i;
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    char *szReturnStr = agk::GetNetworkClientIP( param0, param1 );
+    m_pStrStack[ m_iStrStackPtr++ ].SetStrUTF8( szReturnStr );
+    delete [] szReturnStr;
+    break;
+}
+case AGKI_GETNETWORKSERVERIP_S_L:
+{
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    char *szReturnStr = agk::GetNetworkServerIP( param0 );
+    m_pStrStack[ m_iStrStackPtr++ ].SetStrUTF8( szReturnStr );
+    delete [] szReturnStr;
+    break;
+}
+case AGKI_GETRAWMOUSEFOURTHPRESSED_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetRawMouseFourthPressed( );
+    break;
+}
+case AGKI_GETRAWMOUSEFOURTHSTATE_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetRawMouseFourthState( );
+    break;
+}
+case AGKI_GETRAWMOUSEFOURTHRELEASED_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetRawMouseFourthReleased( );
+    break;
+}
+case AGKI_GETRAWMOUSEFIFTHPRESSED_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetRawMouseFifthPressed( );
+    break;
+}
+case AGKI_GETRAWMOUSEFIFTHSTATE_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetRawMouseFifthState( );
+    break;
+}
+case AGKI_GETRAWMOUSEFIFTHRELEASED_L_0:
+{
+    m_pStack[ m_iStackPtr++ ].i = agk::GetRawMouseFifthReleased( );
+    break;
+}

@@ -602,7 +602,7 @@ namespace AGK
 			static bool  PlatformHasTwitter		              ( void );
 
 			// local notifications
-			static void PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage );
+			static void PlatformCreateLocalNotification( int iID, int datetime, const char *szMessage, const char *szDeepLink );
 			static void PlatformCancelLocalNotification( int iID );
 
 			static int PlatformGetIP( uString &sIP );
@@ -736,7 +736,6 @@ namespace AGK
 			static float m_fDrawingTime;
 
 			static int m_iNumProcessors;
-			static int m_iFilePathsInitialised;
 
 		public:
 
@@ -800,6 +799,8 @@ namespace AGK
 			static void MouseLeftButton(UINT ID, int state);
 			static void MouseRightButton(UINT ID, int state);
 			static void MouseMiddleButton(UINT ID, int state);
+			static void MouseFourthButton(uint32_t ID, int state);
+			static void MouseFifthButton(uint32_t ID, int state);
 			static void MouseMove(UINT ID, int x, int y);
 			static void MouseWheel(UINT ID, float w);
 		
@@ -885,6 +886,9 @@ namespace AGK
 			static int m_iGPSSensorExists;
 
 			// core functions
+			static void AddVulkanDeviceExtensions( const char* szExtensions );
+			static void AddVulkanInstanceExtensions( const char* szExtensions );
+			static char* GetRendererName();
 			static void SetScreenResolution( int width, int height );
 			static void SetWindowPosition( int x, int y );
 			static void SetWindowSize( int width, int height, int fullscreen );
@@ -1074,6 +1078,9 @@ namespace AGK
 			static UINT GetImageSizeFromFile( const char* filename );
 			static cImage* GetImagePtr ( UINT iImageIndex );
 			static UINT GetImageTextureID ( UINT iImageIndex );
+			static uint32_t GetOpenGLImageID ( uint32_t iImageIndex );
+			static void* GetVulkanVRImageData ( uint32_t iImageIndex );
+			static void SetVRImage ( uint32_t iImageIndex, int mode );
 			static void LoadImage ( UINT iImageIndex, const char* sImageFilename, int bBlackToAlpha );
 			static UINT LoadImage ( const char* sImageFilename, int bBlackToAlpha );
 			static void LoadImage ( UINT iImageIndex, const char* sImageFilename );
@@ -1884,6 +1891,12 @@ namespace AGK
 			static int GetRawMouseMiddlePressed();
 			static int GetRawMouseMiddleState();
 			static int GetRawMouseMiddleReleased();
+			static int GetRawMouseFourthPressed();
+			static int GetRawMouseFourthState();
+			static int GetRawMouseFourthReleased();
+			static int GetRawMouseFifthPressed();
+			static int GetRawMouseFifthState();
+			static int GetRawMouseFifthReleased();
 			static void SetRawMouseVisible( int visible );
 			static void SetRawMousePosition( float x, float y );
 		
@@ -2291,8 +2304,10 @@ namespace AGK
 			static UINT GetNetworkClientDisconnected( UINT iNetID, UINT client );
 			static void DeleteNetworkClient( UINT iNetID, UINT client );
 			static char* GetNetworkClientName( UINT iNetID, UINT client );
+			static char* GetNetworkClientIP( uint32_t iNetID, uint32_t client );
 			static float GetNetworkClientPing( UINT iNetID, UINT client );
 			static UINT GetNetworkServerID( UINT iNetID );
+			static char* GetNetworkServerIP( uint32_t iNetID );
 			
 			static void SetNetworkLocalInteger( UINT iNetID, const char *name, int i );
 			static void SetNetworkLocalInteger( UINT iNetID, const char *name, int i, int mode );
@@ -2614,6 +2629,7 @@ namespace AGK
 			static void  SetNotificationText          ( const char* pText );
 
 			// local notifications
+			static void SetLocalNotification( int iID, int datetime, const char *szMessage, const char* szDeepLink );
 			static void SetLocalNotification( int iID, int datetime, const char *szMessage );
 			static void CancelLocalNotification( int iID );
 			static int GetLocalNotificationExists( int iID );
@@ -3427,6 +3443,32 @@ namespace AGK
 			static void ARFixObjectToAnchor( int objID, int anchorID );
 			static int ARGetAnchorStatus( int anchorID );
 			static void ARDeleteAnchor( int anchorID );
+
+			// AGK Studio commands
+			static void SetObjectMeshCastShadow( int objID, int meshID, int mode );
+			static void SetObjectShaderConstantArrayFloatByName( int objID, const char* varName, int index, float f1 );
+			static void SetObjectShaderConstantArrayVec2ByName( int objID, const char* varName, int index, float f1, float f2 );
+			static void SetObjectShaderConstantArrayVec3ByName( int objID, const char* varName, int index, float f1, float f2, float f3 );
+			static void SetObjectShaderConstantArrayVec4ByName( int objID, const char* varName, int index, float f1, float f2, float f3, float f4 );
+			static void SetShaderErrorMode( int mode );
+			static void SetShaderConstantArrayFloatByName( int shaderID, const char* varName, int index, float f1 );
+			static void SetShaderConstantArrayVec2ByName( int shaderID, const char* varName, int index, float f1, float f2 );
+			static void SetShaderConstantArrayVec3ByName( int shaderID, const char* varName, int index, float f1, float f2, float f3 );
+			static void SetShaderConstantArrayVec4ByName( int shaderID, const char* varName, int index, float f1, float f2, float f3, float f4 );
+			static int IsInvertedDepth();
+			static int GetClipSpaceMode();
+			static int IsTopLeftOrigin();
+			static float GetDrawing3DSetupTime();
+			static uint32_t MakeColor(uint32_t red, uint32_t green, uint32_t blue, uint32_t alpha);
+			static int GetColorAlpha(int color);
+			static void SetPresentMode( int mode );
+			static void ForcePresent();
+
+			static int GetAppInstalled( const char *packageName );
+
+			// SnapChat
+			static void SetSnapChatStickerSettings( float x, float y, int width, int height, float angle );
+			static void ShareSnapChatImage( const char* imageFile, const char* stickerFile, const char* caption, const char* url );
 	};
 }
 

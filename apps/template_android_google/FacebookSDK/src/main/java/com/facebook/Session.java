@@ -16,15 +16,16 @@
 
 package com.facebook;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.*;
 import android.content.pm.ResolveInfo;
 import android.os.*;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.facebook.internal.NativeProtocol;
 import com.facebook.internal.SessionAuthorizationType;
 import com.facebook.internal.Utility;
@@ -89,28 +90,28 @@ public class Session implements Serializable {
     /**
      * The action used to indicate that the active session has been set. This should
      * be used as an action in an IntentFilter and BroadcastReceiver registered with
-     * the {@link android.support.v4.content.LocalBroadcastManager}.
+     * the {@link LocalBroadcastManager}.
      */
     public static final String ACTION_ACTIVE_SESSION_SET = "com.facebook.sdk.ACTIVE_SESSION_SET";
 
     /**
      * The action used to indicate that the active session has been set to null. This should
      * be used as an action in an IntentFilter and BroadcastReceiver registered with
-     * the {@link android.support.v4.content.LocalBroadcastManager}.
+     * the {@link LocalBroadcastManager}.
      */
     public static final String ACTION_ACTIVE_SESSION_UNSET = "com.facebook.sdk.ACTIVE_SESSION_UNSET";
 
     /**
      * The action used to indicate that the active session has been opened. This should
      * be used as an action in an IntentFilter and BroadcastReceiver registered with
-     * the {@link android.support.v4.content.LocalBroadcastManager}.
+     * the {@link LocalBroadcastManager}.
      */
     public static final String ACTION_ACTIVE_SESSION_OPENED = "com.facebook.sdk.ACTIVE_SESSION_OPENED";
 
     /**
      * The action used to indicate that the active session has been closed. This should
      * be used as an action in an IntentFilter and BroadcastReceiver registered with
-     * the {@link android.support.v4.content.LocalBroadcastManager}.
+     * the {@link LocalBroadcastManager}.
      */
     public static final String ACTION_ACTIVE_SESSION_CLOSED = "com.facebook.sdk.ACTIVE_SESSION_CLOSED";
 
@@ -147,7 +148,6 @@ public class Session implements Serializable {
     private volatile Bundle authorizationBundle;
     private final List<StatusCallback> callbacks;
     private Handler handler;
-    private AutoPublishAsyncTask autoPublishAsyncTask;
     // This is the object that synchronizes access to state and tokenInfo
     private final Object lock = new Object();
     private TokenCachingStrategy tokenCachingStrategy;
@@ -551,8 +551,6 @@ public class Session implements Serializable {
             state = SessionState.OPENED;
             this.postStateChange(oldState, state, null);
         }
-
-        autoPublishAsync();
     }
 
     /**
@@ -1151,8 +1149,6 @@ public class Session implements Serializable {
         boolean started = false;
 
         request.setApplicationId(applicationId);
-
-        autoPublishAsync();
 
         logAuthorizationStart();
 
@@ -1833,57 +1829,6 @@ public class Session implements Serializable {
         public void startActivityForResult(Intent intent, int requestCode);
 
         public Activity getActivityContext();
-    }
-
-    @SuppressWarnings("deprecation")
-    private void autoPublishAsync() {
-        AutoPublishAsyncTask asyncTask = null;
-        synchronized (this) {
-            if (autoPublishAsyncTask == null && Settings.getShouldAutoPublishInstall()) {
-                // copy the application id to guarantee thread safety against our container.
-                String applicationId = Session.this.applicationId;
-
-                // skip publish if we don't have an application id.
-                if (applicationId != null) {
-                    asyncTask = autoPublishAsyncTask = new AutoPublishAsyncTask(applicationId, staticContext);
-                }
-            }
-        }
-
-        if (asyncTask != null) {
-            asyncTask.execute();
-        }
-    }
-
-    /**
-     * Async implementation to allow auto publishing to not block the ui thread.
-     */
-    private class AutoPublishAsyncTask extends AsyncTask<Void, Void, Void> {
-        private final String mApplicationId;
-        private final Context mApplicationContext;
-
-        public AutoPublishAsyncTask(String applicationId, Context context) {
-            mApplicationId = applicationId;
-            mApplicationContext = context.getApplicationContext();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                Settings.publishInstallAndWaitForResponse(mApplicationContext, mApplicationId, true);
-            } catch (Exception e) {
-                Utility.logd("Facebook-publish", e);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            // always clear out the publisher to allow other invocations.
-            synchronized (Session.this) {
-                autoPublishAsyncTask = null;
-            }
-        }
     }
 
     /**

@@ -435,6 +435,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 
+		case WM_XBUTTONDOWN:
+		{
+			if ( wParam & 0x00010000 ) agk::MouseFourthButton( 0, 1 );
+			else if ( wParam & 0x00020000 ) agk::MouseFifthButton( 0, 1 );
+			else return DefWindowProc(hWnd, message, wParam, lParam);
+
+			SetCapture(hWnd);
+			return 1;
+			break;
+		}
+
+		case WM_XBUTTONUP:
+		{
+			if ( wParam & 0x00010000 ) agk::MouseFourthButton( 0, 0 );
+			else if ( wParam & 0x00020000 ) agk::MouseFifthButton( 0, 0 );
+			else return DefWindowProc(hWnd, message, wParam, lParam);
+
+			ReleaseCapture();
+			return 1;
+			break;
+		}
+
 		case WM_MOUSEWHEEL:
 		{
 			int w = (wParam >> 16) & 0x0000ffff;

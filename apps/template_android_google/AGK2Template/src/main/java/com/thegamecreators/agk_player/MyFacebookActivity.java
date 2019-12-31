@@ -20,12 +20,14 @@ import android.database.Cursor;
 // Dynamic Java Code
 public class MyFacebookActivity extends Activity
 {
-	Session.StatusCallback statusCallback = new SessionStatusCallback();
+	public static Session.StatusCallback statusCallback = new SessionStatusCallback();
+	public static Activity act;
 
 	// Called when the activity is first created.
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		act = this;
 		// call Image Picker right away
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.facebookmain);
@@ -64,12 +66,12 @@ public class MyFacebookActivity extends Activity
         Session.saveSession(session, outState); 
     }
 	
-	private class SessionStatusCallback implements Session.StatusCallback {
+	private static class SessionStatusCallback implements Session.StatusCallback {
         public void call(Session session, SessionState state, Exception exception) {
         	if ( session.isOpened() || session.isClosed() ) 
         	{
         		AGKHelper.facebookLoginState = 0;
-        		finish();
+				act.finish();
         	}
         }
     }

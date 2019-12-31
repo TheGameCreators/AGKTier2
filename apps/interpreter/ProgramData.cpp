@@ -2990,6 +2990,10 @@ int ProgramData::ParseDebugArray( AGKFunction *pFunction, int stackPtr, int strS
 		const char *varStart;
 		if ( sRemaining.ByteAt(0) == '[' ) varStart = strchr( szDimensions, '[' )+1;
 		else if ( sRemaining.ByteAt(0) == ',' ) varStart = strchr( szDimensions, ',' )+1;
+		else if ( sRemaining.CompareTo( ".length" ) == 0 ) 
+		{
+			sValue.Format( "%d", pArray->m_iLength-1 );
+		}
 		else
 		{
 			sValue.SetStrUTF8( "<Invalid Expression>" );
@@ -3466,6 +3470,7 @@ void ProgramData::PrintCallStack()
 
 	uString sFinal;
 	int level = 0;
+	int prevFuncCall = 0;
 	int returnAddress = 0;
 	int iDebugFramePtr = m_iFramePtr;
 	int iDebugStrFramePtr = m_iStrFramePtr;
@@ -3475,8 +3480,7 @@ void ProgramData::PrintCallStack()
 		// extract the jump pointer from the function call command and use that to match against known functions
 		returnAddress = m_pStack[ iDebugFramePtr ].i;
 		int functionPtr = m_pInstructions[ returnAddress-1 ].i;
-		const char *szInclude = m_pIncludeFiles[ m_pInstructions[ functionPtr ].iIncludeFile ];
-
+		
 		AGKFunction *pFunction = 0;
 		for ( UINT i = 0; i < m_iNumFunctions; i++ )
 		{
@@ -3489,13 +3493,19 @@ void ProgramData::PrintCallStack()
 
 		if ( pFunction )
 		{
-			sFinal.Format( "%d:%s:%s:%d", level, pFunction->sName.GetStr(), szInclude, m_pInstructions[ functionPtr ].iLineNum );
+			if ( prevFuncCall <= 0 ) sFinal.Format( "%d:%s:%s:%d", level, pFunction->sName.GetStr(), GetCurrentIncludeFile(), GetCurrentLineNum() );
+			else 
+			{
+				const char *szInclude = m_pIncludeFiles[ m_pInstructions[ prevFuncCall ].iIncludeFile ];
+				sFinal.Format( "%d:%s:%s:%d", level, pFunction->sName.GetStr(), szInclude, m_pInstructions[ prevFuncCall ].iLineNum );
+			}
 			agk::DebugInfo( "Frame", sFinal );
 		}
 	
 		iDebugStrFramePtr = m_pStack[ iDebugFramePtr+2 ].i;
 		iDebugFramePtr = m_pStack[ iDebugFramePtr+1 ].i;
 		level++;
+		prevFuncCall = returnAddress - 1;
 	}
 
 	if ( returnAddress == 0 )

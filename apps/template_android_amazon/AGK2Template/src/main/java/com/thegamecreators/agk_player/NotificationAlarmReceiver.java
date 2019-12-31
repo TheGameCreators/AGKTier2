@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
+
+import android.net.Uri;
 import android.util.Log;
 
 import com.mycompany.mytemplate.R;
@@ -23,6 +25,7 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
         String message = intent.getStringExtra("message");
         String title = intent.getStringExtra("title");
         int id = intent.getIntExtra("id", 0);
+        String deeplink = intent.getStringExtra("deeplink");
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -30,6 +33,10 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
         //PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent2, 0);
 
         Intent intent2 = new Intent(context, AGKActivity.class);
+        if ( deeplink != null && !deeplink.equals("") )
+        {
+            intent2.setData( Uri.parse(deeplink) );
+        }
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent2, 0);
 
         CharSequence from = title;

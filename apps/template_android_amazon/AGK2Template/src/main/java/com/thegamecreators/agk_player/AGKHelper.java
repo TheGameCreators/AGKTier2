@@ -1,7 +1,6 @@
 // Temporary until the NDK build system can deal with there being no Java source.
 package com.thegamecreators.agk_player;
 
-import com.amazon.ags.api.player.RequestPlayerResponse;
 import com.amazon.device.iap.PurchasingService;
 import com.facebook.*;
 import com.facebook.android.DialogError;
@@ -15,10 +14,6 @@ import com.google.android.gms.ads.*;
 
 import com.amazon.device.ads.*;
 
-import com.amazon.ags.api.*;
-import com.amazon.ags.api.achievements.*;
-import com.amazon.ags.api.leaderboards.*;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -30,7 +25,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.content.IntentSender;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -122,12 +116,11 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.thegamecreators.agk_player.iap.AGKPurchasingListener;
-
-import android.media.MediaMetadataRetriever;
+import com.mycompany.mytemplate.R;
 
 import com.google.ads.consent.*;
 
-import com.mycompany.mytemplate.R;
+import android.media.MediaMetadataRetriever;
 
 import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
 
@@ -1892,32 +1885,7 @@ class AGKSpeechListener  implements TextToSpeech.OnInitListener, TextToSpeech.On
 public class AGKHelper {
 
 	public static String g_sLastURI = null;
-
-	static int m_iGameCenterUsed = 0;
-	static int m_iGameCenterLoggedIn = 0;
-	static String m_sGameCenterPlayerID = "";
-	static String m_sGameCenterPlayerDisplayName = "";
-	static AmazonGamesClient agsClient;
-	static AmazonGamesCallback agsCallback = new AmazonGamesCallback() {
-		@Override
-		public void onServiceNotReady(AmazonGamesStatus status) {
-			m_iGameCenterLoggedIn = -1;
-		}
-		@Override
-		public void onServiceReady(AmazonGamesClient amazonGamesClient) {
-			agsClient = amazonGamesClient;
-			m_iGameCenterLoggedIn = 1;
-			agsClient.getPlayerClient().getLocalPlayer().setCallback(new AGResponseCallback<RequestPlayerResponse>() {
-				@Override
-				public void onComplete(RequestPlayerResponse response) {
-					m_sGameCenterPlayerID = response.getPlayer().getPlayerId();
-					m_sGameCenterPlayerDisplayName = response.getPlayer().getAlias();
-				}
-			});
-		}
-	};
-	static EnumSet<AmazonGamesFeature> myGameFeatures = EnumSet.of(AmazonGamesFeature.Achievements, AmazonGamesFeature.Leaderboards);
-	static int isVisible = 0;
+	public static int isVisible = 0;
 
 	// screen recording
 	static MediaProjectionManager mMediaProjectionManager = null;
@@ -2017,8 +1985,6 @@ public class AGKHelper {
 		run.act = act;
 		act.runOnUiThread(run);
 
-		if ( m_iGameCenterUsed > 0 && !AmazonGamesClient.isInitialized() ) AmazonGamesClient.initialize(act, agsCallback, myGameFeatures);
-
 		if ( g_iIAPStatus == 2 )
 		{
 			PurchasingService.getPurchaseUpdates(false);
@@ -2043,8 +2009,6 @@ public class AGKHelper {
 		run.action = 7;
 		run.act = act;
 		act.runOnUiThread( run );
-
-		if ( m_iGameCenterUsed > 0 && agsClient != null ) agsClient.release();
 
 		RunnableVideo video = new RunnableVideo();
 		video.act = act;
@@ -2124,58 +2088,44 @@ public class AGKHelper {
 	
 	public static void GameCenterLogin( Activity act )
 	{
-		m_iGameCenterLoggedIn = 0;
-		AmazonGamesClient.initialize(act, agsCallback, myGameFeatures);
-		m_iGameCenterUsed = 1;
+
 	}
 
 	public static void GameCenterLogout() {}
 	
 	public static int GetGameCenterLoggedIn()
 	{
-		return m_iGameCenterLoggedIn;
+		return 0;
 	}
 
 	public static String GetGameCenterPlayerID()
 	{
-		return m_sGameCenterPlayerID;
+		return "";
 	}
 
 	public static String GetGameCenterPlayerDisplayName()
 	{
-		return m_sGameCenterPlayerDisplayName;
+		return "";
 	}
 	
 	public static void GameCenterSubmitAchievement( String szAchievementID, int iPercentageComplete )
 	{
-		if ( agsClient == null ) return;
 
-		AchievementsClient acClient = agsClient.getAchievementsClient();
-		AGResponseHandle<UpdateProgressResponse> handle = acClient.updateProgress(szAchievementID, iPercentageComplete);
 	}
 	
 	public static void GameCenterAchievementsShow( Activity act )
 	{
-		if ( agsClient == null ) return;
 
-		AchievementsClient acClient = agsClient.getAchievementsClient();
-		acClient.showAchievementsOverlay();
 	}
 	
 	public static void GameCenterSubmitScore( String szBoardID, int iScore )
 	{
-		if ( agsClient == null ) return;
 
-		LeaderboardsClient lbClient = agsClient.getLeaderboardsClient();
-		AGResponseHandle<SubmitScoreResponse> handle = lbClient.submitScore(szBoardID, iScore);
 	}
 	
 	public static void GameCenterShowLeaderBoard( Activity act, String szBoardID )
 	{
-		if ( agsClient == null ) return;
 
-		LeaderboardsClient lbClient = agsClient.getLeaderboardsClient();
-		lbClient.showLeaderboardOverlay(szBoardID);
 	}
 	// End GameCenter
 
@@ -3125,7 +3075,7 @@ public class AGKHelper {
 
 	// local notifications
 	static NotificationChannel mNotificationChannel = null;
-	public static void SetNotification( Activity act, int id, int unixtime, String message )
+	public static void SetNotification( Activity act, int id, int unixtime, String message, String deeplink )
 	{
 		if (mNotificationChannel == null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
 		{
@@ -3139,11 +3089,17 @@ public class AGKHelper {
 		intent.putExtra("title", act.getString(R.string.app_name));
 		intent.putExtra("message", message);
 		intent.putExtra("id",id);
+		intent.putExtra("deeplink",deeplink);
 		PendingIntent sender = PendingIntent.getBroadcast(act, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) act.getSystemService(Context.ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, unixtime * 1000L, sender);
+	}
+
+	public static void SetNotification( Activity act, int id, int unixtime, String message )
+	{
+		SetNotification( act, id, unixtime, message, "" );
 	}
 
 	public static void CancelNotification( Activity act, int id )
@@ -4031,5 +3987,27 @@ public class AGKHelper {
 	public static String GetExternalDir()
 	{
 		return Environment.getExternalStorageDirectory().getAbsolutePath();
+	}
+
+	public static int GetPackageInstalled( Activity act, String packageName )
+	{
+		try {
+			if ( act.getPackageManager().getApplicationInfo(packageName, 0).enabled ) return 1;
+			else return 0;
+		} catch (PackageManager.NameNotFoundException e) {
+			return 0;
+		}
+	}
+
+	// SnapChat
+
+	public static void SetSnapChatStickerSettings( float x, float y, int width, int height, float angle )
+	{
+
+	}
+
+	public static void ShareSnapChat( Activity act, String image, String sticker, String caption, String url )
+	{
+
 	}
 }

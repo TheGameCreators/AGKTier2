@@ -3,7 +3,6 @@
       android:versionCode="51"
       android:versionName="2.0.21" package="com.mycompany.mytemplate" android:installLocation="auto">
     <uses-feature android:glEsVersion="0x00020000"></uses-feature>
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26" />
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -35,7 +34,14 @@
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/games_app_id" />
 
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+
+        <meta-data android:name="com.snapchat.kit.sdk.clientId" android:value="@string/snap_chat_id" />
+
         <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="false"/>
+
+        <meta-data android:name="com.google.ar.core" android:value="optional" />
 
         <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/icon_white" />
@@ -59,15 +65,19 @@
         <activity android:name="com.chartboost.sdk.CBImpressionActivity"
 				  android:theme="@style/AGKTheme.Transparent"
 				  android:excludeFromRecents="true"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
   				
 		<activity android:name="com.google.android.gms.ads.AdActivity"
               	  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
               	  android:theme="@android:style/Theme.Translucent"/>
 
-        <activity android:name="com.amazon.device.ads.AdActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name="com.amazon.device.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 
-        <service android:name="com.thegamecreators.agk_player.FCMService" />
+        <service android:name="com.thegamecreators.agk_player.NotificationService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <activity android:name="com.facebook.LoginActivity"
             android:label="@string/app_name"
@@ -84,8 +94,8 @@
         <receiver android:name="com.thegamecreators.agk_player.NotificationAlarmReceiver" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

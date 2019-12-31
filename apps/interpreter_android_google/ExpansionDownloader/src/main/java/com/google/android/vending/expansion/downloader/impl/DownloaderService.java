@@ -377,6 +377,8 @@ public class DownloaderService extends CustomIntentService implements IDownloade
      */
     private static boolean sIsRunning;
 
+    private static String gChannelId = "";
+
     @Override
     public IBinder onBind(Intent paramIntent) {
         Log.d(Constants.TAG, "Service Bound");
@@ -639,6 +641,8 @@ public class DownloaderService extends CustomIntentService implements IDownloade
                 context.getPackageName(), 0);
 
         int status = NO_DOWNLOAD_REQUIRED;
+
+        gChannelId = channelId;
 
         // the database automatically reads the metadata for version code
         // and download status when the instance is created
@@ -1199,6 +1203,7 @@ public class DownloaderService extends CustomIntentService implements IDownloade
             ApplicationInfo ai = getApplicationInfo();
             CharSequence applicationLabel = getPackageManager().getApplicationLabel(ai);
             mNotification = new DownloadNotification(this, applicationLabel);
+            mNotification.setChannelId(gChannelId);
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }

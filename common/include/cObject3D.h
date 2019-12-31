@@ -230,6 +230,7 @@ namespace AGK
 			int GetColorGreen() const;
 			int GetColorBlue() const;
 			int GetAlpha() const;
+			int IsQuad() const { return (m_iObjFlags & AGK_OBJECT_IS_QUAD) ? 1 : 0; }
 
 			const char* GetName() { return m_sName.GetStr(); }
 			const char* GetTexture(int index) { if (index >= 0 && index < AGK_OBJECT_MAX_TEXTURES) return m_sTextures[index].GetStr(); else return(""); }

@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SCSDKClientId</key>
+	<string>1cec1943-35cc-49ed-b25e-61c4a9d7e10a</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -45,6 +49,7 @@
 	<array>
 		<string>fb</string>
 		<string>fbauth</string>
+		<string>snapchat</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -58,9 +63,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Streaming the camera feed into the app</string>
 	<key>NSLocationUsageDescription</key>
-	<string></string>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -73,6 +78,10 @@
 	<true/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Add image to the camera roll</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Provide your current GPS coordinates to the app</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Provide your current GPS coordinates to the app</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

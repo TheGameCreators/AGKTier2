@@ -32,7 +32,7 @@ $(ODIR)/%.o: ../interpreter/%.cpp
 	$(CC) -DIDE_PI -c $(INC) -o $@ $< $(CFLAGS)
 	
 AGKPlayer: | $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o build/PiPlayer$(SUFFIX) $(LDFLAGS) -lAGKPi -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lXrandr -lpthread -lopenal -lcurl -ludev -lrt -lXxf86vm -lXext -lX11
+	$(CC) $(LDFLAGS) $(OBJS) -o build/PiPlayer$(SUFFIX) $(LDFLAGS) -lAGKPi -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lXrandr -lpthread -lopenal -ludev -lrt -lXxf86vm -lXext -lX11
 
 clean:
 	rm -rf build/obj$(SUFFIX)/*

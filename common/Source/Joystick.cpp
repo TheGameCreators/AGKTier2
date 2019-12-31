@@ -4,31 +4,21 @@ using namespace AGK;
 
 // virtual button
 
-cSprite* cVirtualButton::g_pButtonSprite = 0;
-cSprite* cVirtualButton::g_pButtonDownSprite = 0;
+cImage* cVirtualButton::g_pButtonImage = 0;
+cImage* cVirtualButton::g_pButtonDownImage = 0;
 
 void cVirtualButton::Zero()
 {
 	m_bPrevDown = false;
 	m_bDown = false;
 	
-	m_fVirtualPosX = 0;
-	m_fVirtualPosY = 0;
-	m_fVirtualSizeX = 20;
-	m_fVirtualSizeY = 20;
-
 	m_pCapturedMouse = 0;
 	m_pCapturedTouch = 0;
 
 	m_pButtonSprite = UNDEF;
 	m_pButtonDownSprite = UNDEF;
 	m_pText = UNDEF;
-
-	m_iRed = 255;
-	m_iGreen = 255;
-	m_iBlue = 255;
-	m_iAlpha = 200;
-
+	
 	m_bActive = true;
 	m_bVisible = true;
 }
@@ -39,30 +29,23 @@ cVirtualButton::cVirtualButton( float x, float y, float size )
 
 	if ( size < 1 ) size = 1;
 	
-	m_fVirtualPosX = x;
-	m_fVirtualPosY = y;
-	m_fVirtualSizeX = size;
-	m_fVirtualSizeY = size;
+	if ( g_pButtonImage == 0 ) g_pButtonImage = new cImage( "/Button.png" );
 
-	if ( g_pButtonSprite == UNDEF )
-	{
-		g_pButtonSprite = new cSprite( "/Button.png" );
-		
-		g_pButtonSprite->SetSize( 1, -1 );
-		g_pButtonSprite->SetColor( m_iRed, m_iGreen, m_iBlue, m_iAlpha );
-		g_pButtonSprite->SetDepth( 0 );
-		g_pButtonSprite->FixToScreen( 1 );
-	}
+	m_pButtonSprite = new cSprite( g_pButtonImage );
+	m_pButtonSprite->SetPositionByOffset( x, y );
+	m_pButtonSprite->SetSize( size, -1 );
+	m_pButtonSprite->SetColor( 255, 255, 255, 200 );
+	m_pButtonSprite->SetDepth( 0 );
+	m_pButtonSprite->FixToScreen( 1 );
 
-	if ( g_pButtonDownSprite == UNDEF )
-	{
-		g_pButtonDownSprite = new cSprite( "/ButtonDown.png" );
-		
-		g_pButtonDownSprite->SetSize( 1, -1 );
-		g_pButtonDownSprite->SetColor( m_iRed, m_iGreen, m_iBlue, m_iAlpha );
-		g_pButtonDownSprite->SetDepth( 0 );
-		g_pButtonDownSprite->FixToScreen( 1 );
-	}
+	if ( g_pButtonDownImage == 0 ) g_pButtonDownImage = new cImage( "/ButtonDown.png" );
+
+	m_pButtonDownSprite = new cSprite( g_pButtonDownImage );
+	m_pButtonDownSprite->SetPositionByOffset( x, y );
+	m_pButtonDownSprite->SetSize( size, -1 );
+	m_pButtonDownSprite->SetColor( 255, 255, 255, 200 );
+	m_pButtonDownSprite->SetDepth( 0 );
+	m_pButtonDownSprite->FixToScreen( 1 );
 }
 
 cVirtualButton::~cVirtualButton()
@@ -74,41 +57,40 @@ cVirtualButton::~cVirtualButton()
 
 void cVirtualButton::SetPosition( float x, float y )
 {
-	m_fVirtualPosX = x;
-	m_fVirtualPosY = y;
+	m_pButtonSprite->SetPositionByOffset( x, y );
+	m_pButtonDownSprite->SetPositionByOffset( x, y );
 }
 
 void cVirtualButton::SetSize( float size )
 {
-	if ( size < 0.1f ) size = 0.1f;
-	m_fVirtualSizeX = size;
-	m_fVirtualSizeY = size;
+	if ( size < 0 ) size = 0;
+	m_pButtonSprite->SetSize( size, -1 );
+	m_pButtonDownSprite->SetSize( size, -1 );
 }
 
 void cVirtualButton::SetSize( float sizeX, float sizeY )
 {
-	if ( sizeX < 0.1f ) sizeX = 0.1f;
-	if ( sizeY < 0.1f ) sizeY = 0.1f;
-	m_fVirtualSizeX = sizeX;
-	m_fVirtualSizeY = sizeY;
+	if ( sizeX < 0 ) sizeX = 0;
+	if ( sizeY < 0 ) sizeY = 0;
+	m_pButtonSprite->SetSize( sizeX, sizeY );
+	m_pButtonDownSprite->SetSize( sizeX, sizeY );
 }
 
 void cVirtualButton::SetColor( UINT red, UINT green, UINT blue )
 {
-	if ( red > 255 ) red = 255;
-	if ( green > 255 ) green = 255;
-	if ( blue > 255 ) blue = 255;
+	m_pButtonSprite->SetRed( red );
+	m_pButtonSprite->SetGreen( green );
+	m_pButtonSprite->SetBlue( blue );
 
-	m_iRed = red;
-	m_iGreen = green;
-	m_iBlue = blue;
+	m_pButtonDownSprite->SetRed( red );
+	m_pButtonDownSprite->SetGreen( green );
+	m_pButtonDownSprite->SetBlue( blue );
 }
 
 void cVirtualButton::SetAlpha( UINT alpha )
 {
-	if ( alpha > 255 ) alpha = 255;
-
-	m_iAlpha = alpha;
+	m_pButtonSprite->SetAlpha( alpha );
+	m_pButtonDownSprite->SetAlpha( alpha );
 }
 
 void cVirtualButton::SetActive( bool active )
@@ -123,50 +105,18 @@ void cVirtualButton::SetVisible( bool visible )
 
 void cVirtualButton::SetUpImage( cImage *pImage )
 {
-	if ( m_pButtonSprite )
-	{
-		if ( pImage ) m_pButtonSprite->SetImage( pImage );
-		else 
-		{
-			delete m_pButtonSprite;
-			m_pButtonSprite = UNDEF;
-		}
-	}
-	else
-	{
-		if ( pImage )
-		{
-			m_pButtonSprite = new cSprite( pImage );
-			m_pButtonSprite->SetSize( 1, -1 );
-			m_pButtonSprite->SetColor( m_iRed, m_iGreen, m_iBlue, m_iAlpha );
-			m_pButtonSprite->SetDepth( 0 );
-			m_pButtonSprite->FixToScreen( 1 );
-		}
-	}
+	if ( pImage ) m_pButtonSprite->SetImage( pImage );
+	else m_pButtonSprite->SetImage( g_pButtonImage );
+
+	m_pButtonSprite->SetSize( m_pButtonSprite->GetWidth(), -1 );
 }
 
 void cVirtualButton::SetDownImage( cImage *pImage )
 {
-	if ( m_pButtonDownSprite )
-	{
-		if ( pImage ) m_pButtonDownSprite->SetImage( pImage );
-		else 
-		{
-			delete m_pButtonDownSprite;
-			m_pButtonDownSprite = UNDEF;
-		}
-	}
-	else
-	{
-		if ( pImage )
-		{
-			m_pButtonDownSprite = new cSprite( pImage );
-			m_pButtonDownSprite->SetSize( 1, -1 );
-			m_pButtonDownSprite->SetColor( m_iRed, m_iGreen, m_iBlue, m_iAlpha );
-			m_pButtonDownSprite->SetDepth( 0 );
-			m_pButtonDownSprite->FixToScreen( 1 );
-		}
-	}
+	if ( pImage ) m_pButtonDownSprite->SetImage( pImage );
+	else m_pButtonDownSprite->SetImage( g_pButtonDownImage );
+
+	m_pButtonDownSprite->SetSize( m_pButtonDownSprite->GetWidth(), -1 );
 }
 
 void cVirtualButton::SetText( const char *str )
@@ -217,15 +167,7 @@ bool cVirtualButton::GetHitTest( float x, float y )
 {
 	if ( !m_bActive ) return false;
 
-	float m_fHalfSize = m_fVirtualSizeX / 2.0f;
-	if ( x < m_fVirtualPosX - m_fHalfSize ) return false;
-	if ( x > m_fVirtualPosX + m_fHalfSize ) return false;
-
-	m_fHalfSize = (m_fVirtualSizeY * agk::GetStretchValue()) / 2.0f;
-	if ( y < m_fVirtualPosY - m_fHalfSize ) return false;
-	if ( y > m_fVirtualPosY + m_fHalfSize ) return false;
-
-	return true;
+	return m_pButtonSprite->GetHitTest( x, y );
 }
 
 void cVirtualButton::Draw()
@@ -233,38 +175,25 @@ void cVirtualButton::Draw()
 	if ( !m_bVisible ) return;
 
 	// find the correct sprite to use
-	cSprite *pSprite = g_pButtonSprite;
-	if ( m_bDown )
-	{
-		if ( m_pButtonDownSprite ) pSprite = m_pButtonDownSprite;
-		else pSprite = g_pButtonDownSprite;
-	}
-	else
-	{
-		if ( m_pButtonSprite ) pSprite = m_pButtonSprite;
-	}
-
-	// draw it
-	pSprite->SetSize( 1, -1, false );
-	pSprite->SetPositionByOffset( m_fVirtualPosX, m_fVirtualPosY );
-	pSprite->SetScaleByOffset( m_fVirtualSizeX, m_fVirtualSizeY );
-	pSprite->SetColor( m_iRed, m_iGreen, m_iBlue, m_iAlpha );
+	cSprite *pSprite = m_pButtonSprite;
+	if ( m_bDown ) pSprite = m_pButtonDownSprite;
+	
 	pSprite->Draw();
 
 	// draw text
 	if ( m_pText )
 	{
 		m_pText->SetAlignment( 1 );
-		m_pText->SetPosition( m_fVirtualPosX, m_fVirtualPosY - m_fVirtualSizeY/8.0f );
-		m_pText->SetSize( m_fVirtualSizeY/4.0f );
+		m_pText->SetPosition( m_pButtonSprite->GetXByOffset(), m_pButtonSprite->GetYByOffset() - m_pButtonSprite->GetHeight()/8.0f );
+		m_pText->SetSize( m_pButtonSprite->GetHeight() / 4.0f );
 		m_pText->Draw();
 	}
 }
 
 // virtual joystick
 
-cSprite *cVirtualJoystick::g_pOuterSprite = 0;
-cSprite *cVirtualJoystick::g_pInnerSprite = 0;
+cImage *cVirtualJoystick::g_pOuterImage = 0;
+cImage *cVirtualJoystick::g_pInnerImage = 0;
 float cVirtualJoystick::g_fDeadZone = 0.15f;
 
 void cVirtualJoystick::Zero()
@@ -272,18 +201,14 @@ void cVirtualJoystick::Zero()
 	m_fX = 0;
 	m_fY = 0;
 	
-	m_fVirtualPosX = 0;
-	m_fVirtualPosY = 0;
-	m_fVirtualSize = 20;
-
 	m_pCapturedMouse = 0;
 	m_pCapturedTouch = 0;
 
 	m_pOuterSprite = UNDEF;
 	m_pInnerSprite = UNDEF;
 
-	m_iAlpha1 = 150;
-	m_iAlpha2 = 200;
+	//m_iAlpha1 = 150;
+	//m_iAlpha2 = 200;
 
 	m_bActive = true;
 	m_bVisible = true;
@@ -293,31 +218,25 @@ cVirtualJoystick::cVirtualJoystick( float x, float y, float size )
 {
 	Zero();
 
-	if ( size < 1 ) size = 1;
+	if ( size < 0 ) size = 0;
 	
-	m_fVirtualPosX = x;
-	m_fVirtualPosY = y;
-	m_fVirtualSize = size;
+	if ( g_pOuterImage == 0 ) g_pOuterImage = new cImage( "/JoystickOuter.png" );
+	
+	m_pOuterSprite = new cSprite( g_pOuterImage );
+	m_pOuterSprite->SetPositionByOffset( x, y );
+	m_pOuterSprite->SetSize( size, -1 );
+	m_pOuterSprite->SetColor( 255,255,255,150 );
+	m_pOuterSprite->SetDepth( 0 );
+	m_pOuterSprite->FixToScreen( 1 );
+	
+	if ( g_pInnerImage == 0 ) g_pInnerImage = new cImage( "/JoystickInner.png" );
 
-	if ( g_pOuterSprite == UNDEF )
-	{
-		g_pOuterSprite = new cSprite( "/JoystickOuter.png" );
-		
-		g_pOuterSprite->SetSize( 1, -1 );
-		g_pOuterSprite->SetColor( 255,255,255,150 );
-		g_pOuterSprite->SetDepth( 0 );
-		g_pOuterSprite->FixToScreen( 1 );
-	}
-
-	if ( g_pInnerSprite == UNDEF )
-	{
-		g_pInnerSprite = new cSprite( "/JoystickInner.png" );
-		
-		g_pInnerSprite->SetSize( 0.7f, -1 );
-		g_pInnerSprite->SetColor( 255,255,255,200 );
-		g_pInnerSprite->SetDepth( 0 );
-		g_pInnerSprite->FixToScreen( 1 );
-	}
+	m_pInnerSprite = new cSprite( g_pInnerImage );
+	m_pInnerSprite->SetPositionByOffset( x, y );
+	m_pInnerSprite->SetSize( size * 0.7f, -1 );
+	m_pInnerSprite->SetColor( 255,255,255,200 );
+	m_pInnerSprite->SetDepth( 0 );
+	m_pInnerSprite->FixToScreen( 1 );
 }
 
 cVirtualJoystick::~cVirtualJoystick()
@@ -328,23 +247,21 @@ cVirtualJoystick::~cVirtualJoystick()
 
 void cVirtualJoystick::SetPosition( float x, float y )
 {
-	m_fVirtualPosX = x;
-	m_fVirtualPosY = y;
+	m_pOuterSprite->SetPositionByOffset( x, y );
+	m_pInnerSprite->SetPositionByOffset( x, y );
 }
 
 void cVirtualJoystick::SetSize( float size )
 {
-	if ( size < 1 ) size = 1;
-	m_fVirtualSize = size;
+	if ( size < 0 ) size = 0;
+	m_pOuterSprite->SetSize( size, -1 );
+	m_pInnerSprite->SetSize( size, -1 );
 }
 
 void cVirtualJoystick::SetAlpha( UINT alpha1, UINT alpha2 )
 {
-	if ( alpha1 > 255 ) alpha1 = 255;
-	if ( alpha2 > 255 ) alpha2 = 255;
-
-	m_iAlpha1 = alpha1;
-	m_iAlpha2 = alpha2;
+	m_pOuterSprite->SetAlpha( alpha1 );
+	m_pInnerSprite->SetAlpha( alpha2 );
 }
 
 void cVirtualJoystick::SetActive( bool active )
@@ -359,50 +276,18 @@ void cVirtualJoystick::SetVisible( bool visible )
 
 void cVirtualJoystick::SetInnerImage( cImage *pImage )
 {
-	if ( m_pInnerSprite )
-	{
-		if ( pImage ) m_pInnerSprite->SetImage( pImage );
-		else 
-		{
-			delete m_pInnerSprite;
-			m_pInnerSprite = UNDEF;
-		}
-	}
-	else
-	{
-		if ( pImage )
-		{
-			m_pInnerSprite = new cSprite( pImage );
-			m_pInnerSprite->SetSize( 0.7f, -1 );
-			m_pInnerSprite->SetColor( 255,255,255,150 );
-			m_pInnerSprite->SetDepth( 0 );
-			m_pInnerSprite->FixToScreen( 1 );
-		}
-	}
+	if ( pImage ) m_pInnerSprite->SetImage( pImage );
+	else m_pInnerSprite->SetImage( g_pInnerImage );
+
+	m_pInnerSprite->SetSize( m_pInnerSprite->GetWidth(), -1 );
 }
 
 void cVirtualJoystick::SetOuterImage( cImage *pImage )
 {
-	if ( m_pOuterSprite )
-	{
-		if ( pImage ) m_pOuterSprite->SetImage( pImage );
-		else 
-		{
-			delete m_pOuterSprite;
-			m_pOuterSprite = UNDEF;
-		}
-	}
-	else
-	{
-		if ( pImage )
-		{
-			m_pOuterSprite = new cSprite( pImage );
-			m_pOuterSprite->SetSize( 1, -1 );
-			m_pOuterSprite->SetColor( 255,255,255,150 );
-			m_pOuterSprite->SetDepth( 0 );
-			m_pOuterSprite->FixToScreen( 1 );
-		}
-	}
+	if ( pImage ) m_pOuterSprite->SetImage( pImage );
+	else m_pOuterSprite->SetImage( g_pOuterImage );
+
+	m_pOuterSprite->SetSize( m_pOuterSprite->GetWidth(), -1 );
 }
 
 void cVirtualJoystick::Update()
@@ -414,8 +299,8 @@ void cVirtualJoystick::Update()
 		return;
 	}
 
-	float x = m_fVirtualPosX;
-	float y = m_fVirtualPosY;
+	float x = m_pOuterSprite->GetXByOffset();
+	float y = m_pOuterSprite->GetYByOffset();
 
 	if ( m_pCapturedMouse )
 	{
@@ -437,13 +322,13 @@ void cVirtualJoystick::Update()
 		}
 	}
 
-	float relX = x - m_fVirtualPosX;
-	float relY = y - m_fVirtualPosY;
+	float relX = x - m_pOuterSprite->GetXByOffset();
+	float relY = y - m_pOuterSprite->GetYByOffset();
 
 	relY /= agk::GetStretchValue();
 
-	relX /= (m_fVirtualSize/2.0f);
-	relY /= (m_fVirtualSize/2.0f);
+	relX /= (m_pOuterSprite->GetWidth()/2.0f);
+	relY /= (m_pOuterSprite->GetWidth()/2.0f);
 
 	float length = relX*relX + relY*relY;
 	if ( length > 1.0f )
@@ -473,40 +358,17 @@ bool cVirtualJoystick::GetHitTest( float x, float y )
 {
 	if ( !m_bActive ) return false;
 
-	float m_fHalfSize = m_fVirtualSize / 2.0f;
-	if ( x < m_fVirtualPosX - m_fHalfSize ) return false;
-	if ( x > m_fVirtualPosX + m_fHalfSize ) return false;
-
-	m_fHalfSize *= agk::GetStretchValue();
-	if ( y < m_fVirtualPosY - m_fHalfSize ) return false;
-	if ( y > m_fVirtualPosY + m_fHalfSize ) return false;
-
-	return true;
+	return m_pOuterSprite->GetHitTest( x, y );
 }
 
 void cVirtualJoystick::Draw()
 {
 	if ( !m_bVisible ) return;
 
-	// check for local sprites, otherwise use the global sprites
-	cSprite *pOuter = g_pOuterSprite;
-	if ( m_pOuterSprite ) pOuter = m_pOuterSprite;
+	m_pOuterSprite->Draw();
 
-	cSprite *pInner = g_pInnerSprite;
-	if ( m_pInnerSprite ) pInner = m_pInnerSprite;
-
-	// draw them
-	pOuter->SetSize( 1, -1 );
-	pOuter->SetPositionByOffset( m_fVirtualPosX, m_fVirtualPosY );
-	pOuter->SetScaleByOffset( m_fVirtualSize, m_fVirtualSize );
-	pOuter->SetAlpha( m_iAlpha1 );
-	pOuter->Draw();
-
-	pInner->SetSize( 0.7f, -1 );
-	pInner->SetPositionByOffset( m_fVirtualPosX + m_fX*(m_fVirtualSize/8.0f), m_fVirtualPosY + (m_fY*(m_fVirtualSize/8.0f))*agk::GetStretchValue() );
-	pInner->SetScaleByOffset( m_fVirtualSize, m_fVirtualSize );
-	pInner->SetAlpha( m_iAlpha2 );
-	pInner->Draw();
+	m_pInnerSprite->SetPositionByOffset( m_pOuterSprite->GetXByOffset() + m_fX*(m_pOuterSprite->GetWidth()/8.0f), m_pOuterSprite->GetYByOffset() + (m_fY*(m_pOuterSprite->GetWidth()/8.0f))*agk::GetStretchValue() );
+	m_pInnerSprite->Draw();
 }
 
 // real joystick
