@@ -644,8 +644,8 @@ void agk::PlatformInitGL( void* ptr )
     // emscripten_get_num_gamepads()
     // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-    int numJoysticks = emscripten_sample_gamepad_data();	
-	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
+    int gamepadData = emscripten_sample_gamepad_data();	
+	if ( gamepadData == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
     int numJoysticks = emscripten_get_num_gamepads();
 	
     if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
@@ -687,8 +687,8 @@ void agk::PlatformInitConsole()
     // emscripten_get_num_gamepads()
     // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-    int numJoysticks = emscripten_sample_gamepad_data();	
-	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
+    int gamepadData = emscripten_sample_gamepad_data();	
+	if ( gamepadData == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
     int numJoysticks = emscripten_get_num_gamepads();
     
 	if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
@@ -3917,8 +3917,8 @@ void cJoystick::DetectJoysticks()
     // emscripten_get_num_gamepads()
     // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-    int numJoysticks = emscripten_sample_gamepad_data();	
-	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
+    int gamepadData = emscripten_sample_gamepad_data();	
+	if ( gamepadData == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
     int numJoysticks = emscripten_get_num_gamepads();
     
 	if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
@@ -4026,8 +4026,8 @@ void cJoystick::PlatformUpdate()
     // emscripten_get_num_gamepads()
     // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-    int numJoysticks = emscripten_sample_gamepad_data();	
-	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
+    int gamepadData = emscripten_sample_gamepad_data();	
+	if ( gamepadData == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
     int numJoysticks = emscripten_get_num_gamepads();
     
 	if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
