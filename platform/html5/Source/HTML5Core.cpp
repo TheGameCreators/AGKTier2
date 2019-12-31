@@ -640,16 +640,15 @@ void agk::PlatformInitGL( void* ptr )
 
 	// joysticks 
 
-        // You have to call emscripten_sample_gamepad_data() before
-        // emscripten_get_num_gamepads()
-        // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
+    // You have to call emscripten_sample_gamepad_data() before
+    // emscripten_get_num_gamepads()
+    // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-        int numJoysticks = emscripten_sample_gamepad_data();
+    int numJoysticks = emscripten_sample_gamepad_data();	
 	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
-        
-        int numJoysticks = emscripten_get_num_gamepads();
+    int numJoysticks = emscripten_get_num_gamepads();
 	
-        if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
+    if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
 	
 	for( int i = 0; i < AGK_NUM_JOYSTICKS; i++ )
 	{
@@ -683,16 +682,15 @@ void agk::PlatformInitConsole()
 	SetRandomSeed( uFixTime + (now.tv_nsec % 1000) );
 	
 	// joysticks 
- 
-        // You have to call emscripten_sample_gamepad_data() before
-        // emscripten_get_num_gamepads()
-        // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-        int numJoysticks = emscripten_sample_gamepad_data();
+    // You have to call emscripten_sample_gamepad_data() before
+    // emscripten_get_num_gamepads()
+    // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
+
+    int numJoysticks = emscripten_sample_gamepad_data();	
 	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
-        
-        int numJoysticks = emscripten_get_num_gamepads();
-
+    int numJoysticks = emscripten_get_num_gamepads();
+    
 	if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
 	
 	for( int i = 0; i < AGK_NUM_JOYSTICKS; i++ )
@@ -3913,18 +3911,16 @@ void agk::SetRawMousePosition( float x, float y )
 
 void cJoystick::DetectJoysticks()
 {
+    // joysticks 
 
-        // joysticks 
- 
-        // You have to call emscripten_sample_gamepad_data() before
-        // emscripten_get_num_gamepads()
-        // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
+    // You have to call emscripten_sample_gamepad_data() before
+    // emscripten_get_num_gamepads()
+    // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
 
-        int numJoysticks = emscripten_sample_gamepad_data();
+    int numJoysticks = emscripten_sample_gamepad_data();	
 	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
-        
-        int numJoysticks = emscripten_get_num_gamepads();
-
+    int numJoysticks = emscripten_get_num_gamepads();
+    
 	if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
 	
 	for( int i = 0; i < AGK_NUM_JOYSTICKS; i++ )
@@ -4024,18 +4020,16 @@ void cJoystick::DetectJoysticks()
 
 void cJoystick::PlatformUpdate()
 {
-	
-        // joysticks 
- 
-        // You have to call emscripten_sample_gamepad_data() before
-        // emscripten_get_num_gamepads()
-        // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
+	// joysticks 
 
-        int numJoysticks = emscripten_sample_gamepad_data();
+    // You have to call emscripten_sample_gamepad_data() before
+    // emscripten_get_num_gamepads()
+    // Ref: https://emscripten.org/docs/api_reference/html5.h.html#c.emscripten_sample_gamepad_data
+
+    int numJoysticks = emscripten_sample_gamepad_data();	
 	if ( numJoysticks == EMSCRIPTEN_RESULT_NOT_SUPPORTED ) return;
-        
-        int numJoysticks = emscripten_get_num_gamepads();
-
+    int numJoysticks = emscripten_get_num_gamepads();
+    
 	if ( numJoysticks > AGK_NUM_JOYSTICKS ) numJoysticks = AGK_NUM_JOYSTICKS;
 	
 	for( int i = 0; i < numJoysticks; i++ )
