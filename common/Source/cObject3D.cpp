@@ -1119,7 +1119,7 @@ void cObject3D::LoadObject( const char *szFilename, int withChildren,  float hei
 
 				pos *= meshscale;
 
-				if ( warned == 0 && (agk::Abs(scale.x-1) > 0.01f || agk::Abs(scale.y-1) > 0.01f || agk::Abs(scale.z-1) > 0.01f) )
+				if ( warned == 0 && (agk::Abs(scale.x)-1 > 0.01f || agk::Abs(scale.y)-1 > 0.01f || agk::Abs(scale.z)-1 > 0.01f) )
 				{
 					warned = 1;
 					agk::Warning( "Bone transform matrix contains scale values, scaling of bones is not supported and will be ignored" );
@@ -1171,7 +1171,7 @@ void cObject3D::LoadObject( const char *szFilename, int withChildren,  float hei
 						pBone->m_offsetPosition.Set( pos.x, pos.y, pos.z );
 						pBone->m_offsetRotation.Set( rot.w, rot.x, rot.y, rot.z );
 
-						if ( warned2 == 0 && (agk::Abs(scale.x-1) > 0.01f || agk::Abs(scale.y-1) > 0.01f || agk::Abs(scale.z-1) > 0.01f) )
+						if ( warned2 == 0 && (agk::Abs(scale.x)-1 > 0.01f || agk::Abs(scale.y)-1 > 0.01f || agk::Abs(scale.z)-1 > 0.01f) )
 						{
 							warned2 = 1;
 							agk::Warning( "Bone offset matrix contains scale values, it may not display correctly" );
