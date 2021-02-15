@@ -9598,6 +9598,92 @@ void agk::SetSpriteShader( UINT spriteID, UINT shaderID )
 	pSprite->SetShader( pShader );
 }
 
+//****f* Sprite/Properties/SetSpriteShaderConstantByName
+// FUNCTION
+//   Sets a shader constant for a sprite by name, the constant must be marked as "uniform" in the shader source.
+//   The sprite will set the specified constant to this value for any shader that it is applied to it.
+//   All shader values have 1 to 4 components, this command accepts 4 values and discards any that are not used 
+//   by the named variable.
+// INPUTS
+//   spriteID -- The ID of the sprite to modify.
+//   szName   -- The name of the constant to change, as defined in the shader source file.
+//   value1   -- The X or R component of the new value, this value will always be used.
+//   value2   -- The Y or G component of the new value, if the constant only uses 1 component this value is discarded.
+//   value3   -- The Z or B component of the new value, if the constant only uses 2 components this value is discarded.
+//   value4   -- The W or A component of the new value, if the constant only uses 3 components this value is discarded.
+// SOURCE
+void agk::SetSpriteShaderConstantByName( unsigned int spriteID, const char *szName, float value1, float value2, float value3, float value4 )
+//****
+{
+    cSprite *pSprite = m_cSpriteList.GetItem( spriteID );
+    if( !pSprite ) {
+#ifdef _AGK_ERROR_CHECK
+        uString errStr( "Failed to set shader constant for sprite " );
+        errStr.AppendUInt( spriteID ).Append( " - sprite does not exist" );
+        Error( errStr );
+#endif
+        return;
+    }
+
+    pSprite->SetShaderConstantByName( szName, value1, value2, value3, value4 );
+}
+
+//****f* Sprite/Properties/SetSpriteShaderConstantArrayByName
+// FUNCTION
+//   Sets a shader constant array index by name, the constant must be marked as "uniform" in the shader source.
+//   Array indices start at 0, if the array index is out of bounds then it will be ignored and no changes will 
+//   be made.
+//   This will affect only the specified sprite this shader.
+//   All shader values have 1 to 4 components, this command accepts 4 values and discards any that are not used 
+//   by the named variable.
+// INPUTS
+//   spriteID   -- The ID of the sprite to modify.
+//   szName     -- The name of the constant to change, as defined in the shader source file.
+//   arrayIndex -- The element of the array to modify.
+//   value1     -- The X or R component of the new value, this value will always be used.
+//   value2     -- The Y or G component of the new value, if the constant only uses 1 component this value is discarded.
+//   value3     -- The Z or B component of the new value, if the constant only uses 2 components this value is discarded.
+//   value4     -- The W or A component of the new value, if the constant only uses 3 components this value is discarded.
+// SOURCE
+void agk::SetSpriteShaderConstantArrayByName( unsigned int spriteID, const char *szName, UINT arrayIndex, float value1, float value2, float value3, float value4 )
+//****
+{
+    cSprite *pSprite = m_cSpriteList.GetItem( spriteID );
+    if( !pSprite ) {
+#ifdef _AGK_ERROR_CHECK
+        uString errStr( "Failed to set shader constant for sprite " );
+        errStr.AppendUInt( spriteID ).Append( " - sprite does not exist" );
+        Error( errStr );
+#endif
+        return;
+    }
+
+    pSprite->SetShaderConstantArrayByName( szName, arrayIndex, value1, value2, value3, value4 );
+}
+
+//****f* Sprite/Properties/SetSpriteShaderConstantDefault
+// FUNCTION
+//   Stops a sprite setting the given constant name in its shaders and uses the shader's default value from now on.
+// INPUTS
+//   spriteID   -- The ID of the sprite to modify.
+//   szName     -- The name of the constant to stop changing.
+// SOURCE
+void agk::SetSpriteShaderConstantDefault( unsigned int spriteID, const char *szName )
+//****
+{
+    cSprite *pSprite = m_cSpriteList.GetItem( spriteID );
+    if( !pSprite ) {
+#ifdef _AGK_ERROR_CHECK
+        uString errStr( "Failed to set shader constant default for sprite " );
+        errStr.AppendUInt( spriteID ).Append( " - sprite does not exist" );
+        Error( errStr );
+#endif
+        return;
+    }
+
+    pSprite->SetShaderConstantDefault( szName );
+}
+
 //****f* Sprite/Properties/DrawSprite
 // FUNCTION
 //   Immediately draws the sprite to the backbuffer at its current position, size, and rotation. This is 

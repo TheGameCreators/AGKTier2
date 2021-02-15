@@ -1442,6 +1442,36 @@ case AGKI_SETSPRITESHADER_0_L_L:
     agk::SetSpriteShader( param0, param1 );
     break;
 }
+case AGKI_SETSPRITESHADERCONSTANTBYNAME_0_L_S_F_F_F_F:
+{
+    float param5 = m_pStack[ --m_iStackPtr ].f;
+    float param4 = m_pStack[ --m_iStackPtr ].f;
+    float param3 = m_pStack[ --m_iStackPtr ].f;
+    float param2 = m_pStack[ --m_iStackPtr ].f;
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetSpriteShaderConstantByName( param0, param1, param2, param3, param4, param5 );
+    break;
+}
+case AGKI_SETSPRITESHADERCONSTANTARRAYBYNAME_0_L_S_L_F_F_F_F:
+{
+    float param6 = m_pStack[ --m_iStackPtr ].f;
+    float param5 = m_pStack[ --m_iStackPtr ].f;
+    float param4 = m_pStack[ --m_iStackPtr ].f;
+    float param3 = m_pStack[ --m_iStackPtr ].f;
+    int param2 = m_pStack[ --m_iStackPtr ].i;
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetSpriteShaderConstantArrayByName( param0, param1, param2, param3, param4, param5, param6 );
+    break;
+}
+case AGKI_SETSPRITESHADERCONSTANTDEFAULT_0_L_S:
+{
+    const char* param1 = m_pStrStack[ --m_iStrStackPtr ].GetStr();
+    int param0 = m_pStack[ --m_iStackPtr ].i;
+    agk::SetSpriteShaderConstantDefault( param0, param1 );
+    break;
+}
 case AGKI_DRAWSPRITE_0_L:
 {
     int param0 = m_pStack[ --m_iStackPtr ].i;

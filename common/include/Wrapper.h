@@ -1252,6 +1252,10 @@ namespace AGK
 			static void SetSpriteScissor( UINT iSpriteIndex, float x, float y, float x2, float y2 );
 			static void SetSpriteShader( UINT spriteID, UINT shaderID );
 
+			static void SetSpriteShaderConstantByName( UINT spriteID, const char* szName, float value1, float value2, float value3, float value4 );
+			static void SetSpriteShaderConstantArrayByName( UINT spriteID, const char* szName, UINT arrayIndex, float value1, float value2, float value3, float value4 );
+			static void SetSpriteShaderConstantDefault( UINT spriteID, const char* szName );
+
 			static void SetSpriteGroup( UINT iSpriteIndex, int group );
 			static void SetSpriteCategoryBits( UINT iSpriteIndex, UINT categories );
 			static void SetSpriteCategoryBit( UINT iSpriteIndex, UINT category, int flag );
