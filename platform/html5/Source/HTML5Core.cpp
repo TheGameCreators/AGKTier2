@@ -4957,7 +4957,7 @@ void agk::SaveSharedVariable( const char *varName, const char *varValue )
 		var d = new Date();
 		d.setTime(d.getTime() + (5 * 365 * 24 * 60 * 60 * 1000)); // 5 years
 		var expires = "expires="+d.toUTCString();
-		document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+		document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/; SameSite=None; Secure";
 	}, varName, varValue);
 }
 
